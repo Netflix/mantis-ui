@@ -1,0 +1,52 @@
+/*******************************
+        Top Nav Overrides
+*******************************/
+.el-menu--horizontal {
+  height: 40px;
+  -webkit-text-stroke: 0.33px rgba(255, 255, 255, 0.33);
+}
+.el-menu--horizontal .el-menu-item,
+.el-menu--horizontal .el-submenu .el-submenu__title {
+  height: 39px;
+  line-height: 40px;
+  font-size: var(--text-2);
+}
+.el-menu--horizontal .el-submenu > .el-menu {
+  top: 39px;
+}
+.el-menu--horizontal a {
+  color: #fff;
+  display: inline-block;
+  width: 100%;
+}
+.el-menu--horizontal h1 {
+  margin: 0;
+  font-size: var(--text-4);
+}
+
+.el-card {
+  &.form-card {
+    > div:nth-child(2) {
+      padding: 0;
+    }
+
+    .card-item {
+      padding: 1em 1em 1em 0;
+      border-bottom: 1px solid var(--element-card-border-color);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    .label {
+      color: var(--blue-400);
+    }
+  }
+}
+
+.el-card__header {
+  background: var(--neutral-050);
+  color: var(--accent-200);
+  text-align: left;
+}

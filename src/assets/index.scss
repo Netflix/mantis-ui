@@ -1,0 +1,37 @@
+@import './layout.scss';
+@import './spacing.scss';
+@import './typography.scss';
+@import './colors.scss';
+@import './element-overrides.scss';
+@import './variables.scss';
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: '';
+}
+.clearfix:after {
+  clear: both;
+}
+
+a {
+  color: var(--blue-600);
+  text-decoration: none;
+
+  :hover {
+    text-decoration:none;
+  }
+}
+
+.job-label {
+  margin: 0.2em;
+}
+
+.job-tag {
+  cursor: pointer;
+}

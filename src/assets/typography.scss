@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600');
+
+$text-sizes: (
+  1: 12,
+  2: 14,
+  3: 16,
+  4: 18,
+  5: 20,
+  6: 24,
+  7: 30,
+  8: 36,
+  9: 48,
+  10: 60,
+  11: 72,
+);
+
+$text-weights: (
+  light: 300,
+  normal: 400,
+  bold: 600,
+);
+
+:root {
+  // Sizes
+  --text-base: 14px;
+  @each $key, $value in $text-sizes {
+    --text-#{$key}: #{$value}px;
+  }
+
+  // Weights
+  @each $key, $value in $text-weights {
+    --text-#{$key}: #{$value};
+  }
+}
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: var(--text-base);
+  font-weight: var(--text-normal);
+  color: var(--neutral-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-stroke: 0.33px rgba(0, 0, 0, 0.33);
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+}
+
+pre {
+  font-size: var(--text-1);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+a {
+  color: var(--primary-500);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Headings
+h1 {
+  font-size: var(--text-6);
+  font-weight: var(--text-bold);
+}
+h2 {
+  font-size: var(--text-5);
+  font-weight: var(--text-bold);
+}
+h3 {
+  font-size: var(--text-4);
+  font-weight: var(--text-bold);
+}
+h4 {
+  font-size: var(--text-3);
+  font-weight: var(--text-bold);
+}
+strong {
+  font-weight: var(--text-bold);
+}
+
+// Weights
+@each $key, $value in $text-weights {
+  .text-#{$key} {
+    font-weight: var(--text-#{$key});
+  }
+}
+
+// Style/Decoration
+.uppercase {
+  text-transform: uppercase;
+}
+.lowercase {
+  text-transform: lowercase;
+}
+.capitalize {
+  text-transform: capitalize;
+}
+
+// Alignment
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-justify {
+  text-align: justify;
+}
+
+// Text colors
+.primary-text {
+  color: var(--element-brand-color);
+}
+.success-text {
+  color: var(--element-success-color);
+}
+.warning-text {
+  color: var(--element-warning-color);
+}
+.danger-text {
+  color: var(--element-danger-color);
+}
+.info-text {
+  color: var(--element-info-color);
+}

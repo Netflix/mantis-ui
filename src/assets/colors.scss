@@ -1,0 +1,84 @@
+:root {
+  // Primary
+  --primary-050: hsl(195, 25%, 94%);
+  --primary-100: hsl(194, 38%, 89%);
+  --primary-200: hsl(196, 27%, 81%);
+  --primary-300: hsl(190, 46%, 77%);
+  --primary-500: hsl(189, 80%, 39%);
+
+  // Accent
+  --accent-100: hsl(205, 17%, 57%);
+  --accent-200: hsl(207, 32%, 44%);
+  --accent-500: hsl(207, 30%, 32%);
+
+  // Neutrals (Cool Grey)
+  --neutral-050: hsl(216, 33%, 97%);
+  --neutral-100: hsl(214, 15%, 91%);
+  --neutral-200: hsl(210, 16%, 82%);
+  --neutral-300: hsl(211, 13%, 65%);
+  --neutral-400: hsl(211, 10%, 53%);
+  --neutral-500: hsl(211, 12%, 43%);
+  --neutral-600: hsl(209, 14%, 37%);
+  --neutral-700: hsl(209, 18%, 30%);
+  --neutral-800: hsl(209, 20%, 25%);
+  --neutral-900: hsl(210, 24%, 16%);
+
+  // Supporting
+  // Light Blue
+  --blue-050: hsl(201, 100%, 96%);
+  --blue-100: hsl(200, 88%, 90%);
+  --blue-200: hsl(200, 71%, 80%);
+  --blue-300: hsl(200, 66%, 69%);
+  --blue-400: hsl(200, 60%, 58%);
+  --blue-500: hsl(200, 54%, 49%);
+  --blue-600: hsl(200, 59%, 43%);
+  --blue-700: hsl(200, 68%, 35%);
+  --blue-800: hsl(200, 72%, 31%);
+  --blue-900: hsl(200, 82%, 24%);
+
+  // Red
+  --red-050: hsl(360, 100%, 97%);
+  --red-100: hsl(360, 82%, 89%);
+  --red-200: hsl(360, 77%, 78%);
+  --red-300: hsl(360, 71%, 66%);
+  --red-400: hsl(360, 64%, 55%);
+  --red-500: hsl(360, 67%, 44%);
+  --red-600: hsl(360, 72%, 38%);
+  --red-700: hsl(360, 79%, 32%);
+  --red-800: hsl(360, 85%, 25%);
+  --red-900: hsl(360, 92%, 20%);
+
+  // Vivid Yellow
+  --yellow-050: hsl(49, 100%, 96%);
+  --yellow-100: hsl(48, 100%, 88%);
+  --yellow-200: hsl(48, 95%, 76%);
+  --yellow-300: hsl(48, 94%, 68%);
+  --yellow-400: hsl(44, 92%, 63%);
+  --yellow-500: hsl(42, 87%, 55%);
+  --yellow-600: hsl(36, 77%, 49%);
+  --yellow-700: hsl(29, 80%, 44%);
+  --yellow-800: hsl(22, 82%, 39%);
+  --yellow-900: hsl(15, 86%, 30%);
+
+  // Lime Green
+  --green-050: hsl(83, 88%, 94%);
+  --green-100: hsl(84, 77%, 86%);
+  --green-200: hsl(83, 68%, 74%);
+  --green-300: hsl(83, 63%, 61%);
+  --green-400: hsl(83, 55%, 52%);
+  --green-500: hsl(83, 64%, 42%);
+  --green-600: hsl(83, 70%, 34%);
+  --green-700: hsl(83, 74%, 27%);
+  --green-800: hsl(81, 78%, 21%);
+  --green-900: hsl(81, 86%, 14%);
+
+  // Element Card Border
+  --element-card-border-color: #EBEEF5;
+
+  // Element Colors
+  --element-success-color: #67C23A;
+  --element-brand-color: #409EFF;
+  --element-warning-color: #E6A23C;
+  --element-danger-color: #F56C6C;
+  --element-info-color: #909399;
+}
