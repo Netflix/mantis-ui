@@ -138,7 +138,8 @@ export default {
     },
     prependHttpToUrl(url) {
       const prefix = 'http://';
-      if (url.substr(0, prefix.length) !== prefix) {
+      const pattern = /^((http|https|ftp):\/\/)/;
+      if (!pattern.test(url)) {
         return prefix + url;
       }
       return url;
