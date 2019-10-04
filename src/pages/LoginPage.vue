@@ -14,22 +14,21 @@
           status-icon
           :model="form"
           :rules="rules"
-          label-width="140px"
           label-position="left"
         >
-          <el-form-item label="Name:" prop="name">
+          <el-form-item label="Name" prop="name">
             <el-input v-model="form.name" />
           </el-form-item>
-          <el-form-item label="Email:" prop="email">
+          <el-form-item label="Email" prop="email">
             <el-input v-model="form.email" type="email" />
           </el-form-item>
-          <el-form-item label="Master Name:" prop="masterName">
+          <el-form-item label="Master Name" prop="masterName">
             <el-input v-model="form.masterName" />
           </el-form-item>
-          <el-form-item label="Mantis Master Url:" prop="masterUrl">
+          <el-form-item label="Mantis Master API URL" prop="masterUrl">
             <el-input v-model="form.masterUrl" />
           </el-form-item>
-          <el-form-item label="Mesos Url:" prop="mesosUrl">
+          <el-form-item label="Mesos URL" prop="mesosUrl">
             <el-input v-model="form.mesosUrl" />
           </el-form-item>
 
@@ -102,7 +101,7 @@ export default {
         masterUrl: [
           {
             required: true,
-            message: 'Please input your master url',
+            message: 'Please input your master api url',
             trigger: 'blur',
           },
         ],
