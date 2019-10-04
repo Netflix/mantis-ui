@@ -8,7 +8,7 @@ module.exports = {
     'prettier/vue',
   ],
   rules: {
-    'no-console': ['error', { allow: ['debug'] }],
+    'no-console': 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'sort-imports': ['error', {
       'ignoreDeclarationSort': true,
