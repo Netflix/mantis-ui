@@ -119,7 +119,7 @@ export default {
           const masters = [
             {
               name: this.form.masterName,
-              url: this.form.masterUrl,
+              url: this.prependHttpToUrl(this.form.masterUrl),
             },
           ];
           store.dispatch(ActionTypes.LoginUser, {
@@ -127,7 +127,7 @@ export default {
             email: this.form.email,
           });
           store.dispatch(ActionTypes.SetMantisMasters, masters);
-          store.dispatch(ActionTypes.SetMesosUrl, this.form.mesosUrl);
+          store.dispatch(ActionTypes.SetMesosUrl, this.prependHttpToUrl(this.form.mesosUrl));
           this.$router.push('/clusters');
         } else {
           return false;
@@ -136,6 +136,13 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    prependHttpToUrl(url) {
+      const prefix = 'http://';
+      if (url.substr(0, prefix.length) !== prefix) {
+        return prefix + url;
+      }
+      return url;
     },
   },
 };
