@@ -25,11 +25,11 @@ export function getMesosUrl() {
 }
 
 export function setUserName(userName) {
-  return localStorage.setItem(USER_NAME_KEY, userName);
+  return localStorage.setItem(USER_NAME_KEY, userName ? userName : '');
 }
 
 export function setUserEmail(userEmail) {
-  return localStorage.setItem(USER_EMAIL_KEY, userEmail);
+  return localStorage.setItem(USER_EMAIL_KEY, userEmail ? userEmail : '');
 }
 
 export function setMantisMasters(masters) {
