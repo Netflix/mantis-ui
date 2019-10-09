@@ -1,24 +1,26 @@
 language: node_js
 node_js:
-  - '10'
+- '10'
 dist: xenial
 addons:
   chrome: stable
 cache:
   yarn: true
 before_install:
-  - curl -o- -L https://yarnpkg.com/install.sh | bash
-  - export PATH=$HOME/.yarn/bin:$PATH
+- curl -o- -L https://yarnpkg.com/install.sh | bash
+- export PATH=$HOME/.yarn/bin:$PATH
 install:
-  - yarn install --no-lockfile --non-interactive
+- yarn install --no-lockfile --non-interactive
 script:
-  - yarn test:unit
-  - yarn build
-
+- yarn test:unit
+- yarn build
 deploy:
- provider: pages
- skip_cleanup: true
- github_token: $GITHUB_TOKEN
- local_dir: dist
- on:
-   branch: master
+  provider: pages
+  skip_cleanup: true
+  github_token: "$GITHUB_TOKEN"
+  local_dir: dist
+  on:
+    branch: master
+env:
+  global:
+    secure: h01JUwbdSdKz/GwAZudwqwanC0AIfAonY1JiTc62Bm498mRAIYzv60XpfQRP8a2n/N7TnOkJ4vskEv+sQvxzCPTVItbu8CLTIICoqGl8hRN5h0vQ025mA2m4R9p1RBalpi18DqBc6+BA/5HPIdykhgwau4T8GE1iQSndYaAQxpwsB+AVQ0vvnrfPCDjgics1ySpG88sT1Jx+UtTA5cmQZK6ZohJRbtyWkWKNzy3znd/8R23qf4R9DGX6FnoAD01bJrbqjbkiZjrpkYJWbKUHm98O30lrbkKDcBAGuYHJksFXixN06reEkSeJCZbYAFdcj4xIsaMWU67pm37+bW88ORj0weR2QcpUJYmnsnSyGXBanU9g3R6JIGb+G2gWLqQ0UkBOQ/lp4Bls4vl5IoPcRYgjzieQAWVNHD9RoD//K71NGG2KP+GwNT1VSUp1AXdYJhWFT32eQ1OMC6wKczA3iR6HzJy/7PK3NG8NKHlNBXn+vncboTMfyMBHCJbHLWyHOamG70Tc1Zxiw7/2YGNsstKm/azi/h7pOBNZgVb/FHL/4REf7ynPxsKE5n5RKTLRXhodvvSn4Tctb95bvrgDk5petRF479mo62TEV3bAk8hoyIqaVsWS/zLvipezol7qj4jIOtjG27qHVXnHC5Yov4Dim66H+hjy0a6eXaRuUrg=
