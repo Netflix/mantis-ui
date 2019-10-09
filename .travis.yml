@@ -13,3 +13,12 @@ install:
   - yarn install --no-lockfile --non-interactive
 script:
   - yarn test:unit
+  - yarn build
+
+deploy:
+ provider: pages
+ skip_cleanup: true
+ github_token: $GITHUB_TOKEN
+ local_dir: dist
+ on:
+   branch: master
