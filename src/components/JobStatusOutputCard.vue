@@ -53,7 +53,7 @@ export default {
 
   methods: {
     formatDateLong(timestamp) {
-      return format(timestamp, DETAILED_TIME_FORMAT);
+      return timestamp ? format(timestamp, DETAILED_TIME_FORMAT) : '';
     },
   },
 };

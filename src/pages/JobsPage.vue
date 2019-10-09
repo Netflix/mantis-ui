@@ -125,6 +125,7 @@ import debounce from 'lodash.debounce';
 import { format } from 'date-fns';
 import { getJobClusterIdFromJobId } from '@/utils/job';
 import SpecialLabels from '@/components/SpecialLabels';
+import { DETAILED_TIME_FORMAT } from '@/utils/constants';
 
 export default {
   name: 'JobsPage',
@@ -248,7 +249,7 @@ export default {
       this.updateRouteWithFilters();
     }, 500),
     formatDateLong(timestamp) {
-      return format(timestamp, 'MMM D YYYY, hh:mm:ss A');
+      return timestamp ? format(timestamp, DETAILED_TIME_FORMAT) : '';
     },
     jobClusterFromJobId(jobId) {
       return getJobClusterIdFromJobId(jobId);

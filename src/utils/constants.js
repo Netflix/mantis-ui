@@ -1,5 +1,6 @@
-export const DETAILED_TIME_FORMAT = 'MMM D YYYY, hh:mm:ss.SSS A';
-export const BASIC_TIME_FORMAT = 'YYYY-MM-DD hh:mm:ss'
+export const DETAILED_TIME_FORMAT = 'MMM d yyyy, hh:mm:ss a';
+export const DETAILED_TIME_FORMAT_WITH_TIME_ZONE = 'MMM d yyyy, hh:mm:ss a (zz)';
+export const BASIC_TIME_FORMAT = 'yyyy-MM-dd hh:mm:ss'
 
 export const JOB_LABELS = {
   '_mantis.user': {

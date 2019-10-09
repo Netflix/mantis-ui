@@ -78,6 +78,7 @@ import { Button, Card } from 'element-ui';
 import CopyableSpan from '@/components/CopyableSpan';
 import CopyableInput from '@/components/CopyableInput';
 import { format } from 'date-fns';
+import { DETAILED_TIME_FORMAT_WITH_TIME_ZONE } from '@/utils/constants';
 
 export default {
   name: 'JobWorkerDetailCard',
@@ -105,11 +106,11 @@ export default {
       if (!this.worker) {
         return '';
       }
-      return `/mnt/data/mesos/slaves/${
+      return `/var/run/mesos/slaves/${
         this.worker.slaveID
       }/frameworks/MantisFramework/executors/${this.worker.jobId}-worker-${
         this.worker.workerIndex
-      }-${this.worker.workerNumber}`;
+      }-${this.worker.workerNumber}/runs/latest`;
     },
     mesosConsoleLink() {
       if (this.mesosBaseUrl !== 'null' && this.mesosBaseUrl) {
@@ -123,7 +124,7 @@ export default {
 
   methods: {
     formatDateLong(timestamp) {
-      return format(timestamp, 'MMM D YYYY, hh:mm:ss A (ZZ)');
+      return timestamp ? format(timestamp, DETAILED_TIME_FORMAT_WITH_TIME_ZONE) : '';
     },
     openMesosConsole() {
       window.open(this.mesosConsoleLink, '_blank');
