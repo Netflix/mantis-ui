@@ -29,7 +29,7 @@
       </el-form-item>
 
       <el-form-item label="CPU Core(s)">
-        <el-input-number v-model="stage.machineDefinition.cpuCores" :min="defaults.cpuCores.min" :max="defaults.cpuCores.max" />
+        <el-input-number v-model="stage.machineDefinition.cpuCores" :min="defaults.cpuCores.min" :max="defaults.cpuCores.max" :step="0.1" />
       </el-form-item>
 
       <el-form-item label="Memory (MB)">
