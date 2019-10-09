@@ -1,8 +1,8 @@
 # Mantis UI
 
-[![Build Status](https://img.shields.io/travis/Netflix/mantis-cli.svg)](https://travis-ci.org/Netflix/mantis-cli)
-[![OSS Lifecycle](https://img.shields.io/osslifecycle/Netflix/mantis-cli.svg)](https://github.com/Netflix/mantis-cli)
-[![License](https://img.shields.io/github/license/Netflix/mantis-cli.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Build Status](https://img.shields.io/travis/Netflix/mantis-ui.svg)](https://travis-ci.com/Netflix/mantis-ui)
+[![OSS Lifecycle](https://img.shields.io/osslifecycle/Netflix/mantis-ui.svg)](https://github.com/Netflix/mantis-ui)
+[![License](https://img.shields.io/github/license/Netflix/mantis-ui.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Management UI for interacting with Mantis.
 
