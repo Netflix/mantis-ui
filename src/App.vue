@@ -65,9 +65,12 @@ export default Vue.extend({
 <style lang="scss" module>
 #app {
   display: flex;
-  font-family: 'Source Code Pro', sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: var(--text-base);
+  font-weight: var(--text-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-text-stroke: .33px rgba(0,0,0,.33);
   text-align: center;
 }
 

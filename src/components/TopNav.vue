@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       faBars,
-      backgroundColor: '#800000',
+      backgroundColor: '#545c64',
       textColor: 'white',
       activeTextColor: getComputedStyle(
         document.documentElement,

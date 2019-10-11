@@ -33,16 +33,6 @@ $text-weights: (
   }
 }
 
-body {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: var(--text-base);
-  font-weight: var(--text-normal);
-  color: var(--neutral-900);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-stroke: 0.33px rgba(0, 0, 0, 0.33);
-}
-
 button,
 input,
 optgroup,
