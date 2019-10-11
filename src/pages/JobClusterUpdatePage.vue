@@ -32,6 +32,7 @@
           <JobClusterArtifactFormCard
             :class="$style['box-card']"
             :latest-artifact="form.latestArtifact"
+            :is-uploading-job-artifact="isUploadingJobArtifact"
             :is-loading-job-artifacts="isLoadingArtifactsList"
             :available-job-artifacts="availableArtifacts"
             :artifact-name.sync="form.jobDefinition.jobJarFileLocation"
@@ -119,6 +120,7 @@
           <JobClusterArtifactFormCard
             :class="$style['box-card']"
             :latest-artifact="form.latestArtifact"
+            :is-uploading-job-artifact="isUploadingJobArtifact"
             :is-loading-job-artifacts="isLoadingArtifactsList"
             :available-job-artifacts="availableArtifacts"
             :artifact-name.sync="form.jobDefinition.jobJarFileLocation"
@@ -241,6 +243,7 @@ export default {
       formLabelWidth: '150px',
       formReady: false,
       JOB_CLUSTER_UPDATE_TYPES,
+      isUploadingJobArtifact: false,
       form: {
         latestArtifact: null,
         shouldAutomaticallySubmit: true,
@@ -398,8 +401,10 @@ export default {
       this.form.availableParameters = parameters;
     },
     async uploadJobArtifact({ file }) {
+      this.isUploadingJobArtifact = true;
       await store.dispatch(ActionTypes.UploadArtifact, { file });
       store.dispatch(ActionTypes.FetchArtifacts);
+      this.isUploadingJobArtifact = false;
     },
     onChangeUpdateType(updateType) {
       const updateTypeWithSpaces = updateType.replace(/\s/g, '');

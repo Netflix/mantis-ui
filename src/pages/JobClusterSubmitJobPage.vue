@@ -379,7 +379,7 @@ export default {
           const clusterId = this.clusterId;
           const responseHandler = (data, errors) => {
             if (!errors) {
-              const jobId = data.jobId.id;
+              const jobId = data.jobMetadata.jobId;
               this.$router.push({ path: `/jobs/${jobId}` }, () => {
                 this.$message.success(`Successfully submited job ${jobId}`);
                 this.$scrollTo(submitJobForm.$el, {

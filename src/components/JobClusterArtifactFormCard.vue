@@ -40,7 +40,7 @@
       <el-form-item label="Upload File">
         <el-switch v-model="showUploadControls"/>
       </el-form-item>
-      <el-form-item v-if="showUploadControls" label>
+      <el-form-item v-if="showUploadControls" v-loading="isUploadingJobArtifact">
         <el-upload
           drag
           action="none"
@@ -100,6 +100,10 @@ export default {
       required: true,
     },
     isLoadingJobArtifacts: {
+      type: Boolean,
+      required: true,
+    },
+    isUploadingJobArtifact: {
       type: Boolean,
       required: true,
     },

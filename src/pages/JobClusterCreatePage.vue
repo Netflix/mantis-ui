@@ -25,6 +25,7 @@
       <JobClusterArtifactFormCard
         :class="$style['box-card']"
         :is-loading-job-artifacts="isLoadingArtifactsList"
+        :is-uploading-job-artifact="isUploadingJobArtifact"
         :available-job-artifacts="availableArtifacts"
         :artifact-name.sync="form.jobDefinition.jobJarFileLocation"
         :version.sync="form.jobDefinition.version"
@@ -172,6 +173,7 @@ export default {
     return {
       inputMaxLength: 100,
       formLabelWidth: '150px',
+      isUploadingJobArtifact: false,
       form: {
         availableParameters: [],
         enableJobMaster: false,
@@ -277,8 +279,10 @@ export default {
       this.form.availableParameters = parameters;
     },
     async uploadJobArtifact({ file }) {
+      this.isUploadingJobArtifact = true;
       await store.dispatch(ActionTypes.UploadArtifact, { file });
       store.dispatch(ActionTypes.FetchArtifacts);
+      this.isUploadingJobArtifact = false;
     },
     onSubmit() {
       const createClusterForm = this.$refs['createClusterForm'];
