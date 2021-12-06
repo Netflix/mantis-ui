@@ -1,6 +1,6 @@
 <template>
   <el-card shadow="hover" :class="$style['detail-card']">
-    <template slot="header" class="flex layout horizontal">
+    <template slot="header">
       <strong
         >Job Status Output (newest on top) -
         {{ jobStatusEvents.length }} messages</strong

@@ -60,14 +60,7 @@
 </template>
 
 <script>
-import {
-  Button,
-  Card,
-  Col,
-  Input,
-  Pagination,
-  Row,
-} from 'element-ui';
+import { Button, Card, Col, Input, Pagination, Row } from 'element-ui';
 import store from '@/store';
 import { mapState } from 'vuex';
 import debounce from 'lodash.debounce';
@@ -85,6 +78,11 @@ export default {
     [Button.name]: Button,
     [Pagination.name]: Pagination,
     JobClusterItem,
+  },
+
+  beforeRouteUpdate(to, from, next) {
+    next();
+    this.fetchJobClusters();
   },
 
   data() {
@@ -105,11 +103,6 @@ export default {
   },
 
   created() {
-    this.fetchJobClusters();
-  },
-
-  beforeRouteUpdate(to, from, next) {
-    next();
     this.fetchJobClusters();
   },
 
@@ -147,7 +140,12 @@ export default {
     updateRouteWithFilters() {
       const searchText = this.clusterIdSearchFilter;
       const labelFilterText = this.clusterLabelSearchFilter;
-      this.$router.push({ query: { matching: searchText || undefined, labels: labelFilterText || undefined } });
+      this.$router.push({
+        query: {
+          matching: searchText || undefined,
+          labels: labelFilterText || undefined,
+        },
+      });
     },
     throttledUpdateRouteWithFilters: debounce(function() {
       this.updateRouteWithFilters();

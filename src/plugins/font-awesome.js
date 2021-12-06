@@ -27,6 +27,6 @@ export default () => {
     faClipboard,
     faSlidersH,
   );
-  Vue.component('font-awesome-icon', FontAwesomeIcon);
+  Vue.component('FontAwesomeIcon', FontAwesomeIcon);
 }
 

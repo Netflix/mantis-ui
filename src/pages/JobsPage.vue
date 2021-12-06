@@ -23,18 +23,21 @@
             />
           </el-col>
           <el-col class="layout horizontal center-center">
-            <strong>{{ numJobs }}</strong>&nbsp;jobs found -&nbsp;
-            <strong>{{ totalResources.cpu }}</strong>&nbsp;CPUs,&nbsp;
-            <strong>{{ totalResources.memory }}</strong>&nbsp;RAM
+            <strong>{{ numJobs }}</strong
+            >&nbsp;jobs found -&nbsp; <strong>{{ totalResources.cpu }}</strong
+            >&nbsp;CPUs,&nbsp; <strong>{{ totalResources.memory }}</strong
+            >&nbsp;RAM
           </el-col>
           <el-col class="layout horizontal end-justified center">
             <el-dropdown trigger="hover" @command="handleActionMenuItemClick">
               <el-button type="primary" :disabled="!selectedJobs.length">
                 Multi-Action Menu
-                <i class="el-icon-arrow-down el-icon--right"/>
+                <i class="el-icon-arrow-down el-icon--right" />
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item icon="el-icon-delete" command="killJob">Kill Jobs</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-delete" command="killJob"
+                  >Kill Jobs</el-dropdown-item
+                >
               </el-dropdown-menu>
             </el-dropdown>
           </el-col>
@@ -48,20 +51,32 @@
           stripe
           @selection-change="handleSelectionChange"
         >
-          <el-table-column type="selection" width="50"/>
-          <el-table-column property="jobId" label="Job Id" show-overflow-tooltip>
+          <el-table-column type="selection" width="50" />
+          <el-table-column
+            property="jobId"
+            label="Job Id"
+            show-overflow-tooltip
+          >
             <template slot-scope="scope">
-              <router-link tag="a" :to="`/jobs/${scope.row.jobId}`">{{ scope.row.jobId }}</router-link>
+              <router-link tag="a" :to="`/jobs/${scope.row.jobId}`">{{
+                scope.row.jobId
+              }}</router-link>
               <span v-if="isTransient(scope.row.type)">
-                <font-awesome-icon icon="clock"/>Transient
+                <font-awesome-icon icon="clock" />Transient
               </span>
-              <SpecialLabels :labels="scope.row.labels" @on-tag-click="onTagClick"/>
+              <SpecialLabels
+                :labels="scope.row.labels"
+                @on-tag-click="onTagClick"
+              />
             </template>
           </el-table-column>
           <el-table-column property="name" label="Job Cluster" width="100">
             <template slot-scope="scope">
-              <router-link tag="span" :to="`/clusters/${jobClusterFromJobId(scope.row.jobId)}`">
-                <el-link icon="el-icon-view" :underline="false"/>
+              <router-link
+                tag="span"
+                :to="`/clusters/${jobClusterFromJobId(scope.row.jobId)}`"
+              >
+                <el-link icon="el-icon-view" :underline="false" />
               </router-link>
             </template>
           </el-table-column>
@@ -78,11 +93,15 @@
             </template>
           </el-table-column>
           <el-table-column label="Submitted At">
-            <template slot-scope="scope">{{ formatDateLong(scope.row.submittedAt) }}</template>
+            <template slot-scope="scope">{{
+              formatDateLong(scope.row.submittedAt)
+            }}</template>
           </el-table-column>
           <el-table-column label="State">
             <template slot-scope="scope">
-              <el-tag type="success" :disable-transitions="true">{{ scope.row.state }}</el-tag>
+              <el-tag type="success" :disable-transitions="true">{{
+                scope.row.state
+              }}</el-tag>
             </template>
           </el-table-column>
         </el-table>
@@ -147,6 +166,13 @@ export default {
     SpecialLabels,
   },
 
+  beforeRouteUpdate(to, from, next) {
+    next();
+    this.jobIdSearchFilter = this.$route.query.matching;
+    this.jobLabelSearchFilter = this.$route.query.labels;
+    this.fetchJobs();
+  },
+
   data() {
     return {
       jobIdSearchFilter: this.$route.query.matching,
@@ -167,13 +193,6 @@ export default {
   },
 
   created() {
-    this.fetchJobs();
-  },
-
-  beforeRouteUpdate(to, from, next) {
-    next();
-    this.jobIdSearchFilter = this.$route.query.matching;
-    this.jobLabelSearchFilter = this.$route.query.labels;
     this.fetchJobs();
   },
 
