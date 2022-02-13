@@ -16,3 +16,6 @@ node_modules
 build
 dist
 stats.html
+
+# Netflix implementations
+Nflx*.*
