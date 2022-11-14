@@ -36,7 +36,10 @@ function Login() {
             <Form.Item
               label="Email"
               name="email"
-              rules={[{ required: true, message: 'Please input your email!' }]}
+              rules={[
+                { type: 'email', message: 'The input is not valid email!' },
+                { required: true, message: 'Please input your email!' },
+              ]}
             >
               <Input />
             </Form.Item>
