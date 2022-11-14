@@ -37,7 +37,7 @@ function Login() {
               label="Email"
               name="email"
               rules={[
-                { type: 'email', message: 'The input is not valid email!' },
+                { type: 'email', message: 'The input is not valid email' },
                 { required: true, message: 'Please input your email!' },
               ]}
             >
