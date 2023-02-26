@@ -24,8 +24,12 @@ UI for Mantis Project
 ### Prerequisites
 
 ```
-node
-pnpm
+node (version >= 14.18.0)
+pnpm (version >= 6.23.0)
+```
+To install pnpm :
+```
+npm install -g pnpm
 ```
 
 <br/>
@@ -36,9 +40,14 @@ None available at the moment!
 <br/><br/>
 
 ## ⌨️ Development <a name="development"></a>
-
-pnpm install
-pnpm dev
+To install dependencies :
+``` 
+pnpm install 
+```
+To start the local server :
+``` 
+pnpm dev 
+```
 
 ## 🚀 Deployment <a name = "deployment"></a>
 
