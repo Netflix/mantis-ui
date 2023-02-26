@@ -1,5 +1,5 @@
 function CreateCluster() {
-  return <div className="m-4 flex flex-col h-full" />;
+  return <div className="flex flex-col h-full" />;
 }
 
 export default CreateCluster;

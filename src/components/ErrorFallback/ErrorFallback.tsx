@@ -1,4 +1,5 @@
-import { Alert, Button } from 'antd';
+import { Alert, Button } from '@mantine/core';
+import { FaTimesCircle } from 'react-icons/fa';
 
 function ErrorFallback({
   error,
@@ -9,10 +10,10 @@ function ErrorFallback({
 }) {
   return (
     <div className="flex flex-col h-full gap-4 mx-auto mt-8">
-      <Alert message="Something went wrong:" description={error.message} type="error" showIcon />
-      <Button type="primary" onClick={resetErrorBoundary}>
-        Try again
-      </Button>
+      <Alert icon={<FaTimesCircle size={16} />} title="Something went wrong" color="red">
+        {error.message}
+      </Alert>
+      <Button onClick={resetErrorBoundary}>Try again</Button>
     </div>
   );
 }

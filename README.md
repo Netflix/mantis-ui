@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=350px height=200px src="src/assets/images/mantis-logo-full-transparent.png" alt="Project logo"></a>
+ <img width=250px height=200px src="src/assets/mantis-logo-full-transparent.png" alt="Project logo"></a>
 </p>
 
 <div align="center">

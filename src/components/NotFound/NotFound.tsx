@@ -1,21 +1,17 @@
-import { Button, Result } from 'antd';
+import { Button, Text, Title } from '@mantine/core';
 import { useNavigate } from 'react-location';
-import { AppRoutePaths } from '@/router/routes';
 
 function NotFound() {
   const navigate = useNavigate();
 
   return (
-    <Result
-      status="404"
-      title="404"
-      subTitle="Sorry, the page you visited does not exist."
-      extra={
-        <Button type="primary" onClick={() => navigate({ to: AppRoutePaths.ROOT, replace: true })}>
-          Back Home
-        </Button>
-      }
-    />
+    <div className="flex flex-col h-full justify-center items-center">
+      <Title order={3}>404</Title>
+      <Text>Page not found!</Text>
+      <Button className="my-4" onClick={() => navigate({ to: '/', replace: true })}>
+        Back Home
+      </Button>
+    </div>
   );
 }
 

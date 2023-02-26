@@ -1,21 +1,40 @@
-import style from './Login.module.css';
-import { Button, Card, Form, Input } from 'antd';
-import mantisImage from '@/assets/images/mantis-logo-full-transparent.png';
-import { useAuth } from '@/hooks/useAuth';
-import { useSearch, useNavigate } from 'react-location';
+import { Button, Card, Image, TextInput } from '@mantine/core';
 import { Helmet } from 'react-helmet-async';
+import { useForm } from 'react-hook-form';
+import { TbAt } from 'react-icons/tb';
+import { useNavigate, useSearch } from 'react-location';
+
+import mantisImage from '@/assets/images/mantis-logo-full-transparent.png';
 import { LocationGenerics } from '@/components/Router/Router';
+import { useAuth } from '@/hooks/useAuth';
+
+type UserData = {
+  name: string;
+  email: string;
+};
 
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const { redirect = '/' } = useSearch<LocationGenerics>();
 
-  const onFinish = (user: { name: string; email: string }) => {
-    login({ ...user, isAdmin: true }, () => navigate({ to: redirect, replace: true }));
+  const {
+    register,
+    trigger,
+    getValues,
+    formState: { errors },
+  } = useForm<UserData>({ mode: 'onBlur' });
+
+  const onLogin = async () => {
+    const isValid = await trigger(undefined, { shouldFocus: true });
+    const user = getValues();
+    if (isValid) {
+      login({ ...user, isAdmin: true }, () => navigate({ to: redirect, replace: true }));
+    }
   };
 
-  const title = <img src={mantisImage} alt="Mantis Logo" className="h-20 w-24" />;
+  const emailPattern =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   return (
     <>
@@ -23,30 +42,40 @@ function Login() {
         <title>Mantis - Login</title>
       </Helmet>
       <div className="flex items-center justify-center h-full">
-        <Card title={title} className={`${style.card} max-w-2xl`}>
-          <Form name="login-form" labelCol={{ span: 3 }} autoComplete="off" onFinish={onFinish}>
-            <Form.Item
-              label="Name"
-              name="name"
-              rules={[{ required: true, message: 'Please input your name!' }]}
-            >
-              <Input />
-            </Form.Item>
+        <Card shadow="sm" radius="md" withBorder className="w-1/2">
+          <Card.Section inheritPadding py="xs" className="flex justify-center">
+            <Image src={mantisImage} alt="Mantis Logo" width={100} fit="contain" />
+          </Card.Section>
 
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[{ required: true, message: 'Please input your email!' }]}
-            >
-              <Input />
-            </Form.Item>
+          <Card.Section inheritPadding py="xs">
+            <form className="flex flex-col gap-2">
+              <TextInput
+                label="Name"
+                placeholder="Enter your name"
+                withAsterisk
+                {...register('name', { required: 'Name required' })}
+                error={errors.name?.message}
+              />
 
-            <Form.Item className={style.footer}>
-              <Button type="primary" htmlType="submit">
+              <TextInput
+                label="Email"
+                placeholder="Enter your email"
+                icon={<TbAt size={14} />}
+                withAsterisk
+                {...register('email', {
+                  required: 'Email required',
+                  pattern: {
+                    value: emailPattern,
+                    message: 'Invalid email address',
+                  },
+                })}
+                error={errors.email?.message}
+              />
+              <Button mt="md" onClick={onLogin}>
                 Login
               </Button>
-            </Form.Item>
-          </Form>
+            </form>
+          </Card.Section>
         </Card>
       </div>
     </>

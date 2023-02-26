@@ -1,7 +1,8 @@
 import { ReactNode, useState } from 'react';
+
 import { AuthContext } from '@/hooks/useAuth';
-import { User } from '@/types/user';
 import { AuthContextType } from '@/hooks/useAuth';
+import { User } from '@/types/user';
 
 function getCurrentUser() {
   try {

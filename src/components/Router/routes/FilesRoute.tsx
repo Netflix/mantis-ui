@@ -1,10 +1,11 @@
+import { Suspense } from 'react';
+import { Navigate } from 'react-location';
+
+import LoadingFallback from '@/components/LoadingFallback/LoadingFallback';
+import { Queries, queryClient } from '@/lib/react-query';
 import { AppRoutePaths } from '@/router/routes';
 import { fetchArtifacts } from '@/services/ArtifactService';
-import { Suspense } from 'react';
-import LoadingFallback from '@/components/LoadingFallback/LoadingFallback';
-import { Navigate } from 'react-location';
 import { ENVS } from '@/services/BaseService';
-import { Queries, queryClient } from '@/lib/react-query';
 
 export default {
   element: () =>

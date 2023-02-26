@@ -1,8 +1,9 @@
-import { REGION_ENVS } from '@/services/BaseService';
-import { Queries, queryClient } from '@/lib/react-query';
-import { fetchJobsSummary } from '@/services/JobService';
 import { Suspense } from 'react';
+
 import LoadingFallback from '@/components/LoadingFallback/LoadingFallback';
+import { Queries, queryClient } from '@/lib/react-query';
+import { REGION_ENVS } from '@/services/BaseService';
+import { fetchJobsSummary } from '@/services/JobService';
 
 export default {
   element: () =>

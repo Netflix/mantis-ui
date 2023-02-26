@@ -1,7 +1,8 @@
+import { Hooks } from 'ky';
+
+import { createKyInstance } from '@/lib/ky';
 import { ApiClientEntry } from '@/types/api';
 import { flattenEnvObject } from '@/utils/env';
-import { loadLibModule } from '@/utils/module-loader';
-import type { KyInstance } from 'ky/distribution/types/ky.js';
 
 const mantisClients = [] as ApiClientEntry[];
 export let MANTIS_ADMIN_GROUPS: string[] = [];
@@ -10,15 +11,12 @@ export let ENVS = [] as string[];
 export const IS_PROD_STACK = window.location.origin.includes('prod.netflix');
 export const IS_DEV_STACK = !IS_PROD_STACK;
 
-export async function setupApiClients(
+export function setupApiClients(
   appUrls: { [key: string]: { [key: string]: string } },
   envsMap: { [key: string]: string[] },
   adminGroups: string[],
+  kyHooks: Hooks,
 ) {
-  const KyInstance = await loadLibModule<KyInstance>('ky', 'Ky').then(
-    ({ default: KyInstance }) => KyInstance,
-  );
-
   Object.entries(envsMap).forEach(([env, regions]) => {
     if (Array.isArray(regions)) {
       regions.forEach((region: string) => {
@@ -26,9 +24,7 @@ export async function setupApiClients(
           env,
           region,
           url: appUrls[env][region],
-          client: KyInstance.extend({
-            prefixUrl: appUrls[env][region],
-          }),
+          client: createKyInstance(appUrls[env][region], kyHooks),
         });
       });
     }
@@ -38,16 +34,6 @@ export async function setupApiClients(
   ENVS = Object.keys(envsMap);
   MANTIS_ADMIN_GROUPS = adminGroups;
 }
-
-// export function setClientAccessToken(accessToken: string): void {
-//   mantisClients.forEach((entry) => {
-//     entry.client = entry.client.extend({
-//       headers: {
-//         Authorization: `Bearer ${accessToken}`,
-//       },
-//     });
-//   });
-// }
 
 export function getApiClientEntryForRegion(env: string, region: string) {
   const apiClients = mantisClients;

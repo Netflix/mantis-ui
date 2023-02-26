@@ -1,4 +1,5 @@
-import { Tag } from 'antd';
+import { Badge } from '@mantine/core';
+
 import { LabelTag } from '@/utils/job';
 
 function TagRenderer({
@@ -9,16 +10,21 @@ function TagRenderer({
   getTagColor: (type: string) => string;
 }) {
   return (
-    <>
+    <span className="flex flex-wrap gap-1 my-2">
       {Array.isArray(labels) &&
         labels.map((label) => {
           return (
-            <Tag key={label.labelName} color={getTagColor(label.labelType)}>
+            <Badge
+              key={label.labelName}
+              color={getTagColor(label.labelType)}
+              variant="filled"
+              radius={3}
+            >
               {label.name.toUpperCase()}
-            </Tag>
+            </Badge>
           );
         })}
-    </>
+    </span>
   );
 }
 

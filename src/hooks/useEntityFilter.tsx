@@ -1,16 +1,18 @@
-import { LocationGenerics } from '@/components/Router/Router';
-import { useCallback } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import { useNavigate, useSearch } from 'react-location';
+
+import { LocationGenerics } from '@/components/Router/Router';
 
 export function useEntityFilter(
   allParamString: string,
   filterParamString: string,
-): { filter?: string; onToggleHandler: (checked: boolean) => void } {
+): { filter?: string; onToggleHandler: (e: ChangeEvent<HTMLInputElement>) => void } {
   const navigate = useNavigate<LocationGenerics>();
   const { filter } = useSearch<LocationGenerics>();
 
   const onToggleHandler = useCallback(
-    (checked: boolean) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const checked = e.target.checked;
       if (checked) {
         navigate({
           search: (old) => ({

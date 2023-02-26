@@ -1,5 +1,5 @@
+import { getApiClientEntries } from '@/services/BaseService';
 import { Cluster, ClusterListItem } from '@/types/cluster';
-import { getApiClientEntries } from './BaseService';
 
 export async function fetchJobClusters(
   regionEnvs: {

@@ -1,8 +1,9 @@
+import { useMemo } from 'react';
+
 import DataGrid from '@/components/DataGrid/DataGrid';
 import DateTimeRenderer from '@/components/DataGrid/renderers/DateTimeRenderer/DateTimeRenderer';
-import formatFileSize from '@/utils/file';
 import { useArtifacts } from '@/hooks/useArtifacts';
-import { useMemo } from 'react';
+import formatFileSize from '@/utils/file';
 
 function FilesList() {
   const columnDefs = useMemo(
@@ -26,7 +27,7 @@ function FilesList() {
     ],
     [],
   );
-  const frameworkComponents = useMemo(
+  const components = useMemo(
     () => ({
       DateTimeRenderer,
     }),
@@ -35,12 +36,12 @@ function FilesList() {
   const { data = [] } = useArtifacts();
 
   return (
-    <div className="m-4 flex flex-col h-full">
+    <div className="flex flex-col h-full">
       <DataGrid
         columnDefs={columnDefs}
         rowData={data}
         recordTypes="Artifacts"
-        frameworkComponents={frameworkComponents}
+        components={components}
       />
     </div>
   );

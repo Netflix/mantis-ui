@@ -1,7 +1,8 @@
 import { Suspense } from 'react';
+
 import LoadingFallback from '@/components/LoadingFallback/LoadingFallback';
-import { REGION_ENVS } from '@/services/BaseService';
 import { Queries, queryClient } from '@/lib/react-query';
+import { REGION_ENVS } from '@/services/BaseService';
 import { fetchJobs } from '@/services/JobService';
 
 export default {

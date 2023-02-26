@@ -1,3 +1,4 @@
+import { Anchor } from '@mantine/core';
 import { Link } from 'react-location';
 
 function LinkRenderer({
@@ -9,7 +10,11 @@ function LinkRenderer({
   data: unknown;
   getTo: (data: unknown) => string | number | null;
 }) {
-  return <Link to={getTo(data)}>{value}</Link>;
+  return (
+    <Anchor component={Link} to={getTo(data)}>
+      {value}
+    </Anchor>
+  );
 }
 
 export default LinkRenderer;

@@ -1,14 +1,14 @@
-import { AppRoutePaths } from '@/router/routes';
 import { Navigate, ReactLocation, Route, Router } from 'react-location';
-import { LocationGenerics } from '@/components/Router/Router';
 
+import Layout from '@/components/Layout/Layout';
+import LoadingFallback from '@/components/LoadingFallback/LoadingFallback';
+import { LocationGenerics } from '@/components/Router/Router';
 // Route Components
 import ClustersRoute from '@/components/Router/routes/ClustersRoute';
 import FilesRoute from '@/components/Router/routes/FilesRoute';
-import Layout from '@/components/Layout/Layout';
-import LoadingFallback from '@/components/LoadingFallback/LoadingFallback';
 import JobsRoute from '@/components/Router/routes/JobsRoute';
 import SummaryRoute from '@/components/Router/routes/SummaryRoute';
+import { AppRoutePaths } from '@/router/routes';
 
 function AppRouter() {
   const location = new ReactLocation<LocationGenerics>();

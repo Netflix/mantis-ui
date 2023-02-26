@@ -1,4 +1,4 @@
-import { Tag } from 'antd';
+import { Badge } from '@mantine/core';
 
 function TagRenderer({
   value,
@@ -7,7 +7,11 @@ function TagRenderer({
   value: string;
   getTagColor: (value: string) => string;
 }) {
-  return <Tag color={getTagColor(value)}>{value.toUpperCase()}</Tag>;
+  return (
+    <Badge color={getTagColor(value)} variant="filled" radius={3}>
+      {value.toUpperCase()}
+    </Badge>
+  );
 }
 
 export default TagRenderer;

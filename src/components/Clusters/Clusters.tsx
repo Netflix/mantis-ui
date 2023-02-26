@@ -1,17 +1,18 @@
+import { Button, Switch } from '@mantine/core';
+import { useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-location';
+
 import DataGrid from '@/components/DataGrid/DataGrid';
 import JobLabelRenderer from '@/components/DataGrid/renderers/JobLabelRenderer/JobLabelRenderer';
-import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRenderer';
 import JobVersionRenderer from '@/components/DataGrid/renderers/JobVersionRenderer/JobVersionRenderer';
-import { getJobTagDefinitions } from '@/utils/job';
-import { useClusters } from '@/hooks/useClusters';
-import { ClusterListItem } from '@/types/cluster';
-import { Button, Switch } from 'antd';
-import { useEntityFilter } from '@/hooks/useEntityFilter';
+import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRenderer';
 import { useAuth } from '@/hooks/useAuth';
-import { useNavigate } from 'react-location';
+import { useClusters } from '@/hooks/useClusters';
+import { useEntityFilter } from '@/hooks/useEntityFilter';
 import { AppRoutePaths } from '@/router/routes';
-import { useMemo } from 'react';
+import { ClusterListItem } from '@/types/cluster';
+import { getJobTagDefinitions } from '@/utils/job';
 
 function Clusters() {
   const columnDefs = useMemo(
@@ -30,6 +31,22 @@ function Clusters() {
         valueGetter: ({ data }: { data: ClusterListItem }) => {
           return getJobTagDefinitions(data.labels);
         },
+        headerName: 'Tags',
+        cellRenderer: 'JobLabelRenderer',
+        cellRendererParams: {
+          getTagColor(type: string) {
+            switch (type) {
+              case 'danger':
+                return 'red';
+              case 'warning':
+                return 'yellow';
+              default:
+                return 'blue';
+            }
+          },
+        },
+      },
+      {
         headerName: 'Tags',
         cellRenderer: 'JobLabelRenderer',
         cellRendererParams: {
@@ -55,7 +72,7 @@ function Clusters() {
     ],
     [],
   );
-  const frameworkComponents = useMemo(
+  const components = useMemo(
     () => ({
       JobLabelRenderer,
       LinkRenderer,
@@ -82,19 +99,14 @@ function Clusters() {
       <Helmet>
         <title>Mantis - Clusters</title>
       </Helmet>
-      <div className="m-4 flex flex-col h-full">
+      <div className="flex flex-col h-full">
         <div className="flex flex-row items-center">
           <Switch
-            checkedChildren="All Clusters"
-            unCheckedChildren="My Clusters"
+            label={shouldShowAllClusters ? 'All Clusters' : 'My Clusters'}
             onChange={onToggleHandler}
             checked={shouldShowAllClusters}
           />
-          <Button
-            type="primary"
-            className="my-2 ml-auto"
-            onClick={() => navigate({ to: AppRoutePaths.CREATE })}
-          >
+          <Button className="my-2 ml-auto" onClick={() => navigate({ to: AppRoutePaths.CREATE })}>
             Create New Job Cluster
           </Button>
         </div>
@@ -102,7 +114,7 @@ function Clusters() {
           columnDefs={columnDefs}
           rowData={clusters}
           recordTypes="Job Clusters"
-          frameworkComponents={frameworkComponents}
+          components={components}
         />
       </div>
     </>

@@ -1,5 +1,5 @@
 import { getApiClientEntries, getApiClientEntryForRegion } from '@/services/BaseService';
-import { Job, CompactJob, JobSummary } from '@/types/job';
+import { CompactJob, Job, JobSummary } from '@/types/job';
 
 const reason = 'Mantis UI user action';
 
@@ -8,7 +8,7 @@ export async function fetchJobsListForRegion(env: string, region: string, compac
   const queryParams = new URLSearchParams();
   queryParams.set('compact', compact.toString());
   const data = await client.get(`api/v1/jobs/?${queryParams.toString()}`);
-  return data.json() as Promise<{ list: Job[] | CompactJob[] }>;
+  return data.json<{ list: Job[] | CompactJob[] }>();
 }
 
 export async function fetchJobs(
@@ -49,7 +49,7 @@ export async function fetchJobsSummary(
 ) {
   const data = (await fetchJobs(regionEnvs, false)) as Job[];
   const uniqueJobs = [...new Set(data.map((item) => item.jobMetadata.name))];
-  const jobSummaries = <JobSummary[]>[];
+  const jobSummaries: JobSummary[] = [];
 
   uniqueJobs.forEach((jobId: string) => {
     let jobCount = 0;

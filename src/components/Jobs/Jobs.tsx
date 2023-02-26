@@ -1,21 +1,22 @@
-import { killJobs } from '@/services/JobService';
-import { Button, Switch } from 'antd';
-import { Helmet } from 'react-helmet-async';
-import DataGrid from '@/components/DataGrid/DataGrid';
-import { pluralize } from '@/utils/string';
-import DateTimeRenderer from '@/components/DataGrid/renderers/DateTimeRenderer/DateTimeRenderer';
-import TagRenderer from '@/components/DataGrid/renderers/TagRenderer/TagRenderer';
-import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRenderer';
-import JobLabelRenderer from '@/components/DataGrid/renderers/JobLabelRenderer/JobLabelRenderer';
-import { AppRoutePaths } from '@/router/routes';
-import { getJobClusterId, getJobTagDefinitions } from '@/utils/job';
-import { ClusterOutlined } from '@ant-design/icons';
-import { useCallback, useMemo, useState } from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import { useJobs } from '@/hooks/useJobs';
-import { CompactJob } from '@/types/job';
 import { GridApi } from '@ag-grid-community/core';
+import { Button, Switch } from '@mantine/core';
+import { useCallback, useMemo, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { FaServer } from 'react-icons/fa';
+
+import DataGrid from '@/components/DataGrid/DataGrid';
+import DateTimeRenderer from '@/components/DataGrid/renderers/DateTimeRenderer/DateTimeRenderer';
+import JobLabelRenderer from '@/components/DataGrid/renderers/JobLabelRenderer/JobLabelRenderer';
+import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRenderer';
+import TagRenderer from '@/components/DataGrid/renderers/TagRenderer/TagRenderer';
+import { useAuth } from '@/hooks/useAuth';
 import { useEntityFilter } from '@/hooks/useEntityFilter';
+import { useJobs } from '@/hooks/useJobs';
+import { AppRoutePaths } from '@/router/routes';
+import { killJobs } from '@/services/JobService';
+import { CompactJob } from '@/types/job';
+import { getJobClusterId, getJobTagDefinitions } from '@/utils/job';
+import { pluralize } from '@/utils/string';
 
 function Jobs() {
   const columnDefs = useMemo(
@@ -34,7 +35,7 @@ function Jobs() {
       },
       {
         headerName: 'Cluster',
-        valueGetter: () => <ClusterOutlined />,
+        valueGetter: () => <FaServer className="my-3" />,
         width: 90,
         flex: 0,
         filter: false,
@@ -52,9 +53,9 @@ function Jobs() {
           getTagColor(value: string) {
             switch (value) {
               case 'prod':
-                return getComputedStyle(document.documentElement).getPropertyValue('--prod-color');
+                return 'red';
               case 'test':
-                return getComputedStyle(document.documentElement).getPropertyValue('--test-color');
+                return 'gray';
               default:
                 return 'default';
             }
@@ -72,11 +73,14 @@ function Jobs() {
           getTagColor(type: string) {
             switch (type) {
               case 'danger':
-                return 'error';
+                return 'red';
+              case 'warning':
+                return 'yellow';
               default:
-                return type;
+                return 'blue';
             }
           },
+          filter: false,
         },
         filter: false,
       },
@@ -102,11 +106,11 @@ function Jobs() {
           getTagColor(value: string) {
             switch (value) {
               case 'Launched':
-                return 'success';
+                return 'lime';
               case 'Accepted':
-                return 'processing';
+                return 'gray';
               default:
-                return 'default';
+                return 'blue';
             }
           },
         },
@@ -114,7 +118,7 @@ function Jobs() {
     ],
     [],
   );
-  const frameworkComponents = useMemo(
+  const components = useMemo(
     () => ({
       DateTimeRenderer,
       TagRenderer,
@@ -149,17 +153,15 @@ function Jobs() {
       <Helmet>
         <title>Mantis - Jobs</title>
       </Helmet>
-      <div className="m-4 flex flex-col h-full">
+      <div className="flex flex-col h-full">
         <div className="flex flex-row items-center">
           <Switch
-            checkedChildren="All Jobs"
-            unCheckedChildren="My Jobs"
+            label={shouldShowAllJobs ? 'All Jobs' : 'My Jobs'}
             onChange={onToggleHandler}
             checked={shouldShowAllJobs}
           />
           <Button
-            type="primary"
-            danger
+            color="red"
             className="my-2 ml-auto"
             disabled={!selections.length}
             onClick={() => killJobs(selections, user?.email as string)}
@@ -173,7 +175,7 @@ function Jobs() {
           recordTypes="Jobs"
           rowSelection={'multiple'}
           rowMultiSelectWithClick={true}
-          frameworkComponents={frameworkComponents}
+          components={components}
           onSelectionChanged={onSelectionChanged}
         />
       </div>

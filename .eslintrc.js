@@ -32,5 +32,12 @@ module.exports = {
     'react/no-danger': 'error',
     'react/self-closing-comp': 'error',
     'react/function-component-definition': ['error', { namedComponents: 'function-declaration' }],
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: false,
+      },
+    ],
   },
 };

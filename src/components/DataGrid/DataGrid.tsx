@@ -1,25 +1,15 @@
-import style from './DataGrid.module.css';
-import { AgGridReact, AgGridReactProps } from '@ag-grid-community/react';
 import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
 import { GridApi } from '@ag-grid-community/core';
+import { AgGridReact, AgGridReactProps } from '@ag-grid-community/react';
+import { LoadingOverlay } from '@mantine/core';
 import { memo, useCallback, useRef, useState } from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
-import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
-import { Empty, Spin } from 'antd';
+
+import style from './DataGrid.module.css';
 
 interface DataGridProps extends AgGridReactProps {
   recordTypes?: string;
   showFooter?: boolean;
   loading?: boolean;
-}
-
-const icons = Object.freeze({
-  sortAscending: renderToStaticMarkup(<CaretUpOutlined />),
-  sortDescending: renderToStaticMarkup(<CaretDownOutlined />),
-});
-
-function NoRowsOverlay() {
-  return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
 }
 
 function DataGrid({
@@ -30,7 +20,7 @@ function DataGrid({
   showFooter = true,
   loading = false,
   modules = [ClientSideRowModelModule],
-  frameworkComponents = {},
+  components = {},
   rowSelection = undefined,
   rowMultiSelectWithClick = false,
   onSelectionChanged,
@@ -83,37 +73,26 @@ function DataGrid({
   }, [gridApi]);
 
   return (
-    <Spin
-      tip={`Loading ${recordTypes}...`}
-      spinning={loading}
-      wrapperClassName="flex flex-col h-full"
-    >
+    <>
+      <LoadingOverlay visible={loading} />
       <AgGridReact
         className="ag-theme-alpine"
         columnDefs={columnDefs}
         rowData={rowData}
         headerHeight={headerHeight}
         defaultColDef={defaultColDef}
-        icons={icons}
         modules={modules}
         animateRows={true}
-        reactUi={true}
         rowSelection={rowSelection}
         rowMultiSelectWithClick={rowMultiSelectWithClick}
-        suppressCellSelection={true}
         enableCellTextSelection={true}
         onFilterChanged={onFilterChanged}
         onGridReady={onGridReady}
         onSelectionChanged={onSelectionChanged}
-        frameworkComponents={
-          { noRowsOverlay: NoRowsOverlay, ...frameworkComponents } as {
-            [p: string]: { new (): unknown };
-          }
-        }
-        noRowsOverlayComponent={'noRowsOverlay'}
+        components={components}
       />
       {footer}
-    </Spin>
+    </>
   );
 }
 

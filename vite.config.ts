@@ -1,53 +1,13 @@
-import path from 'path';
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-swc';
 import eslintPlugin from 'vite-plugin-eslint';
-import OptimizationPersist from 'vite-plugin-optimize-persist';
-import PkgConfig from 'vite-plugin-package-config';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { visualizer } from 'rollup-plugin-visualizer';
-import vitePluginImp from 'vite-plugin-imp';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    eslintPlugin({ fix: true }),
-    tsconfigPaths(),
-    PkgConfig(),
-    OptimizationPersist(),
-    vitePluginImp({
-      libList: [
-        {
-          libName: 'antd',
-          style: (name) => `antd/es/${name}/style`,
-        },
-      ],
-    }),
-    visualizer(),
-  ],
+  plugins: [react(), eslintPlugin({ fix: true }), tsconfigPaths()],
   resolve: {
-    alias: [
-      { find: /^~/, replacement: '' },
-      {
-        find: /^@ag-grid-community\/react/,
-        replacement: path.resolve(
-          __dirname,
-          './node_modules/@ag-grid-community/react/bundles/ag-grid-react.min.js',
-        ),
-      },
-    ],
-  },
-  css: {
-    preprocessorOptions: {
-      less: {
-        javascriptEnabled: true,
-        modifyVars: {
-          'card-head-background': '#f5f7fa',
-          'breadcrumb-link-color': '#1890ff',
-        },
-      },
-    },
+    alias: [{ find: /^~/, replacement: '' }],
   },
   build: {
     rollupOptions: {
@@ -58,5 +18,31 @@ export default defineConfig({
         },
       },
     },
+  },
+  optimizeDeps: {
+    include: [
+      '@ag-grid-community/client-side-row-model',
+      '@ag-grid-community/core',
+      '@ag-grid-community/react',
+      '@ag-grid-community/styles',
+      '@mantine/core',
+      '@mantine/dropzone',
+      '@mantine/notifications',
+      '@sentry/react',
+      '@sentry/tracing',
+      'date-fns',
+      'ky',
+      'react',
+      'react-dom',
+      'react-dom/client',
+      'react-dom/server',
+      'react-error-boundary',
+      'react-helmet-async',
+      'react-icons/ai',
+      'react-icons/fa',
+      'react-location',
+      'react-query',
+      'web-vitals',
+    ],
   },
 });

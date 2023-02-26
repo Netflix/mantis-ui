@@ -1,14 +1,13 @@
-import DataGrid from '@/components/DataGrid/DataGrid';
-import formatFileSize from '@/utils/file';
-import { Checkbox, Statistic } from 'antd';
-import { REGION_ENVS } from '@/services/BaseService';
+import { Checkbox, Text, Title } from '@mantine/core';
+import { ChangeEvent, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+
+import DataGrid from '@/components/DataGrid/DataGrid';
 import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRenderer';
-import { AppRoutePaths } from '@/router/routes';
-import { useMemo, useState } from 'react';
 import { useJobSummary } from '@/hooks/useJobSummary';
-import { CheckboxValueType } from 'antd/lib/checkbox/Group';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox/Checkbox';
+import { AppRoutePaths } from '@/router/routes';
+import { REGION_ENVS } from '@/services/BaseService';
+import formatFileSize from '@/utils/file';
 
 function Summary() {
   const columnDefs = useMemo(
@@ -25,7 +24,7 @@ function Summary() {
         flex: 2,
       },
       { field: 'jobCount', filter: false },
-      { field: 'totalCpus', headerName: 'CPUs', sort: 'desc', filter: false },
+      // { field: 'totalCpus', headerName: 'CPUs', sort: 'desc', filter: false },
       {
         field: 'totalMemory',
         valueFormatter: ({ value }: { value: number }) => {
@@ -38,7 +37,8 @@ function Summary() {
     ],
     [],
   );
-  const frameworkComponents = useMemo(
+
+  const components = useMemo(
     () => ({
       LinkRenderer,
     }),
@@ -52,12 +52,18 @@ function Summary() {
   const [checkedList, setCheckedList] = useState(options.map((option) => option.value));
   const [indeterminate, setIndeterminate] = useState(false);
   const [checkAll, setCheckAll] = useState(true);
-  const onChange = (list: CheckboxValueType[]) => {
-    setCheckedList(list as string[]);
-    setIndeterminate(!!list.length && list.length < options.length);
-    setCheckAll(list.length === options.length);
+  const onChange = (e: ChangeEvent<HTMLInputElement>, value: string) => {
+    const checked = e.target.checked;
+
+    if (checked) {
+      setCheckedList([...new Set([...checkedList, value])]);
+    } else {
+      setCheckedList(checkedList.filter((item) => item !== value));
+    }
+    setIndeterminate(!!checkedList.length && checkedList.length < options.length);
+    setCheckAll(checkedList.length === options.length);
   };
-  const onCheckAllChange = (e: CheckboxChangeEvent) => {
+  const onCheckAllChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCheckedList(e.target.checked ? options.map((option) => option.value) : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
@@ -65,14 +71,22 @@ function Summary() {
   const checkBoxGroup = (
     <div className="flex justify-center gap-4">
       <Checkbox
-        className="mr-2"
         indeterminate={indeterminate}
         checked={checkAll}
         onChange={onCheckAllChange}
-      >
-        Select all
-      </Checkbox>
-      <Checkbox.Group options={options} value={checkedList} onChange={onChange} />
+        label="Select all"
+      />
+      {options.map((option) => {
+        return (
+          <Checkbox
+            key={option.value}
+            value={option.value}
+            checked={checkedList.includes(option.value)}
+            label={option.label}
+            onChange={(e) => onChange(e, option.value)}
+          />
+        );
+      })}
     </div>
   );
 
@@ -84,26 +98,63 @@ function Summary() {
     () => formatFileSize(data.reduce((acc, item) => acc + item.totalMemory, 0)),
     [data],
   );
+  const titleSize = 2;
+  const statisticWeight = 400;
 
   return (
     <>
       <Helmet>
         <title>Mantis - Summary</title>
       </Helmet>
-      <div className="m-4 flex flex-col h-full gap-4">
+      <div className="flex flex-col h-full gap-4">
         <div className="flex gap-2 justify-evenly">
-          <Statistic title="Job Clusters" value={data.length} />
-          <Statistic title="Workers" value={workers} />
-          <Statistic title="Active Jobs" value={activeJobs} />
-          <Statistic title="CPUs" value={cpus} />
-          <Statistic title="RAM" value={memory} />
+          <div className="flex flex-col items-center">
+            <Text color="gray" weight={300}>
+              Job Clusters
+            </Text>
+            <Title order={titleSize} style={{ fontWeight: statisticWeight }}>
+              {data.length}
+            </Title>
+          </div>
+          <div className="flex flex-col items-center">
+            <Text color="gray" weight={300}>
+              Workers
+            </Text>
+            <Title order={titleSize} style={{ fontWeight: statisticWeight }}>
+              {workers}
+            </Title>
+          </div>
+          <div className="flex flex-col items-center">
+            <Text color="gray" weight={300}>
+              Active Jobs
+            </Text>
+            <Title order={titleSize} style={{ fontWeight: statisticWeight }}>
+              {activeJobs}
+            </Title>
+          </div>
+          <div className="flex flex-col items-center">
+            <Text color="gray" weight={300}>
+              CPUs
+            </Text>
+            <Title order={titleSize} style={{ fontWeight: statisticWeight }}>
+              {cpus}
+            </Title>
+          </div>
+          <div className="flex flex-col items-center">
+            <Text color="gray" weight={300}>
+              RAM
+            </Text>
+            <Title order={titleSize} style={{ fontWeight: statisticWeight }}>
+              {memory}
+            </Title>
+          </div>
         </div>
         {checkBoxGroup}
         <DataGrid
           columnDefs={columnDefs}
           rowData={data}
           recordTypes="Jobs Clusters"
-          frameworkComponents={frameworkComponents}
+          components={components}
         />
       </div>
     </>

@@ -1,5 +1,6 @@
-import { Artifact } from '@/types/artifact';
 import ky from 'ky';
+
+import { Artifact } from '@/types/artifact';
 
 export async function fetchArtifacts(envs: string[]) {
   // Fix this API call to not call hard coded UI APIs

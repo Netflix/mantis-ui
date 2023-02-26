@@ -1,23 +1,24 @@
+import { Badge } from '@mantine/core';
+
 import { Version } from '@/types/cluster';
-import { Tag } from 'antd';
 
 function JobVersionRenderer({ value: versions }: { value: Version[] }) {
-  const prodColor = getComputedStyle(document.documentElement).getPropertyValue('--prod-color');
-  const testColor = getComputedStyle(document.documentElement).getPropertyValue('--test-color');
-
-  return (
+  const badges =
     Array.isArray(versions) &&
     versions.map((item) => (
-      <Tag
+      <Badge
         key={`${item.env}:${item.region}:${item.version}`}
-        color={item.disabled ? '#EBEBE4' : item.env === 'prod' ? prodColor : testColor}
+        color={item.env === 'prod' ? 'red' : 'gray'}
+        variant={item.disabled ? 'light' : 'filled'}
+        radius={3}
       >
-        <span className={item.disabled ? 'text-neutral-400' : ''}>
+        <span className={item.disabled ? 'text-neutral-500' : ''}>
           v{item.version} in {item.env} / {item.region} {item.disabled && '(disabled)'}
         </span>
-      </Tag>
-    ))
-  );
+      </Badge>
+    ));
+
+  return <span className="flex flex-wrap gap-1 my-2">{badges}</span>;
 }
 
 export default JobVersionRenderer;

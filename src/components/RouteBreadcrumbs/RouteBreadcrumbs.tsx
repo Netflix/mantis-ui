@@ -1,4 +1,4 @@
-import { Breadcrumb } from 'antd';
+import { Breadcrumbs } from '@mantine/core';
 import { Link, useMatches } from 'react-location';
 
 function RouteBreadcrumbs() {
@@ -11,14 +11,16 @@ function RouteBreadcrumbs() {
           ? (match.route.meta.breadcrumb(match.params) as string)
           : (match.route.meta?.breadcrumb as string);
       const isLast = index === filteredMatches.length - 1;
-      return (
-        <Breadcrumb.Item key={match.pathname}>
-          {isLast ? breadcrumb : <Link to={match.pathname}>{breadcrumb}</Link>}
-        </Breadcrumb.Item>
+      return isLast ? (
+        <span key={match.pathname}>{breadcrumb}</span>
+      ) : (
+        <Link key={match.pathname} to={match.pathname}>
+          {breadcrumb}
+        </Link>
       );
     });
 
-  return <Breadcrumb separator=">">{crumbs}</Breadcrumb>;
+  return <Breadcrumbs separator=">">{crumbs}</Breadcrumbs>;
 }
 
 export default RouteBreadcrumbs;

@@ -16,4 +16,4 @@ export const API_URLS = {
   },
 };
 
-export const ADMIN_GROUPS = ['rtdi@netflix.com'];
+export const ADMIN_GROUPS = [];

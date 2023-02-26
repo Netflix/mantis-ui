@@ -1,4 +1,4 @@
-import { QueryClient, DefaultOptions } from 'react-query';
+import { DefaultOptions, QueryClient } from 'react-query';
 
 const queryConfig: DefaultOptions = {
   queries: {

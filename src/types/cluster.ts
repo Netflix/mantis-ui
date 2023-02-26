@@ -1,5 +1,5 @@
-import { MigrationConfig, MachineDefinition, Label, Sla } from './machine';
-import { HardConstraints, SoftConstraints } from './constraints';
+import { HardConstraints, SoftConstraints } from '@/types/constraints';
+import { Label, MachineDefinition, MigrationConfig, Sla } from '@/types/machine';
 
 export interface ClusterListItem {
   name: string;

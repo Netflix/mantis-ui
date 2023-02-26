@@ -1,6 +1,7 @@
+import { Navigate, useMatches } from 'react-location';
+
 import { useAuth } from '@/hooks/useAuth';
 import { AppRoutePaths } from '@/router/routes';
-import { Navigate, useMatches } from 'react-location';
 
 function AuthGuard({ children }: { children: JSX.Element }) {
   const { user } = useAuth();
