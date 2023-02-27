@@ -35,6 +35,9 @@ module.exports = {
   variants: {
     extend: {},
   },
+  corePlugins: {
+    preflight: false,
+  },
   plugins: [
     plugin(function ({ addBase, theme }) {
       addBase({
