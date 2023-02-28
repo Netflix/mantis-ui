@@ -666,7 +666,7 @@ export default [
         },
         {
           name: '_mantis.user',
-          value: 'matthewk',
+          value: 'sampleUser',
         },
       ],
     },

@@ -84,14 +84,14 @@ function Clusters() {
   const ALL_CLUSTERS = 'allClusters';
   const MY_CLUSTERS = 'myClusters';
   const { onToggleHandler, filter } = useEntityFilter(ALL_CLUSTERS, MY_CLUSTERS);
-  const shouldShowAllClusters = filter === ALL_CLUSTERS;
+  const shouldShowAllClusters = filter !== MY_CLUSTERS;
   const { user } = useAuth();
   const { data = [] } = useClusters();
 
   const clusters = shouldShowAllClusters
     ? data
     : data.filter((cluster: ClusterListItem) =>
-        cluster.owners.includes(user?.email?.replace(/@netflix.com/g, '') || ''),
+        cluster.owners.includes(user?.email?.replace(/@[A-za-z0-9]+.com/g, '') || ''),
       );
 
   return (

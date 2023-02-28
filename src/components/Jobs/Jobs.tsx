@@ -130,7 +130,7 @@ function Jobs() {
   const ALL_JOBS = 'allJobs';
   const MY_JOBS = 'myJobs';
   const { onToggleHandler, filter } = useEntityFilter(ALL_JOBS, MY_JOBS);
-  const shouldShowAllJobs = filter === ALL_JOBS;
+  const shouldShowAllJobs = filter !== MY_JOBS;
   const { user } = useAuth();
   const { data = [] } = useJobs();
   const [selections, setSelections] = useState<CompactJob[]>([]);
@@ -145,7 +145,7 @@ function Jobs() {
   const jobs = shouldShowAllJobs
     ? data
     : (data as CompactJob[]).filter(
-        (job: CompactJob) => job.user === user?.email?.replace(/@netflix.com/g, ''),
+        (job: CompactJob) => job.user === user?.email?.replace(/@[A-za-z0-9]+.com/g, ''),
       );
 
   return (

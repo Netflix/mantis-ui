@@ -1,26 +1,34 @@
 import { Model, createServer } from 'miragejs';
 import { API_URLS } from '@/config/development';
 
-import artifacts from './fixtures/artifacts';
-import jobs from './fixtures/jobs';
+import artifacts from '@/mirage/fixtures/artifacts';
+import clusters from '@/mirage/fixtures/clusters';
+import jobs from '@/mirage/fixtures/jobs';
 import { CompactJob, Job } from '@/types/job';
 import { Artifact } from '@/types/artifact';
+import { Cluster } from '@/types/cluster';
 
 export function makeServer(baseUrl: string) {
   return createServer({
     models: {
-      job: Model.extend<Partial<Job>>({}),
       artifact: Model.extend<Partial<Artifact>>({}),
+      clusters: Model.extend<Partial<Cluster>>({}),
+      job: Model.extend<Partial<Job>>({}),
     },
 
     fixtures: {
       artifacts,
+      clusters,
       jobs,
     },
 
     routes() {
       this.namespace = '/api';
       this.urlPrefix = baseUrl;
+
+      this.get('/v1/jobClusters', (schema) => {
+        return { list: schema.db.clusters };
+      });
 
       this.get('/v1/jobs', (schema, request) => {
         const { compact } = request.queryParams;
