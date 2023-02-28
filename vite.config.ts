@@ -47,7 +47,6 @@ export default defineConfig({
       'react-icons/tb',
       'react-location',
       'react-query',
-      'web-vitals',
     ],
   },
 });

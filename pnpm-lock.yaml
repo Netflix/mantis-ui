@@ -54,7 +54,6 @@ specifiers:
   vite-plugin-eslint: ^1.8.1
   vite-tsconfig-paths: ^4.0.5
   vitest: ^0.29.1
-  web-vitals: ^3.1.1
 
 dependencies:
   '@ag-grid-community/client-side-row-model': 29.0.0
@@ -78,7 +77,6 @@ dependencies:
   react-icons: 4.7.1_react@18.2.0
   react-location: 3.3.4_biqbaboplfbrettd7655fr4n2y
   react-query: 3.39.3_biqbaboplfbrettd7655fr4n2y
-  web-vitals: 3.1.1
 
 devDependencies:
   '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
@@ -5932,10 +5930,6 @@ packages:
     dependencies:
       xml-name-validator: 4.0.0
     dev: true
-
-  /web-vitals/3.1.1:
-    resolution: {integrity: sha512-qvllU+ZeQChqzBhZ1oyXmWsjJ8a2jHYpH8AMaVuf29yscOPZfTQTjQFRX6+eADTdsDE8IanOZ0cetweHMs8/2A==}
-    dev: false
 
   /webidl-conversions/7.0.0:
     resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}

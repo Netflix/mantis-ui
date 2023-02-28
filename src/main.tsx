@@ -4,7 +4,6 @@ import { setupMirage } from '@/mirage/index';
 
 import App from '@/components/App/App';
 import '@/index.css';
-import reportWebVitals from '@/reportWebVitals';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
@@ -21,6 +20,3 @@ root.render(
     </Suspense>
   </StrictMode>,
 );
-
-// Function is a no-op unless an arg is provided such as console.info
-reportWebVitals();
