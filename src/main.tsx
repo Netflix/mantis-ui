@@ -1,5 +1,6 @@
 import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
+import { setupMirage } from '@/mirage/index';
 
 import App from '@/components/App/App';
 import '@/index.css';
@@ -7,6 +8,9 @@ import reportWebVitals from '@/reportWebVitals';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
+
+// Setup MirageJS to mock APIs
+setupMirage();
 
 root.render(
   <StrictMode>

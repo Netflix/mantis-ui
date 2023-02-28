@@ -6,3 +6,8 @@ export interface ApiClientEntry {
   url: string;
   client: KyInstance;
 }
+
+export interface EnvRegion {
+  env: string;
+  region: string;
+}

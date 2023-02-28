@@ -7,9 +7,9 @@ import { setupApiClients } from '@/services/BaseService';
 function InitProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const mode = import.meta.env.MODE;
-    const { API_URLS, ENVS_MAP, ADMIN_GROUPS } = import.meta.globEager('/src/config/*.ts')[
-      `/src/config/${mode}.ts`
-    ] as {
+    const { API_URLS, ENVS_MAP, ADMIN_GROUPS } = import.meta.glob('/src/config/*.ts', {
+      eager: true,
+    })[`/src/config/${mode}.ts`] as {
       API_URLS: { [key: string]: { [key: string]: string } };
       ENVS_MAP: { [key: string]: string[] };
       ADMIN_GROUPS: string[];

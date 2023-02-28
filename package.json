@@ -76,6 +76,7 @@
     "husky": "^8.0.3",
     "jsdom": "^21.1.0",
     "lint-staged": "^13.1.1",
+    "miragejs": "^0.1.47",
     "postcss": "^8.4.21",
     "postcss-nesting": "^11.1.0",
     "prettier": "^2.8.3",

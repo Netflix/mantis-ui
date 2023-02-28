@@ -3,7 +3,7 @@ import { logErrorMessage } from '@/utils/logger';
 const DEFAULT = 'Base';
 
 const mode = import.meta.env.MODE;
-const { CUSTOM_MODULE_SUFFIX } = import.meta.globEager('/src/config/*.ts')[
+const { CUSTOM_MODULE_SUFFIX } = import.meta.glob('/src/config/*.ts', { eager: true })[
   `/src/config/${mode}.ts`
 ] as {
   CUSTOM_MODULE_SUFFIX: 'string';

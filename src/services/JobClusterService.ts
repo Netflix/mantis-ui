@@ -1,11 +1,9 @@
 import { getApiClientEntries } from '@/services/BaseService';
+import { EnvRegion } from '@/types/api';
 import { Cluster, ClusterListItem } from '@/types/cluster';
 
 export async function fetchJobClusters(
-  regionEnvs: {
-    env: string;
-    region: string;
-  }[],
+  regionEnvs: EnvRegion[],
   compact = true,
 ): Promise<ClusterListItem[]> {
   const clientEntries = getApiClientEntries().filter(({ env, region }) =>
