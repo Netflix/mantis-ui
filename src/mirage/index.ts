@@ -1,16 +1,20 @@
 import { Model, createServer } from 'miragejs';
 import { API_URLS } from '@/config/development';
 
+import artifacts from './fixtures/artifacts';
 import jobs from './fixtures/jobs';
 import { CompactJob, Job } from '@/types/job';
+import { Artifact } from '@/types/artifact';
 
 export function makeServer(baseUrl: string) {
   return createServer({
     models: {
       job: Model.extend<Partial<Job>>({}),
+      artifact: Model.extend<Partial<Artifact>>({}),
     },
 
     fixtures: {
+      artifacts,
       jobs,
     },
 
@@ -52,6 +56,10 @@ export function makeServer(baseUrl: string) {
           };
         }
         return { list: schema.db.jobs };
+      });
+
+      this.get('https://mantis.us-east-1.test.netflix.net/library/list', (schema) => {
+        return schema.db.artifacts;
       });
     },
 
