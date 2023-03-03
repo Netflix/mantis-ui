@@ -7,19 +7,19 @@ If you would like to contribute code you can do so through GitHub by forking the
 1. Lint your code
 
 ```sh
-$ yarn lint
+yarn lint
 ```
 
 2. Test your code
 
 ```sh
-$ yarn test:unit
+yarn test:unit
 ```
 
 3. Build your code and validate there are no errors
 
 ```sh
-$ yarn build
+yarn build
 ```
 
 ## License
