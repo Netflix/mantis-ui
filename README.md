@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=250px height=200px src="src/assets/mantis-logo-full-transparent.png" alt="Project logo"></a>
+ <img width=250px height=200px src="src/assets/images/mantis-logo-full-transparent.png" alt="Mantis logo"></a>
 </p>
 
 <div align="center">
@@ -58,3 +58,5 @@ pnpm build
 ```
 
 Deploy these static assets by copying over the static files build in dist folder to your favorite web server.
+---
+## [How to contribute](./CONTRIBUTING.md)
