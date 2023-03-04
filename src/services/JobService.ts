@@ -81,7 +81,7 @@ export async function fetchJobsSummary(regionEnvs: EnvRegion[]) {
 export async function killJobs(jobs: CompactJob[], userEmail: string) {
   const requests = jobs.map(({ env, region, jobId }) => {
     const { client } = getApiClientEntryForRegion(env, region);
-    return client.delete(`/api/v1/jobs/${jobId}?user=${userEmail}&reason=${reason}`);
+    return client.delete(`api/v1/jobs/${jobId}?user=${userEmail}&reason=${reason}`);
   });
 
   const responses = await Promise.allSettled(requests);

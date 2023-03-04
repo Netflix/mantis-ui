@@ -69,6 +69,18 @@ export function makeServer(baseUrl: string) {
       this.get('https://mantis.us-east-1.test.netflix.net/library/list', (schema) => {
         return schema.db.artifacts;
       });
+
+      this.delete('/v1/jobs/:jobId', (schema, request) => {
+        const { jobId } = request.params; // jobId to be deleted
+
+        schema.db.jobs.map((job: Job) => {
+          if (job.jobMetadata.jobId === jobId) {
+            schema.db.jobs.remove(job); // Remove the job from the mock db
+          }
+        });
+
+        return { list: schema.db.jobs };
+      });
     },
 
     seeds(server) {
