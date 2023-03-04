@@ -81,6 +81,13 @@ export function makeServer(baseUrl: string) {
 
         return { list: schema.db.jobs };
       });
+
+      this.post('/v1/artifacts', (schema, request) => {
+        const data: unknown = JSON.parse(request.requestBody);
+        schema.db.artifacts.insert(data); // Insert the new artifact into the mock db
+
+        return { list: schema.db.artifacts };
+      });
     },
 
     seeds(server) {

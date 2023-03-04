@@ -1,3 +1,4 @@
+import { uploadArtifacts } from '@/services/ArtifactService';
 import { Text, useMantineTheme } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { showNotification } from '@mantine/notifications';
@@ -17,6 +18,21 @@ function FileUpload() {
   const theme = useMantineTheme();
   const onDrop = (files: File[]) => {
     const fileNames = files.map((file) => file.name);
+
+    files.forEach((file) => {
+      // Create a new artifact object
+      const newArtifact = {
+        lastModified: file.lastModified,
+        key: file.name,
+        file: file.toString(),
+        size: file.size.toString(),
+      };
+      // Upload the new artifact
+      uploadArtifacts(newArtifact).catch((err) => {
+        console.log(err, 'err');
+      });
+    });
+
     showNotification({
       title: 'Upload Successful',
       message: `${fileNames.toString()} uploaded successfully.`,
