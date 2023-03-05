@@ -73,7 +73,7 @@ export function makeServer(baseUrl: string) {
       this.delete('/v1/jobs/:jobId', (schema, request) => {
         const { jobId } = request.params; // jobId to be deleted
 
-        schema.db.jobs.map((job: Job) => {
+        schema.db.jobs.forEach((job: Job) => {
           if (job.jobMetadata.jobId === jobId) {
             schema.db.jobs.remove(job); // Remove the job from the mock db
           }
