@@ -109,6 +109,8 @@ function Jobs() {
                 return 'lime';
               case 'Accepted':
                 return 'gray';
+              case 'Killed':
+                return 'red';
               default:
                 return 'blue';
             }
@@ -132,7 +134,7 @@ function Jobs() {
   const { onToggleHandler, filter } = useEntityFilter(ALL_JOBS, MY_JOBS);
   const shouldShowAllJobs = filter !== MY_JOBS;
   const { user } = useAuth();
-  const { data = [] } = useJobs();
+  const { data = [], refetch } = useJobs();
   const [selections, setSelections] = useState<CompactJob[]>([]);
   const onSelectionChanged = useCallback(
     ({ api }: { api: GridApi }) => {
@@ -164,7 +166,7 @@ function Jobs() {
             color="red"
             className="my-2 ml-auto"
             disabled={!selections.length}
-            onClick={() => killJobs(selections, user?.email as string)}
+            onClick={() => killJobs(selections, user?.email as string, refetch)}
           >
             Kill {selections.length} {pluralize(selections.length, 'Job')}
           </Button>
