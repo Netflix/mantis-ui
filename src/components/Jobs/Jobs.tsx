@@ -164,7 +164,7 @@ function Jobs() {
             color="red"
             className="my-2 ml-auto"
             disabled={!selections.length}
-            onClick={() => killJobs(selections, user?.email as string, refetch)}
+            onClick={() => killJobs(selections, user?.email as string, refetch, setSelections)}
           >
             Kill {selections.length} {pluralize(selections.length, 'Job')}
           </Button>

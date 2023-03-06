@@ -78,7 +78,12 @@ export async function fetchJobsSummary(regionEnvs: EnvRegion[]) {
   return jobSummaries;
 }
 
-export async function killJobs(jobs: CompactJob[], userEmail: string, refetch: () => void) {
+export async function killJobs(
+  jobs: CompactJob[],
+  userEmail: string,
+  refetch: () => void,
+  setSelections: (value: React.SetStateAction<CompactJob[]>) => void,
+) {
   const requests = jobs.map(({ env, region, jobId }) => {
     const { client } = getApiClientEntryForRegion(env, region);
     return client.delete(`api/v1/jobs/${jobId}?user=${userEmail}&reason=${reason}`);
@@ -92,6 +97,7 @@ export async function killJobs(jobs: CompactJob[], userEmail: string, refetch: (
     const message = error.reason as string;
     throw new Error(`Failed to kill job due to ${message}`);
   } else {
-    refetch();
+    refetch(); // refetch jobs list
+    setSelections([]); // clear selections after killing jobs to avoid stale data
   }
 }
