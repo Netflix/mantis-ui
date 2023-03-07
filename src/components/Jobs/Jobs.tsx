@@ -109,6 +109,8 @@ function Jobs() {
                 return 'lime';
               case 'Accepted':
                 return 'gray';
+              case 'Deleted':
+                return 'red';
               default:
                 return 'blue';
             }

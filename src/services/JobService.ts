@@ -97,7 +97,7 @@ export async function killJobs(
     const message = error.reason as string;
     throw new Error(`Failed to kill job due to ${message}`);
   } else {
-    refetch(); // refetch jobs list
-    setSelections([]); // clear selections after killing jobs to avoid stale data
+    refetch();
+    setSelections([]);
   }
 }

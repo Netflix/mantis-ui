@@ -20,14 +20,13 @@ function FileUpload() {
     const fileNames = files.map((file) => file.name);
 
     files.forEach((file) => {
-      // Create a new artifact object
       const newArtifact = {
         lastModified: file.lastModified,
         key: file.name,
         file: file.toString(),
         size: file.size.toString(),
       };
-      // Upload the new artifact
+
       uploadArtifacts(newArtifact).catch((err) => {
         console.log(err, 'err');
       });

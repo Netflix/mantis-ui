@@ -27,7 +27,7 @@ export async function uploadArtifacts(artifact: Artifact, env = 'test') {
   const { client } = getApiClientEntryForEnv(env);
 
   const data = await client.post(`api/v1/artifacts`, {
-    json: artifact, // artifact to be uploaded
+    json: artifact,
   });
   return data.json<Artifact>();
 }

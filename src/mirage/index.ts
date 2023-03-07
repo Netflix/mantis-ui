@@ -71,11 +71,11 @@ export function makeServer(baseUrl: string) {
       });
 
       this.delete('/v1/jobs/:jobId', (schema, request) => {
-        const { jobId } = request.params; // jobId to be deleted
+        const { jobId } = request.params;
 
         schema.db.jobs.forEach((job: Job) => {
           if (job.jobMetadata.jobId === jobId) {
-            schema.db.jobs.remove(job); // Remove the job from the mock db
+            job.jobMetadata.state = 'Deleted';
           }
         });
 
@@ -83,8 +83,12 @@ export function makeServer(baseUrl: string) {
       });
 
       this.post('/v1/artifacts', (schema, request) => {
-        const data: unknown = JSON.parse(request.requestBody);
-        schema.db.artifacts.insert(data); // Insert the new artifact into the mock db
+        try {
+          const data = JSON.parse(request.requestBody) as Artifact;
+          schema.db.artifacts.insert(data);
+        } catch (err) {
+          console.error(err);
+        }
 
         return { list: schema.db.artifacts };
       });
