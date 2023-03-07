@@ -103,7 +103,7 @@ function TopNav() {
               className={classes.menuItem}
               icon={<AiOutlineInfoCircle />}
               component="a"
-              href="http://go/mantis"
+              href="https://netflix.github.io/mantis/"
               target="_blank"
             >
               Docs
