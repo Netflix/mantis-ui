@@ -23,8 +23,7 @@ export async function fetchArtifacts(envs: string[]) {
   return data;
 }
 
-export async function uploadArtifacts(artifact: Artifact) {
-  const env = 'test'; // Hard coded env(test) for now
+export async function uploadArtifacts(artifact: Artifact, env = 'test') {
   const { client } = getApiClientEntryForEnv(env);
 
   const data = await client.post(`api/v1/artifacts`, {
