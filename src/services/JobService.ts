@@ -78,7 +78,7 @@ export async function fetchJobsSummary(regionEnvs: EnvRegion[]) {
   return jobSummaries;
 }
 
-export async function killJobs(jobs: CompactJob[], userEmail: string, refresh: () => void) {
+export async function killJobs({ jobs, userEmail }: { jobs: CompactJob[]; userEmail: string }) {
   const requests = jobs.map(({ env, region, jobId }) => {
     const { client } = getApiClientEntryForRegion(env, region);
     return client.delete(`api/v1/jobs/${jobId}?user=${userEmail}&reason=${reason}`);
@@ -91,26 +91,19 @@ export async function killJobs(jobs: CompactJob[], userEmail: string, refresh: (
   if (error) {
     const message = error.reason as string;
     throw new Error(`Failed to kill job due to ${message}`);
-  } else {
-    refresh();
   }
 }
 
-export async function fetchJob(regionEnvs: EnvRegion[], jobId: string): Promise<Job | null> {
-  const clientEntries = getApiClientEntries().filter(({ env, region }) =>
-    regionEnvs.some((item) => item.env === env && item.region === region),
-  );
-
-  const requests = clientEntries.map(({ env, region }) => {
-    const { client } = getApiClientEntryForRegion(env, region);
-    return client.get(`api/v1/jobs/${jobId}`);
-  });
-  const responses = await Promise.allSettled(requests);
-  responses.flatMap((response, index) => {
-    if (response.status === 'fulfilled') {
-      return response.value.json;
-    }
-    return [];
-  });
-  return null;
+export async function fetchJob(
+  env: string,
+  region: string,
+  jobId: string,
+): Promise<{ job: Job } | null> {
+  const { client } = getApiClientEntryForRegion(env, region);
+  const requests = await client.get(`api/v1/jobs/${jobId}`);
+  if (requests.status === 200) {
+    return requests.json<{ job: Job }>();
+  } else {
+    return null;
+  }
 }
