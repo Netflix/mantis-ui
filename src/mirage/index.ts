@@ -1,4 +1,4 @@
-import { Model, createServer } from 'miragejs';
+import { Model, createServer, Response } from 'miragejs';
 import { API_URLS } from '@/config/development';
 
 import artifacts from '@/mirage/fixtures/artifacts';
@@ -64,6 +64,38 @@ export function makeServer(baseUrl: string) {
           };
         }
         return { list: schema.db.jobs };
+      });
+
+      //Get single Job item
+      this.get('/v1/jobs/:jobId', (schema, request) => {
+        const { jobId } = request.params;
+        let job: Job | null = null;
+        schema.db.jobs.map((mappedJob: Job) => {
+          if (mappedJob.jobMetadata.jobId === jobId) {
+            job = mappedJob;
+          }
+        });
+        if (job !== null) {
+          return { job: job };
+        } else return new Response(500, { Error: 'No job found with this id.' });
+      });
+
+      this.delete('/v1/jobs/:jobId', (schema, request) => {
+        //Local type as mirage returns "any"
+        type MirageJobEntity<T> = T & {
+          id: number;
+        };
+        const { jobId } = request.params;
+        schema.db.jobs.map((job: Job) => {
+          if (job.jobMetadata.jobId === jobId) {
+            const dbJob = schema.db.jobs.findBy(job) as MirageJobEntity<Job>;
+            job.jobMetadata.state = 'Killed';
+            schema.db.jobs.update(dbJob.id, job);
+            //Moving job to archive
+            schema.db.createCollection('archived', [job]);
+          }
+        });
+        return new Response(200);
       });
 
       this.get('https://mantis.us-east-1.test.netflix.net/library/list', (schema) => {

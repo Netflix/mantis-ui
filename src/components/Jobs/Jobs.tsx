@@ -11,9 +11,8 @@ import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRende
 import TagRenderer from '@/components/DataGrid/renderers/TagRenderer/TagRenderer';
 import { useAuth } from '@/hooks/useAuth';
 import { useEntityFilter } from '@/hooks/useEntityFilter';
-import { useJobs } from '@/hooks/useJobs';
+import { useJobs, useKillJobMutation } from '@/hooks/useJobs';
 import { AppRoutePaths } from '@/router/routes';
-import { killJobs } from '@/services/JobService';
 import { CompactJob } from '@/types/job';
 import { getJobClusterId, getJobTagDefinitions } from '@/utils/job';
 import { pluralize } from '@/utils/string';
@@ -109,6 +108,8 @@ function Jobs() {
                 return 'lime';
               case 'Accepted':
                 return 'gray';
+              case 'Killed':
+                return 'red';
               default:
                 return 'blue';
             }
@@ -132,7 +133,9 @@ function Jobs() {
   const { onToggleHandler, filter } = useEntityFilter(ALL_JOBS, MY_JOBS);
   const shouldShowAllJobs = filter !== MY_JOBS;
   const { user } = useAuth();
+
   const { data = [] } = useJobs();
+  const { mutate } = useKillJobMutation();
   const [selections, setSelections] = useState<CompactJob[]>([]);
   const onSelectionChanged = useCallback(
     ({ api }: { api: GridApi }) => {
@@ -164,12 +167,13 @@ function Jobs() {
             color="red"
             className="my-2 ml-auto"
             disabled={!selections.length}
-            onClick={() => killJobs(selections, user?.email as string)}
+            onClick={() => mutate({ jobs: selections, userEmail: user?.email as string })}
           >
             Kill {selections.length} {pluralize(selections.length, 'Job')}
           </Button>
         </div>
         <DataGrid
+          className={'dataGrip-class'}
           columnDefs={columnDefs}
           rowData={jobs}
           recordTypes="Jobs"
