@@ -11,7 +11,7 @@ import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRende
 import TagRenderer from '@/components/DataGrid/renderers/TagRenderer/TagRenderer';
 import { useAuth } from '@/hooks/useAuth';
 import { useEntityFilter } from '@/hooks/useEntityFilter';
-import { useJobs, useKillJobMutate } from '@/hooks/useJobs';
+import { useJobs, useKillJobMutation } from '@/hooks/useJobs';
 import { AppRoutePaths } from '@/router/routes';
 import { CompactJob } from '@/types/job';
 import { getJobClusterId, getJobTagDefinitions } from '@/utils/job';
@@ -135,7 +135,7 @@ function Jobs() {
   const { user } = useAuth();
 
   const { data = [] } = useJobs();
-  const { mutate } = useKillJobMutate();
+  const { mutate } = useKillJobMutation();
   const [selections, setSelections] = useState<CompactJob[]>([]);
   const onSelectionChanged = useCallback(
     ({ api }: { api: GridApi }) => {

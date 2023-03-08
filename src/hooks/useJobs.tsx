@@ -9,7 +9,7 @@ export function useJobs() {
   return useQuery<Job[] | CompactJob[], Error>(Queries.JOBS, () => fetchJobs(REGION_ENVS));
 }
 
-export function useKillJobMutate() {
+export function useKillJobMutation() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: killJobs,

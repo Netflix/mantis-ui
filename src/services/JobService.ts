@@ -100,9 +100,9 @@ export async function fetchJob(
   jobId: string,
 ): Promise<{ job: Job } | null> {
   const { client } = getApiClientEntryForRegion(env, region);
-  const requests = await client.get(`api/v1/jobs/${jobId}`);
-  if (requests.status === 200) {
-    return requests.json<{ job: Job }>();
+  const request = await client.get(`api/v1/jobs/${jobId}`);
+  if (request.status === 200) {
+    return request.json<{ job: Job }>();
   } else {
     return null;
   }

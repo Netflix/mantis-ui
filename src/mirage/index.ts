@@ -80,7 +80,6 @@ export function makeServer(baseUrl: string) {
         } else return new Response(500, { Error: 'No job found with this id.' });
       });
 
-      //Mark Job as Kill
       this.delete('/v1/jobs/:jobId', (schema, request) => {
         //Local type as mirage returns "any"
         type MirageJobEntity<T> = T & {
