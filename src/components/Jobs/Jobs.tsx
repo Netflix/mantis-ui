@@ -13,7 +13,6 @@ import { useAuth } from '@/hooks/useAuth';
 import { useEntityFilter } from '@/hooks/useEntityFilter';
 import { useJobs } from '@/hooks/useJobs';
 import { AppRoutePaths } from '@/router/routes';
-import { killJobs } from '@/services/JobService';
 import { CompactJob } from '@/types/job';
 import { getJobClusterId, getJobTagDefinitions } from '@/utils/job';
 import { pluralize } from '@/utils/string';
@@ -134,8 +133,18 @@ function Jobs() {
   const { onToggleHandler, filter } = useEntityFilter(ALL_JOBS, MY_JOBS);
   const shouldShowAllJobs = filter !== MY_JOBS;
   const { user } = useAuth();
-  const { data = [], refetch } = useJobs();
+  const { data = [], killJobsMutation } = useJobs();
   const [selections, setSelections] = useState<CompactJob[]>([]);
+
+  const handleKillJobs = async (jobs: CompactJob[]) => {
+    try {
+      await killJobsMutation(jobs);
+      setSelections([]);
+    } catch (error) {
+      console.error('Failed to kill jobs:', error);
+    }
+  };
+
   const onSelectionChanged = useCallback(
     ({ api }: { api: GridApi }) => {
       const selections = api.getSelectedRows();
@@ -166,7 +175,7 @@ function Jobs() {
             color="red"
             className="my-2 ml-auto"
             disabled={!selections.length}
-            onClick={() => killJobs(selections, user?.email as string, refetch, setSelections)}
+            onClick={() => handleKillJobs(selections)}
           >
             Kill {selections.length} {pluralize(selections.length, 'Job')}
           </Button>

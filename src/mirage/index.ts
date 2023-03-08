@@ -7,6 +7,7 @@ import jobs from '@/mirage/fixtures/jobs';
 import { CompactJob, Job } from '@/types/job';
 import { Artifact } from '@/types/artifact';
 import { Cluster } from '@/types/cluster';
+import { showNotification } from '@mantine/notifications';
 
 export function makeServer(baseUrl: string) {
   return createServer({
@@ -74,7 +75,13 @@ export function makeServer(baseUrl: string) {
         const { jobId } = request.params;
 
         schema.db.jobs.forEach((job: Job) => {
-          if (job.jobMetadata.jobId === jobId) {
+          if (job.jobMetadata.jobId === jobId && job.jobMetadata.state === 'Deleted') {
+            showNotification({
+              title: 'Job already deleted',
+              message: `${job.jobMetadata.name} already deleted`,
+              color: 'red',
+            });
+          } else if (job.jobMetadata.jobId === jobId && job.jobMetadata.state !== 'Deleted') {
             job.jobMetadata.state = 'Deleted';
           }
         });
