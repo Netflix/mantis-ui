@@ -2,10 +2,9 @@ import { Button, Card, Image, TextInput } from '@mantine/core';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { TbAt } from 'react-icons/tb';
-import { useNavigate, useSearch } from 'react-location';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import mantisImage from '@/assets/images/mantis-logo-full-transparent.png';
-import { LocationGenerics } from '@/components/Router/Router';
 import { useAuth } from '@/hooks/useAuth';
 
 type UserData = {
@@ -16,7 +15,8 @@ type UserData = {
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const { redirect = '/' } = useSearch<LocationGenerics>();
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get('redirect') || '/';
 
   const {
     register,
@@ -29,7 +29,7 @@ function Login() {
     const isValid = await trigger(undefined, { shouldFocus: true });
     const user = getValues();
     if (isValid) {
-      login({ ...user, isAdmin: true }, () => navigate({ to: redirect, replace: true }));
+      login({ ...user, isAdmin: true }, navigate(redirect));
     }
   };
 

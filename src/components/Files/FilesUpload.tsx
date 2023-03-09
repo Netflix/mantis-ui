@@ -13,7 +13,7 @@ export interface FileError {
   code: string;
 }
 
-function FileUpload() {
+function FilesUpload() {
   const theme = useMantineTheme();
   const onDrop = (files: File[]) => {
     const fileNames = files.map((file) => file.name);
@@ -66,4 +66,4 @@ function FileUpload() {
   );
 }
 
-export default FileUpload;
+export default FilesUpload;

@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet-async';
 
 import DataGrid from '@/components/DataGrid/DataGrid';
 import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRenderer';
+import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { useJobSummary } from '@/hooks/useJobSummary';
-import { AppRoutePaths } from '@/router/routes';
 import { REGION_ENVS } from '@/services/BaseService';
 import formatFileSize from '@/utils/file';
 

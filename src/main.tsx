@@ -1,9 +1,10 @@
 import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
-import { setupMirage } from '@/mirage/index';
 
 import App from '@/components/App/App';
+import LoadingFallback from '@/components/LoadingFallback';
 import '@/index.css';
+import { setupMirage } from '@/mirage/index';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
@@ -13,9 +14,7 @@ setupMirage();
 
 root.render(
   <StrictMode>
-    <Suspense
-      fallback={<h1 className="flex flex-1 justify-center items-center">Bootstrapping App...</h1>}
-    >
+    <Suspense fallback={<LoadingFallback />}>
       <App />
     </Suspense>
   </StrictMode>,

@@ -1,5 +1,5 @@
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core';
-import { NotificationsProvider } from '@mantine/notifications';
+import { Notifications } from '@mantine/notifications';
 import { ReactNode, lazy, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { QueryClientProvider } from 'react-query';
@@ -35,11 +35,10 @@ function AppProvider({ children }: { children: ReactNode }) {
             withGlobalStyles
             withNormalizeCSS
           >
-            <NotificationsProvider>
-              <InitProvider>
-                <AuthProvider>{children}</AuthProvider>
-              </InitProvider>
-            </NotificationsProvider>
+            <Notifications />
+            <InitProvider>
+              <AuthProvider>{children}</AuthProvider>
+            </InitProvider>
           </MantineProvider>
         </ColorSchemeProvider>
       </QueryClientProvider>

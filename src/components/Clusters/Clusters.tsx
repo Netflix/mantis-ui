@@ -1,16 +1,16 @@
 import { Button, Switch } from '@mantine/core';
 import { useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-location';
+import { useNavigate } from 'react-router-dom';
 
 import DataGrid from '@/components/DataGrid/DataGrid';
 import JobLabelRenderer from '@/components/DataGrid/renderers/JobLabelRenderer/JobLabelRenderer';
 import JobVersionRenderer from '@/components/DataGrid/renderers/JobVersionRenderer/JobVersionRenderer';
 import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRenderer';
+import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { useAuth } from '@/hooks/useAuth';
 import { useClusters } from '@/hooks/useClusters';
 import { useEntityFilter } from '@/hooks/useEntityFilter';
-import { AppRoutePaths } from '@/router/routes';
 import { ClusterListItem } from '@/types/cluster';
 import { getJobTagDefinitions } from '@/utils/job';
 
@@ -106,7 +106,7 @@ function Clusters() {
             onChange={onToggleHandler}
             checked={shouldShowAllClusters}
           />
-          <Button className="my-2 ml-auto" onClick={() => navigate({ to: AppRoutePaths.CREATE })}>
+          <Button className="my-2 ml-auto" onClick={() => navigate(AppRoutePaths.CREATE)}>
             Create New Job Cluster
           </Button>
         </div>

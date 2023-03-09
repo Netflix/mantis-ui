@@ -1,57 +1,38 @@
-import { Suspense } from 'react';
+import { lazy } from 'react';
 
-import LoadingFallback from '@/components/LoadingFallback/LoadingFallback';
+import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { Queries, queryClient } from '@/lib/react-query';
 import { REGION_ENVS } from '@/services/BaseService';
 import { fetchJobClusters } from '@/services/JobClusterService';
 
-export default {
-  meta: {
-    breadcrumb: 'Clusters',
+const Clusters = lazy(() => import('@/components/Clusters/Clusters'));
+const CreateCluster = lazy(() => import('@/components/Clusters/CreateCluster'));
+const ClusterDetail = lazy(() => import('@/components/Clusters/ClusterDetail'));
+
+export default [
+  {
+    path: AppRoutePaths.CLUSTERS,
+    handle: {
+      breadcrumb: 'Jobs',
+    },
+    element: <Clusters />,
+    loader() {
+      void queryClient.prefetchQuery(Queries.CLUSTERS, () => fetchJobClusters(REGION_ENVS));
+      return {};
+    },
   },
-  children: [
-    {
-      path: '/',
-      element: () =>
-        import('@/components/Clusters/Clusters').then((module) => (
-          <>
-            <Suspense fallback={<LoadingFallback />}>
-              <module.default />
-            </Suspense>
-          </>
-        )),
-      loader() {
-        void queryClient.prefetchQuery(Queries.CLUSTERS, () => fetchJobClusters(REGION_ENVS));
-        return {};
-      },
+  {
+    path: `${AppRoutePaths.CLUSTERS}/create`,
+    meta: {
+      breadcrumb: 'Create New Cluster',
     },
-    {
-      path: `create`,
-      meta: {
-        breadcrumb: 'Create New Cluster',
-      },
-      element: () =>
-        import('@/components/CreateCluster/CreateCluster').then((module) => (
-          <>
-            <Suspense fallback={<LoadingFallback />}>
-              <module.default />
-            </Suspense>
-          </>
-        )),
+    element: <CreateCluster />,
+  },
+  {
+    path: `${AppRoutePaths.CLUSTERS}/:clusterId`,
+    meta: {
+      breadcrumb: ({ clusterId }: { clusterId: string }) => clusterId,
     },
-    {
-      path: `:clusterId`,
-      meta: {
-        breadcrumb: ({ clusterId }: { clusterId: string }) => clusterId,
-      },
-      element: () =>
-        import('@/components/ClusterDetail/ClusterDetail').then((module) => (
-          <>
-            <Suspense fallback={<LoadingFallback />}>
-              <module.default />
-            </Suspense>
-          </>
-        )),
-    },
-  ],
-};
+    element: <ClusterDetail />,
+  },
+];

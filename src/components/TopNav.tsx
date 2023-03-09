@@ -9,11 +9,11 @@ import {
   AiOutlineQuestionCircle,
   AiOutlineUser,
 } from 'react-icons/ai';
-import { Link, useMatches, useNavigate } from 'react-location';
+import { Link, useMatches, useNavigate } from 'react-router-dom';
 
 import mantisImage from '@/assets/images/mantis-logo-full-transparent.png';
+import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { useAuth } from '@/hooks/useAuth';
-import { AppRoutePaths } from '@/router/routes';
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -122,7 +122,7 @@ function TopNav() {
             <Menu.Item
               className={classes.menuItem}
               icon={<AiOutlineLogout />}
-              onClick={() => logout(() => navigate({ to: AppRoutePaths.LOGIN }))}
+              onClick={() => logout(() => navigate(AppRoutePaths.LOGIN))}
             >
               Log Out
             </Menu.Item>

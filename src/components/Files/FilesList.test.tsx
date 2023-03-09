@@ -1,7 +1,8 @@
 import { beforeAll, describe, test } from 'vitest';
 
-import FilesList from './FilesList';
 import { mockMatchMedia, renderWithQueryClient } from '@/utils/vitest';
+
+import FilesList from './FilesList';
 
 describe('FilesList', () => {
   beforeAll(mockMatchMedia);

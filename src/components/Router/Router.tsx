@@ -1,10 +1,10 @@
-import { MakeGenerics } from 'react-location';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-export type IRouter = () => JSX.Element;
+import { routes } from '@/components/Router/routes/index';
 
-export type LocationGenerics = MakeGenerics<{
-  Search: {
-    redirect?: string;
-    filter?: string;
-  };
-}>;
+function AppRouter() {
+  const router = createBrowserRouter(routes);
+  return <RouterProvider router={router} />;
+}
+
+export default AppRouter;

@@ -1,6 +1,6 @@
 import { Tabs } from '@mantine/core';
 import { Helmet } from 'react-helmet-async';
-import { Outlet, useMatches, useNavigate } from 'react-location';
+import { Outlet, useMatches, useNavigate } from 'react-router-dom';
 
 function Files() {
   const navigate = useNavigate();
@@ -8,7 +8,7 @@ function Files() {
   const match = matches[matches.length - 1];
 
   const onChange = (key: string) => {
-    navigate({ to: `/files/${key}` });
+    navigate(`/files/${key}`);
   };
   const activeKey = match.pathname.substring(
     match.pathname.lastIndexOf('/') + 1,

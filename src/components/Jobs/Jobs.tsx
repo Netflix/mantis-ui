@@ -9,10 +9,10 @@ import DateTimeRenderer from '@/components/DataGrid/renderers/DateTimeRenderer/D
 import JobLabelRenderer from '@/components/DataGrid/renderers/JobLabelRenderer/JobLabelRenderer';
 import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRenderer';
 import TagRenderer from '@/components/DataGrid/renderers/TagRenderer/TagRenderer';
+import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { useAuth } from '@/hooks/useAuth';
 import { useEntityFilter } from '@/hooks/useEntityFilter';
 import { useJobs, useKillJobMutation } from '@/hooks/useJobs';
-import { AppRoutePaths } from '@/router/routes';
 import { CompactJob } from '@/types/job';
 import { getJobClusterId, getJobTagDefinitions } from '@/utils/job';
 import { pluralize } from '@/utils/string';

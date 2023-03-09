@@ -1,35 +1,27 @@
 import { ChangeEvent, useCallback } from 'react';
-import { useNavigate, useSearch } from 'react-location';
-
-import { LocationGenerics } from '@/components/Router/Router';
+import { useSearchParams } from 'react-router-dom';
 
 export function useEntityFilter(
   allParamString: string,
   filterParamString: string,
-): { filter?: string; onToggleHandler: (e: ChangeEvent<HTMLInputElement>) => void } {
-  const navigate = useNavigate<LocationGenerics>();
-  const { filter } = useSearch<LocationGenerics>();
+): { filter: string | null; onToggleHandler: (e: ChangeEvent<HTMLInputElement>) => void } {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const filter = searchParams.get('filter');
+
+  console.log(searchParams, filter);
 
   const onToggleHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const checked = e.target.checked;
       if (checked) {
-        navigate({
-          search: (old) => ({
-            ...old,
-            filter: allParamString,
-          }),
-        });
+        searchParams.set('filter', allParamString);
+        setSearchParams(searchParams);
       } else {
-        navigate({
-          search: (old) => ({
-            ...old,
-            filter: filterParamString,
-          }),
-        });
+        searchParams.set('filter', filterParamString);
+        setSearchParams(searchParams);
       }
     },
-    [navigate, allParamString, filterParamString],
+    [searchParams, allParamString, setSearchParams, filterParamString],
   );
 
   return {

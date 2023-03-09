@@ -1,51 +1,36 @@
-import { Suspense } from 'react';
-import { Navigate } from 'react-location';
+import { lazy } from 'react';
+import { Navigate } from 'react-router-dom';
 
-import LoadingFallback from '@/components/LoadingFallback/LoadingFallback';
+import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { Queries, queryClient } from '@/lib/react-query';
-import { AppRoutePaths } from '@/router/routes';
 import { fetchArtifacts } from '@/services/ArtifactService';
 import { ENVS } from '@/services/BaseService';
 
-export default {
-  element: () =>
-    import('@/components/Files/Files').then((module) => (
-      <>
-        <Suspense fallback={<LoadingFallback />}>
-          <module.default />
-        </Suspense>
-      </>
-    )),
-  children: [
-    {
-      path: '/',
-      element: <Navigate to={AppRoutePaths.FILES_UPLOAD} />,
+const Files = lazy(() => import('@/components/Files/Files'));
+const FilesList = lazy(() => import('@/components/Files/FilesList'));
+const FilesUpload = lazy(() => import('@/components/Files/FilesUpload'));
+
+export default [
+  {
+    path: AppRoutePaths.FILES,
+    handle: {
+      breadcrumb: 'Files',
     },
-    {
-      path: AppRoutePaths.FILES_UPLOAD,
-      element: () =>
-        import('@/components/Upload/Upload').then((module) => (
-          <>
-            <Suspense fallback={<LoadingFallback />}>
-              <module.default />
-            </Suspense>
-          </>
-        )),
-    },
-    {
-      path: AppRoutePaths.FILES_LIST,
-      element: () =>
-        import('@/components/FilesList/FilesList').then((module) => (
-          <>
-            <Suspense fallback={<LoadingFallback />}>
-              <module.default />
-            </Suspense>
-          </>
-        )),
-      loader() {
-        void queryClient.prefetchQuery(Queries.ARTIFACTS, () => fetchArtifacts(ENVS));
-        return {};
+    element: <Files />,
+    children: [
+      { index: true, element: <Navigate to={AppRoutePaths.FILES_UPLOAD} /> },
+      {
+        path: AppRoutePaths.FILES_UPLOAD,
+        element: <FilesUpload />,
       },
-    },
-  ],
-};
+      {
+        path: AppRoutePaths.FILES_LIST,
+        element: <FilesList />,
+        loader() {
+          void queryClient.prefetchQuery(Queries.ARTIFACTS, () => fetchArtifacts(ENVS));
+          return {};
+        },
+      },
+    ],
+  },
+];

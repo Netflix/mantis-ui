@@ -1,5 +1,5 @@
 import { Anchor } from '@mantine/core';
-import { Link } from 'react-location';
+import { Link } from 'react-router-dom';
 
 function LinkRenderer({
   value,
@@ -8,7 +8,7 @@ function LinkRenderer({
 }: {
   value: string;
   data: unknown;
-  getTo: (data: unknown) => string | number | null;
+  getTo: (data: unknown) => string;
 }) {
   return (
     <Anchor component={Link} to={getTo(data)}>

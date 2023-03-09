@@ -1,7 +1,7 @@
-import { Navigate, useMatches } from 'react-location';
+import { Navigate, useMatches } from 'react-router-dom';
 
+import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { useAuth } from '@/hooks/useAuth';
-import { AppRoutePaths } from '@/router/routes';
 
 function AuthGuard({ children }: { children: JSX.Element }) {
   const { user } = useAuth();
@@ -9,7 +9,17 @@ function AuthGuard({ children }: { children: JSX.Element }) {
   const match = matches[matches.length - 1];
 
   if (!user?.email) {
-    return <Navigate to={AppRoutePaths.LOGIN} search={{ redirect: match.pathname }} />;
+    const params = new URLSearchParams({ redirect: match.pathname });
+    const ROOT = '/';
+    return (
+      <Navigate
+        to={{
+          pathname: AppRoutePaths.LOGIN,
+          search: match.pathname !== ROOT ? `?${params.toString()}` : '',
+        }}
+        replace={true}
+      />
+    );
   }
 
   return children;

@@ -1,12 +1,12 @@
-import { Model, createServer, Response } from 'miragejs';
-import { API_URLS } from '@/config/development';
+import { Model, Response, createServer } from 'miragejs';
 
+import { API_URLS } from '@/config/development';
 import artifacts from '@/mirage/fixtures/artifacts';
 import clusters from '@/mirage/fixtures/clusters';
 import jobs from '@/mirage/fixtures/jobs';
-import { CompactJob, Job } from '@/types/job';
 import { Artifact } from '@/types/artifact';
 import { Cluster } from '@/types/cluster';
+import { CompactJob, Job } from '@/types/job';
 
 export function makeServer(baseUrl: string) {
   return createServer({

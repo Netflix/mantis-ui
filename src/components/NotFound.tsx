@@ -1,5 +1,5 @@
 import { Button, Text, Title } from '@mantine/core';
-import { useNavigate } from 'react-location';
+import { useNavigate } from 'react-router-dom';
 
 function NotFound() {
   const navigate = useNavigate();
@@ -8,7 +8,7 @@ function NotFound() {
     <div className="flex flex-col h-full justify-center items-center">
       <Title order={3}>404</Title>
       <Text>Page not found!</Text>
-      <Button className="my-4" onClick={() => navigate({ to: '/', replace: true })}>
+      <Button className="my-4" onClick={() => navigate(',', { replace: true })}>
         Back Home
       </Button>
     </div>

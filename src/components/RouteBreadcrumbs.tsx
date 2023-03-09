@@ -1,15 +1,21 @@
 import { Breadcrumbs } from '@mantine/core';
-import { Link, useMatches } from 'react-location';
+import { Link, useMatches } from 'react-router-dom';
+
+import { RouteHandle } from '@/components/Router/routes';
 
 function RouteBreadcrumbs() {
   const matches = useMatches();
   const crumbs = matches
-    .filter((match) => match.route.meta?.breadcrumb)
+    .filter((match) => {
+      const handle = match.handle as RouteHandle;
+      return !!handle?.breadcrumb;
+    })
     .map((match, index, filteredMatches) => {
+      const handle = match.handle as RouteHandle;
       const breadcrumb =
-        typeof match.route.meta?.breadcrumb === 'function'
-          ? (match.route.meta.breadcrumb(match.params) as string)
-          : (match.route.meta?.breadcrumb as string);
+        typeof handle?.breadcrumb === 'function'
+          ? handle.breadcrumb(match.params)
+          : (handle?.breadcrumb as string);
       const isLast = index === filteredMatches.length - 1;
       return isLast ? (
         <span key={match.pathname}>{breadcrumb}</span>

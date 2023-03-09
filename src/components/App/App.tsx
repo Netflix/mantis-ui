@@ -1,12 +1,5 @@
-import { lazy } from 'react';
-
-import type { IRouter } from '@/components/Router/Router';
+import Router from '@/components/Router/Router';
 import AppProvider from '@/providers/app';
-import { loadComponentModule } from '@/utils/module-loader';
-
-const Router = lazy(() => {
-  return loadComponentModule<IRouter>('Router', 'Router');
-});
 
 function App() {
   return (
