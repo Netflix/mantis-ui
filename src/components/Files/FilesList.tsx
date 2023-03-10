@@ -1,49 +1,39 @@
-import { useMemo } from 'react';
-
-import DataGrid from '@/components/DataGrid/DataGrid';
-import DateTimeRenderer from '@/components/DataGrid/renderers/DateTimeRenderer/DateTimeRenderer';
+import DataGrid from '@/components/DataGrid';
+import DateTime from '@/components/DateTime';
 import { useArtifacts } from '@/hooks/useArtifacts';
 import formatFileSize from '@/utils/file';
 
 function FilesList() {
-  const columnDefs = useMemo(
-    () => [
-      {
-        field: 'key',
-        valueFormatter: ({ value }: { value: string }) => value?.split('/')?.pop() ?? '',
-        flex: 2,
-      },
-      {
-        field: 'size',
-        valueFormatter: ({ value }: { value: number }) => {
-          return formatFileSize(value);
-        },
-      },
-      {
-        field: 'lastModified',
-        cellRenderer: 'DateTimeRenderer',
-        filter: false,
-      },
-    ],
-    [],
-  );
-  const components = useMemo(
-    () => ({
-      DateTimeRenderer,
-    }),
-    [],
-  );
-  const { data = [] } = useArtifacts();
+  const filterValue = [{ name: 'key', operator: 'contains', type: 'string', value: null }];
+  const columns = [
+    {
+      name: 'key',
+      header: 'File Name',
+      render: ({ value }: { value: string }) => value?.split('/')?.pop() ?? '',
+      defaultFlex: 2,
+    },
+    {
+      name: 'size',
+      header: 'Size',
+      render: ({ value }: { value: number }) => formatFileSize(value),
+    },
+    {
+      name: 'lastModified',
+      header: 'Last Modified',
+      render: ({ value }: { value: number }) => <DateTime date={value} />,
+    },
+  ];
+  const { data = [], isLoading } = useArtifacts();
 
   return (
-    <div className="flex flex-col h-full">
-      <DataGrid
-        columnDefs={columnDefs}
-        rowData={data}
-        recordTypes="Artifacts"
-        components={components}
-      />
-    </div>
+    <DataGrid
+      columns={columns}
+      dataSource={data}
+      defaultFilterValue={filterValue}
+      loading={isLoading}
+      defaultSortInfo={{ name: 'key', dir: 1 }}
+      recordTypes="Artifacts"
+    />
   );
 }
 

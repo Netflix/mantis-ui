@@ -2,13 +2,17 @@ import { Badge } from '@mantine/core';
 
 import { LabelTag } from '@/utils/job';
 
-function TagRenderer({
-  value: labels,
-  getTagColor,
-}: {
-  value: LabelTag[];
-  getTagColor: (type: string) => string;
-}) {
+function JobLabelBadge({ labels }: { labels: LabelTag[] }) {
+  const getTagColor = (type: string) => {
+    switch (type) {
+      case 'danger':
+        return 'red';
+      case 'warning':
+        return 'yellow';
+      default:
+        return 'blue';
+    }
+  };
   return (
     <span className="flex flex-wrap gap-1 my-2">
       {Array.isArray(labels) &&
@@ -28,4 +32,4 @@ function TagRenderer({
   );
 }
 
-export default TagRenderer;
+export default JobLabelBadge;

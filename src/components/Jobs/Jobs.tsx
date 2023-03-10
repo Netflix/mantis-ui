@@ -1,133 +1,82 @@
-import { GridApi } from '@ag-grid-community/core';
+import { TypeRowSelection } from '@inovua/reactdatagrid-community/types';
 import { Button, Switch } from '@mantine/core';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { FaServer } from 'react-icons/fa';
 
-import DataGrid from '@/components/DataGrid/DataGrid';
-import DateTimeRenderer from '@/components/DataGrid/renderers/DateTimeRenderer/DateTimeRenderer';
-import JobLabelRenderer from '@/components/DataGrid/renderers/JobLabelRenderer/JobLabelRenderer';
-import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRenderer';
-import TagRenderer from '@/components/DataGrid/renderers/TagRenderer/TagRenderer';
+import AppLink from '@/components/AppLink';
+import DataGrid from '@/components/DataGrid';
+import DateTime from '@/components/DateTime';
+import EnvBadge from '@/components/EnvBadge';
+import JobLabelBadge from '@/components/Jobs/JobLabelBadge';
 import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { useAuth } from '@/hooks/useAuth';
 import { useEntityFilter } from '@/hooks/useEntityFilter';
 import { useJobs, useKillJobMutation } from '@/hooks/useJobs';
 import { CompactJob } from '@/types/job';
+import { Label } from '@/types/machine';
 import { getJobClusterId, getJobTagDefinitions } from '@/utils/job';
 import { pluralize } from '@/utils/string';
 
+import JobStateBadge from './JobStateBadge';
+
 function Jobs() {
-  const columnDefs = useMemo(
-    () => [
-      {
-        field: 'jobId',
-        headerName: 'Job Name',
-        cellRenderer: 'LinkRenderer',
-        cellRendererParams: {
-          getTo({ jobId }: { jobId: string }) {
-            return `${jobId}`;
-          },
-        },
-        flex: 2,
-        checkboxSelection: true,
-      },
-      {
-        headerName: 'Cluster',
-        valueGetter: () => <FaServer className="my-3" />,
-        width: 90,
-        flex: 0,
-        filter: false,
-        cellRenderer: 'LinkRenderer',
-        cellRendererParams: {
-          getTo({ jobId }: { jobId: string }) {
-            return `/${AppRoutePaths.CLUSTERS}/${getJobClusterId(jobId)}`;
-          },
-        },
-      },
-      {
-        field: 'env',
-        cellRenderer: 'TagRenderer',
-        cellRendererParams: {
-          getTagColor(value: string) {
-            switch (value) {
-              case 'prod':
-                return 'red';
-              case 'test':
-                return 'gray';
-              default:
-                return 'default';
-            }
-          },
-        },
-      },
-      { field: 'region' },
-      {
-        valueGetter: ({ data }: { data: CompactJob }) => {
-          return getJobTagDefinitions(data.labels);
-        },
-        headerName: 'Tags',
-        cellRenderer: 'JobLabelRenderer',
-        cellRendererParams: {
-          getTagColor(type: string) {
-            switch (type) {
-              case 'danger':
-                return 'red';
-              case 'warning':
-                return 'yellow';
-              default:
-                return 'blue';
-            }
-          },
-          filter: false,
-        },
-        filter: false,
-      },
-      {
-        valueGetter: ({ data }: { data: CompactJob }) =>
-          `${data.numStages} ${pluralize(data.numStages, 'stage')} / ${data.numWorkers} ${pluralize(
-            data.numWorkers,
-            'worker',
-          )}`,
-        headerName: '# Stages / Workers',
-        filter: false,
-        flex: 0,
-        width: 185,
-      },
-      { field: 'totCPUs', headerName: 'CPUs' },
-      { field: 'totMemory', headerName: 'RAM' },
-      { field: 'submittedAt', cellRenderer: 'DateTimeRenderer', filter: false },
-      { field: 'user', headerName: 'Owner' },
-      {
-        field: 'state',
-        cellRenderer: 'TagRenderer',
-        cellRendererParams: {
-          getTagColor(value: string) {
-            switch (value) {
-              case 'Launched':
-                return 'lime';
-              case 'Accepted':
-                return 'gray';
-              case 'Killed':
-                return 'red';
-              default:
-                return 'blue';
-            }
-          },
-        },
-      },
-    ],
-    [],
-  );
-  const components = useMemo(
-    () => ({
-      DateTimeRenderer,
-      TagRenderer,
-      LinkRenderer,
-      JobLabelRenderer,
-    }),
-    [],
-  );
+  const filterValue = [{ name: 'jobId', operator: 'contains', type: 'string', value: null }];
+  const columns = [
+    {
+      name: 'jobId',
+      header: 'Job Name',
+      render: ({ value }: { value: string }) => <AppLink item={value} to={`${value}`} />,
+      defaultFlex: 2,
+    },
+    {
+      name: 'cluster',
+      header: 'Cluster',
+      defaultWidth: 100,
+      defaultFlex: 0,
+      render: ({ value }: { value: string }) => (
+        <AppLink
+          item={<FaServer className="my-3" />}
+          to={`/${AppRoutePaths.CLUSTERS}/${getJobClusterId(value)}`}
+        />
+      ),
+    },
+    {
+      name: 'env',
+      header: 'Env',
+      render: ({ value }: { value: string }) => <EnvBadge env={value} />,
+    },
+    { name: 'region', header: 'Region' },
+    {
+      name: 'labels',
+      header: 'Tags',
+      render: ({ value }: { value: Label[] }) => (
+        <JobLabelBadge labels={getJobTagDefinitions(value)} />
+      ),
+    },
+    {
+      name: 'numStagesAndWorkers',
+      header: '# Stages / Workers',
+      render: ({ data }: { data: CompactJob }) =>
+        `${data.numStages} ${pluralize(data.numStages, 'stage')} / ${data.numWorkers} ${pluralize(
+          data.numWorkers,
+          'worker',
+        )}`,
+    },
+    { name: 'totCPUs', header: 'CPUs' },
+    { name: 'totMemory', header: 'RAM' },
+    {
+      name: 'submittedAt',
+      header: 'Submitted At',
+      render: ({ value }: { value: number }) => <DateTime date={value} />,
+    },
+    { name: 'user', header: 'Owner' },
+    {
+      name: 'state',
+      header: 'State',
+      render: ({ value }: { value: string }) => <JobStateBadge state={value} />,
+    },
+  ];
   const ALL_JOBS = 'allJobs';
   const MY_JOBS = 'myJobs';
   const { onToggleHandler, filter } = useEntityFilter(ALL_JOBS, MY_JOBS);
@@ -137,10 +86,9 @@ function Jobs() {
   const { data = [] } = useJobs();
   const { mutate } = useKillJobMutation();
   const [selections, setSelections] = useState<CompactJob[]>([]);
-  const onSelectionChanged = useCallback(
-    ({ api }: { api: GridApi }) => {
-      const selections = api.getSelectedRows();
-      setSelections(selections);
+  const onSelectionChange = useCallback(
+    ({ selected }: { selected: TypeRowSelection }) => {
+      setSelections(Object.values(selected as { [key: string]: CompactJob }));
     },
     [setSelections],
   );
@@ -173,14 +121,14 @@ function Jobs() {
           </Button>
         </div>
         <DataGrid
-          className={'dataGrip-class'}
-          columnDefs={columnDefs}
-          rowData={jobs}
+          idProperty="jobId"
+          columns={columns}
+          dataSource={jobs}
           recordTypes="Jobs"
-          rowSelection={'multiple'}
-          rowMultiSelectWithClick={true}
-          components={components}
-          onSelectionChanged={onSelectionChanged}
+          defaultFilterValue={filterValue}
+          enableSelection={true}
+          checkboxColumn={true}
+          onSelectionChange={onSelectionChange}
         />
       </div>
     </>

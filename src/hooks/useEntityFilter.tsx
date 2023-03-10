@@ -8,8 +8,6 @@ export function useEntityFilter(
   const [searchParams, setSearchParams] = useSearchParams();
   const filter = searchParams.get('filter');
 
-  console.log(searchParams, filter);
-
   const onToggleHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const checked = e.target.checked;

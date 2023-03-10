@@ -2,48 +2,35 @@ import { Checkbox, Text, Title } from '@mantine/core';
 import { ChangeEvent, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-import DataGrid from '@/components/DataGrid/DataGrid';
-import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRenderer';
+import AppLink from '@/components/AppLink';
+import DataGrid from '@/components/DataGrid';
 import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { useJobSummary } from '@/hooks/useJobSummary';
 import { REGION_ENVS } from '@/services/BaseService';
 import formatFileSize from '@/utils/file';
 
 function Summary() {
-  const columnDefs = useMemo(
-    () => [
-      {
-        field: 'name',
-        headerName: 'Job Cluster Name',
-        cellRenderer: 'LinkRenderer',
-        cellRendererParams: {
-          getTo({ name }: { name: string }) {
-            return `/${AppRoutePaths.CLUSTERS}/${name}`;
-          },
-        },
-        flex: 2,
-      },
-      { field: 'jobCount', filter: false },
-      // { field: 'totalCpus', headerName: 'CPUs', sort: 'desc', filter: false },
-      {
-        field: 'totalMemory',
-        valueFormatter: ({ value }: { value: number }) => {
-          return formatFileSize(value);
-        },
-        headerName: 'Memory',
-        filter: false,
-      },
-      { field: 'totalWorkers', headerName: 'Workers', filter: false },
-    ],
-    [],
-  );
-
-  const components = useMemo(
-    () => ({
-      LinkRenderer,
-    }),
-    [],
-  );
+  const filterValue = [{ name: 'name', operator: 'contains', type: 'string', value: null }];
+  const columns = [
+    {
+      name: 'name',
+      header: 'Job Cluster Name',
+      render: ({ value }: { value: string }) => (
+        <AppLink item={value} to={`/${AppRoutePaths.CLUSTERS}/${value}`} />
+      ),
+    },
+    { name: 'jobCount', header: 'Job Count' },
+    {
+      name: 'totalCpus',
+      header: 'CPUs',
+    },
+    {
+      name: 'totalMemory',
+      render: ({ value }: { value: number }) => formatFileSize(value),
+      header: 'Memory',
+    },
+    { name: 'totalWorkers', header: 'Workers' },
+  ];
 
   const options = REGION_ENVS.map((item) => ({
     label: `${item.env.toUpperCase()} (${item.region})`,
@@ -90,7 +77,7 @@ function Summary() {
     </div>
   );
 
-  const { data = [] } = useJobSummary(checkedList);
+  const { data = [], isLoading } = useJobSummary(checkedList);
   const activeJobs = useMemo(() => data.reduce((acc, item) => acc + item.jobCount, 0), [data]);
   const workers = useMemo(() => data.reduce((acc, item) => acc + item.totalWorkers, 0), [data]);
   const cpus = useMemo(() => data.reduce((acc, item) => acc + item.totalCpus, 0), [data]);
@@ -151,10 +138,12 @@ function Summary() {
         </div>
         {checkBoxGroup}
         <DataGrid
-          columnDefs={columnDefs}
-          rowData={data}
+          columns={columns}
+          dataSource={data}
+          defaultFilterValue={filterValue}
+          loading={isLoading}
+          defaultSortInfo={{ name: 'totalCpus', dir: -1 }}
           recordTypes="Jobs Clusters"
-          components={components}
         />
       </div>
     </>

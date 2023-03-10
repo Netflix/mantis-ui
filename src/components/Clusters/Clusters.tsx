@@ -1,92 +1,49 @@
 import { Button, Switch } from '@mantine/core';
-import { useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 
-import DataGrid from '@/components/DataGrid/DataGrid';
-import JobLabelRenderer from '@/components/DataGrid/renderers/JobLabelRenderer/JobLabelRenderer';
-import JobVersionRenderer from '@/components/DataGrid/renderers/JobVersionRenderer/JobVersionRenderer';
-import LinkRenderer from '@/components/DataGrid/renderers/LinkRenderer/LinkRenderer';
+import AppLink from '@/components/AppLink';
+import DataGrid from '@/components/DataGrid';
+import JobLabelBadge from '@/components/Jobs/JobLabelBadge';
+import JobVersionBadge from '@/components/Jobs/JobVersionBadge';
 import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { useAuth } from '@/hooks/useAuth';
 import { useClusters } from '@/hooks/useClusters';
 import { useEntityFilter } from '@/hooks/useEntityFilter';
-import { ClusterListItem } from '@/types/cluster';
+import { ClusterListItem, Version } from '@/types/cluster';
+import { Label } from '@/types/machine';
 import { getJobTagDefinitions } from '@/utils/job';
 
 function Clusters() {
-  const columnDefs = useMemo(
-    () => [
-      {
-        field: 'name',
-        headerName: 'Cluster Name',
-        cellRenderer: 'LinkRenderer',
-        cellRendererParams: {
-          getTo(row: ClusterListItem) {
-            return `${row.name}`;
-          },
-        },
-      },
-      {
-        valueGetter: ({ data }: { data: ClusterListItem }) => {
-          return getJobTagDefinitions(data.labels);
-        },
-        headerName: 'Tags',
-        cellRenderer: 'JobLabelRenderer',
-        cellRendererParams: {
-          getTagColor(type: string) {
-            switch (type) {
-              case 'danger':
-                return 'red';
-              case 'warning':
-                return 'yellow';
-              default:
-                return 'blue';
-            }
-          },
-        },
-      },
-      {
-        headerName: 'Tags',
-        cellRenderer: 'JobLabelRenderer',
-        cellRendererParams: {
-          getTagColor(type: string) {
-            switch (type) {
-              case 'danger':
-                return 'error';
-              case 'default':
-                return 'blue';
-              default:
-                return type;
-            }
-          },
-        },
-        filter: false,
-      },
-      {
-        field: 'versions',
-        cellRenderer: 'JobVersionRenderer',
-        flex: 2,
-        filter: false,
-      },
-    ],
-    [],
-  );
-  const components = useMemo(
-    () => ({
-      JobLabelRenderer,
-      LinkRenderer,
-      JobVersionRenderer,
-    }),
-    [],
-  );
+  const filterValue = [{ name: 'name', operator: 'contains', type: 'string', value: null }];
+  const columns = [
+    {
+      name: 'name',
+      header: 'Cluster Name',
+      render: ({ value }: { value: string }) => <AppLink item={value} to={`${value}`} />,
+    },
+    {
+      name: 'labels',
+      header: 'Tags',
+      render: ({ value }: { value: Label[] }) => (
+        <JobLabelBadge labels={getJobTagDefinitions(value)} />
+      ),
+    },
+    {
+      name: 'versions',
+      header: 'Versions',
+      render: ({ value }: { value: Version[] }) => <JobVersionBadge versions={value} />,
+      cellRenderer: 'JobVersionRenderer',
+      defaultFlex: 2,
+    },
+  ];
   const navigate = useNavigate();
   const ALL_CLUSTERS = 'allClusters';
   const MY_CLUSTERS = 'myClusters';
   const { onToggleHandler, filter } = useEntityFilter(ALL_CLUSTERS, MY_CLUSTERS);
   const shouldShowAllClusters = filter !== MY_CLUSTERS;
   const { user } = useAuth();
-  const { data = [] } = useClusters();
+  const { data = [], isLoading } = useClusters();
 
   const clusters = shouldShowAllClusters
     ? data
@@ -111,10 +68,11 @@ function Clusters() {
           </Button>
         </div>
         <DataGrid
-          columnDefs={columnDefs}
-          rowData={clusters}
+          columns={columns}
+          dataSource={clusters}
+          defaultFilterValue={filterValue}
+          loading={isLoading}
           recordTypes="Job Clusters"
-          components={components}
         />
       </div>
     </>

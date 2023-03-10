@@ -2,7 +2,7 @@ import { Badge } from '@mantine/core';
 
 import { Version } from '@/types/cluster';
 
-function JobVersionRenderer({ value: versions }: { value: Version[] }) {
+function JobVersionBadge({ versions }: { versions: Version[] }) {
   const badges =
     Array.isArray(versions) &&
     versions.map((item) => (
@@ -21,4 +21,4 @@ function JobVersionRenderer({ value: versions }: { value: Version[] }) {
   return <span className="flex flex-wrap gap-1 my-2">{badges}</span>;
 }
 
-export default JobVersionRenderer;
+export default JobVersionBadge;

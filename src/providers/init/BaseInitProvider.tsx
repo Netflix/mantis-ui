@@ -1,8 +1,8 @@
-import { showNotification } from '@mantine/notifications';
 import { Options } from 'ky';
 import { ReactNode, useEffect, useRef } from 'react';
 
 import { setupApiClients } from '@/services/BaseService';
+import { showErrorNotification } from '@/utils/notifications';
 
 function InitProvider({ children }: { children: ReactNode }) {
   const initialized = useRef(false);
@@ -24,11 +24,10 @@ function InitProvider({ children }: { children: ReactNode }) {
         afterResponse: [
           async (_request: Request, _options: Options, response: Response) => {
             if (!response.ok) {
-              showNotification({
-                title: `Request ${response.url} failed with code ${response.status}`,
-                message: response.statusText,
-                color: 'red',
-              });
+              showErrorNotification(
+                response.statusText,
+                `Request ${response.url} failed with code ${response.status}`,
+              );
               return Promise.reject(response);
             }
             return response;

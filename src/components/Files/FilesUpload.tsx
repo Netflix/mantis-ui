@@ -1,7 +1,8 @@
 import { Text, useMantineTheme } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
-import { showNotification } from '@mantine/notifications';
 import { TbFileCheck, TbFileZip, TbX } from 'react-icons/tb';
+
+import { showErrorNotification, showSuccessNotification } from '@/utils/notifications';
 
 interface FileRejection {
   file: File;
@@ -17,22 +18,17 @@ function FilesUpload() {
   const theme = useMantineTheme();
   const onDrop = (files: File[]) => {
     const fileNames = files.map((file) => file.name);
-    showNotification({
-      title: 'Upload Successful',
-      message: `${fileNames.toString()} uploaded successfully.`,
-      color: 'green',
-    });
+    showSuccessNotification(`${fileNames.toString()} uploaded successfully.`, 'Upload Successful');
   };
 
   const onReject = (fileRejections: FileRejection[]) => {
     const fileNames = fileRejections.map((rejection) => rejection.file.name);
     const reasons = fileRejections.map((rejection) => rejection.errors[0].message);
 
-    showNotification({
-      title: 'Upload Failed',
-      message: `${fileNames.toString()} failed to upload due to ${reasons.toString()}.`,
-      color: 'red',
-    });
+    showErrorNotification(
+      `${fileNames.toString()} failed to upload due to ${reasons.toString()}.`,
+      'Upload Failed',
+    );
   };
 
   return (

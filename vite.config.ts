@@ -12,22 +12,9 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
   },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          '@ag-grid-community/core': ['@ag-grid-community/core'],
-          '@ag-grid-community/react': ['@ag-grid-community/react'],
-        },
-      },
-    },
-  },
   optimizeDeps: {
     include: [
-      '@ag-grid-community/client-side-row-model',
-      '@ag-grid-community/core',
-      '@ag-grid-community/react',
-      '@ag-grid-community/styles',
+      '@inovua/reactdatagrid-community',
       '@mantine/core',
       '@mantine/dropzone',
       '@mantine/notifications',
