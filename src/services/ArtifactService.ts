@@ -2,6 +2,8 @@ import ky from 'ky';
 
 import { Artifact } from '@/types/artifact';
 
+import { getApiClientEntryForEnv } from './BaseService';
+
 export async function fetchArtifacts(envs: string[]) {
   // Fix this API call to not call hard coded UI APIs
   const requests = envs.map((env) =>
@@ -20,4 +22,15 @@ export async function fetchArtifacts(envs: string[]) {
     return [];
   });
   return data;
+}
+
+export function uploadArtifacts(artifact: Artifact, envs: string[]) {
+  envs.map((env) => {
+    const { client } = getApiClientEntryForEnv(env);
+
+    const data = client.post(`api/v1/artifacts`, {
+      json: artifact,
+    });
+    return data.json<Artifact>();
+  });
 }

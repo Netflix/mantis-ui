@@ -101,6 +101,17 @@ export function makeServer(baseUrl: string) {
       this.get('https://mantis.us-east-1.test.netflix.net/library/list', (schema) => {
         return schema.db.artifacts;
       });
+
+      this.post('/v1/artifacts', (schema, request) => {
+        try {
+          const data = JSON.parse(request.requestBody) as Artifact;
+          schema.db.artifacts.insert(data);
+        } catch (err) {
+          console.error(err);
+        }
+
+        return { list: schema.db.artifacts };
+      });
     },
 
     seeds(server) {

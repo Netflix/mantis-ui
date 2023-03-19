@@ -2,6 +2,8 @@ import { Text, useMantineTheme } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
 import { TbFileCheck, TbFileZip, TbX } from 'react-icons/tb';
 
+import { uploadArtifacts } from '@/services/ArtifactService';
+import { ENVS } from '@/services/BaseService';
 import { showErrorNotification, showSuccessNotification } from '@/utils/notifications';
 
 interface FileRejection {
@@ -18,6 +20,16 @@ function FilesUpload() {
   const theme = useMantineTheme();
   const onDrop = (files: File[]) => {
     const fileNames = files.map((file) => file.name);
+    files.forEach((file) => {
+      const newArtifact = {
+        lastModified: file.lastModified,
+        key: file.name,
+        file: file.toString(),
+        size: file.size.toString(),
+      };
+
+      uploadArtifacts(newArtifact, ENVS);
+    });
     showSuccessNotification(`${fileNames.toString()} uploaded successfully.`, 'Upload Successful');
   };
 
