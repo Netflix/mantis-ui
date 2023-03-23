@@ -1,12 +1,12 @@
 import { createContext, useContext } from 'react';
 
-import { User } from '@/types/user';
+import type { User } from '@/types/user';
 
 export interface AuthContextType {
-  user: User | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   login: (...args: any[]) => void;
   logout: (callback?: VoidFunction) => void;
+  user: User | null;
 }
 
 export const AuthContext = createContext<AuthContextType>({

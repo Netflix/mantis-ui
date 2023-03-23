@@ -1,6 +1,6 @@
 import { getApiClientEntries } from '@/services/BaseService';
-import { EnvRegion } from '@/types/api';
-import { Cluster, ClusterListItem } from '@/types/cluster';
+import type { EnvRegion } from '@/types/api';
+import type { Cluster, ClusterListItem } from '@/types/cluster';
 
 export async function fetchJobClusters(
   regionEnvs: EnvRegion[],

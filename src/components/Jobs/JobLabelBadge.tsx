@@ -1,6 +1,6 @@
 import { Badge } from '@mantine/core';
 
-import { LabelTag } from '@/utils/job';
+import type { LabelTag } from '@/utils/job';
 
 function JobLabelBadge({ labels }: { labels: LabelTag[] }) {
   const getTagColor = (type: string) => {

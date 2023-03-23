@@ -1,5 +1,6 @@
 import { lazy } from 'react';
-import { Navigate, Params } from 'react-router-dom';
+import type { Params } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import ClustersRoute from '@/components/Router/routes/ClustersRoute';
 import FilesRoute from '@/components/Router/routes/FilesRoute';
@@ -11,9 +12,9 @@ const Login = lazy(() => import('@/components/Login'));
 const NotFound = lazy(() => import('@/components/NotFound'));
 const Layout = lazy(() => import('@/components/Layout'));
 
-export type RouteHandle = {
-  breadcrumb?: string | ((params: Params<string>) => string);
-};
+export interface RouteHandle {
+  breadcrumb: string | ((params: Params) => string);
+}
 
 export const routes = [
   {

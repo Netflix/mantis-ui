@@ -1,8 +1,8 @@
 export interface MachineDefinition {
   cpuCores: number;
+  diskMB: number;
   memoryMB: number;
   networkMbps: number;
-  diskMB: number;
   numPorts: number;
 }
 
@@ -12,14 +12,14 @@ export interface Label {
 }
 
 export interface Sla {
-  runtimeLimitSecs: number;
-  minRuntimeSecs: number;
-  slaType: string;
   durationType: string;
+  minRuntimeSecs: number;
+  runtimeLimitSecs: number;
+  slaType: string;
   userProvidedType: string;
 }
 
 export interface MigrationConfig {
-  strategy: string;
   configString: string;
+  strategy: string;
 }

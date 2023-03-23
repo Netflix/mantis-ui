@@ -1,7 +1,7 @@
-import { Hooks } from 'ky';
+import type { Hooks } from 'ky';
 
 import { createKyInstance } from '@/lib/ky';
-import { ApiClientEntry } from '@/types/api';
+import type { ApiClientEntry } from '@/types/api';
 import { flattenEnvObject } from '@/utils/env';
 
 const mantisClients = [] as ApiClientEntry[];
@@ -51,7 +51,7 @@ export function getApiClientEntries() {
 }
 
 export function getServiceResponseError(response: Response) {
-  if (response && response.status && response.statusText) {
+  if (response?.status && response?.statusText) {
     return {
       code: response.status,
       message: response.statusText,

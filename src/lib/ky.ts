@@ -1,4 +1,5 @@
-import ky, { Hooks } from 'ky';
+import type { Hooks } from 'ky';
+import ky from 'ky';
 
 export function createKyInstance(prefixUrl: string, hooks: Hooks) {
   const instance = ky.create({

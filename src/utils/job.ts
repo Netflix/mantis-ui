@@ -1,9 +1,9 @@
-import { Label } from '@/types/machine';
+import type { Label } from '@/types/machine';
 
 export interface LabelTag {
+  labelName: string;
   labelType: string;
   name: string;
-  labelName: string;
 }
 
 export function getJobTagDefinitions(labels: Label[]) {

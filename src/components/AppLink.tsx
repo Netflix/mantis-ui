@@ -1,6 +1,7 @@
 import { Anchor } from '@mantine/core';
-import { ReactNode } from 'react';
-import { Link, To } from 'react-router-dom';
+import type { ReactNode } from 'react';
+import type { To } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function AppLink({ item, to }: { item: ReactNode; to: To }) {
   return (

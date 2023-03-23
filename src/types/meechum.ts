@@ -7,11 +7,11 @@ export interface MeechumUserInfo {
 
 export interface UserInfo {
   email: string;
-  preferred_username: string;
   familyName: string;
   fullName: string;
   givenName: string;
   googleGroups: string[];
+  preferred_username: string;
   sub: string;
   userId: string;
 }

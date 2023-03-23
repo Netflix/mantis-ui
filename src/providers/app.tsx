@@ -1,6 +1,8 @@
-import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core';
+import type { ColorScheme } from '@mantine/core';
+import { ColorSchemeProvider, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
-import { ReactNode, lazy, useState } from 'react';
+import type { ReactNode } from 'react';
+import { lazy, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { QueryClientProvider } from 'react-query';
 
@@ -8,7 +10,7 @@ import { queryClient } from '@/lib/react-query';
 import type { IAuthProvider } from '@/providers/auth/AuthProvider';
 import { loadProviderModule } from '@/utils/module-loader';
 
-import { IInitProvider } from './init/InitProvider';
+import type { IInitProvider } from './init/InitProvider';
 
 const InitProvider = lazy(() => {
   return loadProviderModule<IInitProvider>('init', 'InitProvider');
@@ -21,7 +23,7 @@ const AuthProvider = lazy(() => {
 function AppProvider({ children }: { children: ReactNode }) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
   const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+    setColorScheme(value ?? (colorScheme === 'dark' ? 'light' : 'dark'));
 
   return (
     <HelmetProvider>

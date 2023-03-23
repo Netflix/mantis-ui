@@ -1,6 +1,6 @@
 import ReactDataGrid from '@inovua/reactdatagrid-community';
 import '@inovua/reactdatagrid-community/index.css';
-import { TypeDataGridProps, TypeDataSource } from '@inovua/reactdatagrid-community/types';
+import type { TypeDataGridProps, TypeDataSource } from '@inovua/reactdatagrid-community/types';
 
 interface DataGridProps extends Partial<TypeDataGridProps> {
   dataSource: TypeDataSource;
@@ -13,7 +13,7 @@ const filterTypes = Object.assign({}, ReactDataGrid.defaultProps.filterTypes, {
     operators: [
       {
         name: 'includes',
-        fn: ({ value, filterValue }: { value: string[]; filterValue: string[] }) => {
+        fn: ({ value, filterValue }: { filterValue: string[]; value: string[] }) => {
           if (!filterValue) {
             return true;
           }

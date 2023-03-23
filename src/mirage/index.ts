@@ -4,9 +4,9 @@ import { API_URLS } from '@/config/development';
 import artifacts from '@/mirage/fixtures/artifacts';
 import clusters from '@/mirage/fixtures/clusters';
 import jobs from '@/mirage/fixtures/jobs';
-import { Artifact } from '@/types/artifact';
-import { Cluster } from '@/types/cluster';
-import { CompactJob, Job } from '@/types/job';
+import type { Artifact } from '@/types/artifact';
+import type { Cluster } from '@/types/cluster';
+import type { CompactJob, Job } from '@/types/job';
 
 export function makeServer(baseUrl: string) {
   return createServer({

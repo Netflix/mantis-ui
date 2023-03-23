@@ -4,7 +4,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from 'react-query';
 import { Outlet } from 'react-router-dom';
 
-import { IAuthGuard } from '@/components/AuthGuard/AuthGuard';
+import type { IAuthGuard } from '@/components/AuthGuard/AuthGuard';
 import ErrorFallback from '@/components/ErrorFallback';
 import RouteBreadcrumbs from '@/components/RouteBreadcrumbs';
 import TopNav from '@/components/TopNav';

@@ -7,15 +7,18 @@ import '@/index.css';
 import { setupMirage } from '@/mirage/index';
 
 const container = document.getElementById('root');
-const root = createRoot(container!);
+if (container) {
+  const root = createRoot(container);
+  // Setup MirageJS to mock APIs
+  setupMirage();
 
-// Setup MirageJS to mock APIs
-setupMirage();
-
-root.render(
-  <StrictMode>
-    <Suspense fallback={<LoadingFallback />}>
-      <App />
-    </Suspense>
-  </StrictMode>,
-);
+  root.render(
+    <StrictMode>
+      <Suspense fallback={<LoadingFallback />}>
+        <App />
+      </Suspense>
+    </StrictMode>,
+  );
+} else {
+  throw new Error('Root element not found');
+}

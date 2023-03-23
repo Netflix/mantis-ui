@@ -1,6 +1,6 @@
 import { getApiClientEntries, getApiClientEntryForRegion } from '@/services/BaseService';
-import { EnvRegion } from '@/types/api';
-import { CompactJob, Job, JobSummary } from '@/types/job';
+import type { EnvRegion } from '@/types/api';
+import type { CompactJob, Job, JobSummary } from '@/types/job';
 
 const reason = 'Mantis UI user action';
 
@@ -9,13 +9,13 @@ export async function fetchJobsListForRegion(env: string, region: string, compac
   const queryParams = new URLSearchParams();
   queryParams.set('compact', compact.toString());
   const data = await client.get(`api/v1/jobs/?${queryParams.toString()}`);
-  return data.json<{ list: Job[] | CompactJob[] }>();
+  return data.json<{ list: CompactJob[] | Job[] }>();
 }
 
 export async function fetchJobs(
   regionEnvs: EnvRegion[],
   compact = true,
-): Promise<Job[] | CompactJob[]> {
+): Promise<CompactJob[] | Job[]> {
   const clientEntries = getApiClientEntries().filter(({ env, region }) =>
     regionEnvs.some((item) => item.env === env && item.region === region),
   );

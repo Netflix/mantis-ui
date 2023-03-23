@@ -1,6 +1,6 @@
 export interface Artifact {
-  lastModified: number;
-  key: string;
   file: string;
+  key: string;
+  lastModified: number;
   size: string;
 }

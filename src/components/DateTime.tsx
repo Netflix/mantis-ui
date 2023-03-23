@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-function DateTime({ date }: { date: number | Date }) {
+function DateTime({ date }: { date: Date | number }) {
   const formattedDate = date ? format(date, 'MMM d, yyyy') : '';
   const formattedTime = date ? format(date, 'hh:ss a') : '';
   return (

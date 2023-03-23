@@ -1,6 +1,6 @@
 import { Badge } from '@mantine/core';
 
-import { Version } from '@/types/cluster';
+import type { Version } from '@/types/cluster';
 
 function JobVersionBadge({ versions }: { versions: Version[] }) {
   const badges =

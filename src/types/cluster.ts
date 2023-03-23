@@ -1,40 +1,40 @@
-import { HardConstraints, SoftConstraints } from '@/types/constraints';
-import { Label, MachineDefinition, MigrationConfig, Sla } from '@/types/machine';
+import type { HardConstraints, SoftConstraints } from '@/types/constraints';
+import type { Label, MachineDefinition, MigrationConfig, Sla } from '@/types/machine';
 
 export interface ClusterListItem {
-  name: string;
   labels: Label[];
-  versions: Version[];
+  name: string;
   owners: string[];
+  versions: Version[];
 }
 
 export interface Version {
+  disabled: boolean;
   env: string;
   region: string;
   version: string;
-  disabled: boolean;
 }
 
 export interface Cluster {
-  name: string;
-  jars: Jar[];
-  sla: Sla;
-  parameters: Label[];
-  owner: Owner;
-  lastJobCount: number;
+  cronActive: boolean;
   disabled: boolean;
   isReadyForJobMaster: boolean;
-  migrationConfig: MigrationConfig;
+  jars: Jar[];
   labels: Label[];
-  cronActive: boolean;
+  lastJobCount: number;
   latestVersion: string;
+  migrationConfig: MigrationConfig;
+  name: string;
+  owner: Owner;
+  parameters: Label[];
+  sla: Sla;
 }
 
 export interface Jar {
-  url: string;
-  uploadedAt: number;
-  version: string;
   schedulingInfo: SchedulingInfo;
+  uploadedAt: number;
+  url: string;
+  version: string;
 }
 
 export interface SchedulingInfo {
@@ -42,18 +42,18 @@ export interface SchedulingInfo {
 }
 
 export interface Stage {
-  numberOfInstances: number;
-  machineDefinition: MachineDefinition;
   hardConstraints: HardConstraints[];
-  softConstraints: SoftConstraints[];
-  scalingPolicy: null;
+  machineDefinition: MachineDefinition;
+  numberOfInstances: number;
   scalable: boolean;
+  scalingPolicy: null;
+  softConstraints: SoftConstraints[];
 }
 
 export interface Owner {
-  name: string;
-  teamName: string;
-  description: string;
   contactEmail: string;
+  description: string;
+  name: string;
   repo: string;
+  teamName: string;
 }

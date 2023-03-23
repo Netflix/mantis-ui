@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 
 import { Queries } from '@/lib/react-query';
 import { fetchJobsSummary } from '@/services/JobService';
-import { JobSummary } from '@/types/job';
+import type { JobSummary } from '@/types/job';
 
 export function useJobSummary(envRegionList: string[]) {
   return useQuery<JobSummary[], Error>([Queries.SUMMARY, envRegionList], () =>

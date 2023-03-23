@@ -1,5 +1,6 @@
-import { Options } from 'ky';
-import { ReactNode, useEffect, useRef } from 'react';
+import type { Options } from 'ky';
+import type { ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { setupApiClients } from '@/services/BaseService';
 import { showErrorNotification } from '@/utils/notifications';
@@ -11,12 +12,12 @@ function InitProvider({ children }: { children: ReactNode }) {
     if (!initialized.current) {
       initialized.current = true;
       const mode = import.meta.env.MODE;
-      const { API_URLS, ENVS_MAP, ADMIN_GROUPS } = import.meta.glob('/src/config/*.ts', {
+      const { ADMIN_GROUPS, API_URLS, ENVS_MAP } = import.meta.glob('/src/config/*.ts', {
         eager: true,
       })[`/src/config/${mode}.ts`] as {
+        ADMIN_GROUPS: string[];
         API_URLS: { [key: string]: { [key: string]: string } };
         ENVS_MAP: { [key: string]: string[] };
-        ADMIN_GROUPS: string[];
       };
       const clientHooks = {
         beforeRequest: [],

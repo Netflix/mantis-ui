@@ -10,8 +10,8 @@ import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { useAuth } from '@/hooks/useAuth';
 import { useClusters } from '@/hooks/useClusters';
 import { useEntityFilter } from '@/hooks/useEntityFilter';
-import { ClusterListItem, Version } from '@/types/cluster';
-import { Label } from '@/types/machine';
+import type { ClusterListItem, Version } from '@/types/cluster';
+import type { Label } from '@/types/machine';
 import { getJobTagDefinitions } from '@/utils/job';
 
 function Clusters() {
@@ -48,7 +48,7 @@ function Clusters() {
   const clusters = shouldShowAllClusters
     ? data
     : data.filter((cluster: ClusterListItem) =>
-        cluster.owners.includes(user?.email?.replace(/@[A-za-z0-9]+.com/g, '') || ''),
+        cluster.owners.includes(user?.email?.replace(/@[A-za-z0-9]+.com/g, '') ?? ''),
       );
 
   return (

@@ -1,5 +1,6 @@
 import { Checkbox, Text, Title } from '@mantine/core';
-import { ChangeEvent, useMemo, useState } from 'react';
+import type { ChangeEvent } from 'react';
+import { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 import AppLink from '@/components/AppLink';

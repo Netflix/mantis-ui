@@ -7,16 +7,16 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import mantisImage from '@/assets/images/mantis-logo-full-transparent.png';
 import { useAuth } from '@/hooks/useAuth';
 
-type UserData = {
-  name: string;
+interface UserData {
   email: string;
-};
+  name: string;
+}
 
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const redirect = searchParams.get('redirect') || '/';
+  const redirect = searchParams.get('redirect') ?? '/';
 
   const {
     register,

@@ -3,11 +3,11 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Queries } from '@/lib/react-query';
 import { REGION_ENVS } from '@/services/BaseService';
 import { fetchJob, fetchJobs, killJobs } from '@/services/JobService';
-import { CompactJob, Job } from '@/types/job';
+import type { CompactJob, Job } from '@/types/job';
 import { showErrorNotification, showSuccessNotification } from '@/utils/notifications';
 
 export function useJobs() {
-  return useQuery<Job[] | CompactJob[], Error>(Queries.JOBS, () => fetchJobs(REGION_ENVS));
+  return useQuery<CompactJob[] | Job[], Error>(Queries.JOBS, () => fetchJobs(REGION_ENVS));
 }
 
 export function useKillJobMutation() {

@@ -20,7 +20,7 @@
     "strict": true,
     "target": "ESNext",
     "types": ["vite/client"],
-    // "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

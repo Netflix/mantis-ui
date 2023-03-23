@@ -5,13 +5,13 @@ import { TbFileCheck, TbFileZip, TbX } from 'react-icons/tb';
 import { showErrorNotification, showSuccessNotification } from '@/utils/notifications';
 
 interface FileRejection {
-  file: File;
   errors: FileError[];
+  file: File;
 }
 
 export interface FileError {
-  message: string;
   code: string;
+  message: string;
 }
 
 function FilesUpload() {

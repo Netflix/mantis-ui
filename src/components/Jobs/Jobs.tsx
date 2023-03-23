@@ -1,4 +1,4 @@
-import { TypeRowSelection } from '@inovua/reactdatagrid-community/types';
+import type { TypeRowSelection } from '@inovua/reactdatagrid-community/types';
 import { Button, Switch } from '@mantine/core';
 import { useCallback, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -13,8 +13,8 @@ import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { useAuth } from '@/hooks/useAuth';
 import { useEntityFilter } from '@/hooks/useEntityFilter';
 import { useJobs, useKillJobMutation } from '@/hooks/useJobs';
-import { CompactJob } from '@/types/job';
-import { Label } from '@/types/machine';
+import type { CompactJob } from '@/types/job';
+import type { Label } from '@/types/machine';
 import { getJobClusterId, getJobTagDefinitions } from '@/utils/job';
 import { pluralize } from '@/utils/string';
 
@@ -111,14 +111,16 @@ function Jobs() {
             onChange={onToggleHandler}
             checked={shouldShowAllJobs}
           />
-          <Button
-            color="red"
-            className="my-2 ml-auto"
-            disabled={!selections.length}
-            onClick={() => mutate({ jobs: selections, userEmail: user?.email as string })}
-          >
-            Kill {selections.length} {pluralize(selections.length, 'Job')}
-          </Button>
+          {user && (
+            <Button
+              color="red"
+              className="my-2 ml-auto"
+              disabled={!selections.length}
+              onClick={() => mutate({ jobs: selections, userEmail: user.email })}
+            >
+              Kill {selections.length} {pluralize(selections.length, 'Job')}
+            </Button>
+          )}
         </div>
         <DataGrid
           idProperty="jobId"
