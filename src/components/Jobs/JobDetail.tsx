@@ -1,4 +1,4 @@
 function JobDetail() {
-  return <div className="flex flex-col h-full" />;
+  return <div className="flex h-full flex-col" />;
 }
 export default JobDetail;

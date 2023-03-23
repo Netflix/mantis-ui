@@ -87,10 +87,10 @@ function TopNav() {
 
   return (
     <div className={classes.navbar}>
-      <img src={mantisImage} alt="Mantis Logo" className="h-8 w-12 mx-8" />
-      <div className="flex flex-row gap-12 items-center h-full">{items}</div>
+      <img src={mantisImage} alt="Mantis Logo" className="mx-8 h-8 w-12" />
+      <div className="flex h-full flex-row items-center gap-12">{items}</div>
 
-      <div className="ml-auto flex flex-row gap-10 mr-6 h-full">
+      <div className="ml-auto mr-6 flex h-full flex-row gap-10">
         <Menu trigger="hover" shadow="md">
           <Menu.Target>
             <div className="flex flex-row items-center gap-2">

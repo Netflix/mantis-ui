@@ -20,7 +20,7 @@ function Files() {
       <Helmet>
         <title>Mantis - Files</title>
       </Helmet>
-      <div className="flex flex-col h-full">
+      <div className="flex h-full flex-col">
         <Tabs className="mb-4" value={activeKey} onTabChange={onChange}>
           <Tabs.List>
             <Tabs.Tab value="upload">Upload</Tabs.Tab>

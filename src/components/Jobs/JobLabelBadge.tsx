@@ -14,7 +14,7 @@ function JobLabelBadge({ labels }: { labels: LabelTag[] }) {
     }
   };
   return (
-    <span className="flex flex-wrap gap-1 my-2">
+    <span className="my-2 flex flex-wrap gap-1">
       {Array.isArray(labels) &&
         labels.map((label) => {
           return (

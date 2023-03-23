@@ -9,7 +9,7 @@ function ErrorFallback({
   resetErrorBoundary: () => void;
 }) {
   return (
-    <div className="flex flex-col h-full gap-4 mx-auto mt-8">
+    <div className="mx-auto mt-8 flex h-full flex-col gap-4">
       <Alert icon={<FaTimesCircle size={16} />} title="Something went wrong" color="red">
         {error.message}
       </Alert>

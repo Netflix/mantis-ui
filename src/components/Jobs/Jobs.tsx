@@ -104,7 +104,7 @@ function Jobs() {
       <Helmet>
         <title>Mantis - Jobs</title>
       </Helmet>
-      <div className="flex flex-col h-full">
+      <div className="flex h-full flex-col">
         <div className="flex flex-row items-center">
           <Switch
             label={shouldShowAllJobs ? 'All Jobs' : 'My Jobs'}

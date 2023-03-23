@@ -35,7 +35,7 @@ function DataGrid({ columns = [], dataSource, recordTypes, ...others }: DataGrid
   }));
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex h-full flex-col">
       <ReactDataGrid
         columns={columnsWithDefaults}
         dataSource={dataSource}
@@ -45,7 +45,7 @@ function DataGrid({ columns = [], dataSource, recordTypes, ...others }: DataGrid
         {...others}
       />
       {Array.isArray(dataSource) && (
-        <div className="p-2 border-solid border-1 border-[#E5E8EB] border-t-0 text-sm text-[#555e68]">
+        <div className="border-1 border-t-0 border-solid border-[#E5E8EB] p-2 text-sm text-[#555e68]">
           <strong>Total:</strong> {dataSource.length} {recordTypes}
         </div>
       )}

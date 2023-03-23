@@ -41,7 +41,7 @@ function Login() {
       <Helmet>
         <title>Mantis - Login</title>
       </Helmet>
-      <div className="flex items-center justify-center h-full">
+      <div className="flex h-full items-center justify-center">
         <Card shadow="sm" radius="md" withBorder className="w-1/2">
           <Card.Section inheritPadding py="xs" className="flex justify-center">
             <Image src={mantisImage} alt="Mantis Logo" width={100} fit="contain" />

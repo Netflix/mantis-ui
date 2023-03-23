@@ -93,8 +93,8 @@ function Summary() {
       <Helmet>
         <title>Mantis - Summary</title>
       </Helmet>
-      <div className="flex flex-col h-full gap-4">
-        <div className="flex gap-2 justify-evenly">
+      <div className="flex h-full flex-col gap-4">
+        <div className="flex justify-evenly gap-2">
           <div className="flex flex-col items-center">
             <Text color="gray" weight={300}>
               Job Clusters

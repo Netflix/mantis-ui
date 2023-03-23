@@ -56,7 +56,7 @@ function Clusters() {
       <Helmet>
         <title>Mantis - Clusters</title>
       </Helmet>
-      <div className="flex flex-col h-full">
+      <div className="flex h-full flex-col">
         <div className="flex flex-row items-center">
           <Switch
             label={shouldShowAllClusters ? 'All Clusters' : 'My Clusters'}

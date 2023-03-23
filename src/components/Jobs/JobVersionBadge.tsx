@@ -18,7 +18,7 @@ function JobVersionBadge({ versions }: { versions: Version[] }) {
       </Badge>
     ));
 
-  return <span className="flex flex-wrap gap-1 my-2">{badges}</span>;
+  return <span className="my-2 flex flex-wrap gap-1">{badges}</span>;
 }
 
 export default JobVersionBadge;

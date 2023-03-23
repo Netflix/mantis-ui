@@ -1,22 +1,27 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "React",
   "compilerOptions": {
-    "target": "esnext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
-    "isolatedModules": true,
-    "moduleResolution": "node",
-    "jsx": "react-jsx",
-    "noEmit": true,
     "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ESNext",
+    "types": ["vite/client"],
+    // "verbatimModuleSyntax": true
   },
-  "include": ["./src", "./*.ts", "tailwind.config.js"]
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
