@@ -1,8 +1,7 @@
 import ky from 'ky';
 
+import { getApiClientEntryForEnv } from '@/services/BaseService';
 import { Artifact } from '@/types/artifact';
-
-import { getApiClientEntryForEnv } from './BaseService';
 
 export async function fetchArtifacts(envs: string[]) {
   // Fix this API call to not call hard coded UI APIs
