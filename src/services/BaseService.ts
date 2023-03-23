@@ -46,6 +46,17 @@ export function getApiClientEntryForRegion(env: string, region: string) {
   return apiClientEntry;
 }
 
+export function getApiClientEntryForEnv(env: string) {
+  const apiClients = mantisClients;
+  const apiClientEntry = apiClients.find((entry) => {
+    return entry.env === env;
+  });
+  if (!apiClientEntry) {
+    throw new Error(`Client requested for invalid env: ${env}`);
+  }
+  return apiClientEntry;
+}
+
 export function getApiClientEntries() {
   return mantisClients;
 }
