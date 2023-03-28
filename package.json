@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "vite build",
+    "build:staging": "vite build --mode staging",
     "dev": "pnpm local",
     "lint": "eslint --ext .tsx,.ts,.js,.jsx src",
     "lint:fix": "eslint --ext .tsx,.ts,.js,.jsx src --fix",

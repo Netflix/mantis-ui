@@ -1,38 +1,49 @@
-import type { Hooks } from 'ky';
+import type { Options } from 'ky';
 
 import { createKyInstance } from '@/lib/ky';
-import type { ApiClientEntry } from '@/types/api';
-import { flattenEnvObject } from '@/utils/env';
+import type { ApiClientEntry, Env, EnvRegion, Region } from '@/types/api';
+import { showErrorNotification } from '@/utils/notifications';
 
-const mantisClients = [] as ApiClientEntry[];
-export let MANTIS_ADMIN_GROUPS: string[] = [];
-export let REGION_ENVS = [] as { env: string; region: string }[];
-export let ENVS = [] as string[];
-export const IS_PROD_STACK = window.location.origin.includes('prod.netflix');
-export const IS_DEV_STACK = !IS_PROD_STACK;
+let mantisClients = [] as ApiClientEntry[];
+export const ENVS = (
+  typeof import.meta.env.VITE_SUPPORTED_ENVS === 'string'
+    ? import.meta.env.VITE_SUPPORTED_ENVS.split(',')
+    : []
+) as Env[];
+export const REGIONS = (
+  typeof import.meta.env.VITE_SUPPORTED_REGIONS === 'string'
+    ? import.meta.env.VITE_SUPPORTED_REGIONS.split(',')
+    : []
+) as Region[];
+export const MANTIS_ADMIN_GROUPS: string[] =
+  typeof import.meta.env.VITE_ADMIN_GROUPS === 'string'
+    ? import.meta.env.VITE_ADMIN_GROUPS.split(',')
+    : [];
+export const REGION_ENVS = getAvailableEnvRegions();
 
-export function setupApiClients(
-  appUrls: { [key: string]: { [key: string]: string } },
-  envsMap: { [key: string]: string[] },
-  adminGroups: string[],
-  kyHooks: Hooks,
-) {
-  Object.entries(envsMap).forEach(([env, regions]) => {
-    if (Array.isArray(regions)) {
-      regions.forEach((region: string) => {
-        mantisClients.push({
-          env,
-          region,
-          url: appUrls[env][region],
-          client: createKyInstance(appUrls[env][region], kyHooks),
-        });
-      });
-    }
-  });
-
-  REGION_ENVS = flattenEnvObject(envsMap);
-  ENVS = Object.keys(envsMap);
-  MANTIS_ADMIN_GROUPS = adminGroups;
+export function setupApiClients(apiUrls: { env: Env; region: Region; url: string }[]) {
+  const clientHooks = {
+    beforeRequest: [],
+    beforeRetry: [],
+    afterResponse: [
+      async (_request: Request, _options: Options, response: Response) => {
+        if (!response.ok) {
+          showErrorNotification(
+            response.statusText,
+            `Request ${response.url} failed with code ${response.status}`,
+          );
+          return Promise.reject(response);
+        }
+        return response;
+      },
+    ],
+  };
+  mantisClients = apiUrls.map(({ env, region, url }) => ({
+    env,
+    region,
+    url,
+    client: createKyInstance(url, clientHooks),
+  }));
 }
 
 export function getApiClientEntryForRegion(env: string, region: string) {
@@ -58,6 +69,23 @@ export function getServiceResponseError(response: Response) {
     };
   }
   return { code: 1, message: 'Request failed with an unexpected error.' };
+}
+
+export function getAvailableRegionsMap() {
+  return ENVS.reduce<{ [key in Env]: Region[] }>(
+    (acc, env) => {
+      acc[env] = REGIONS;
+      return acc;
+    },
+    { prod: [], test: [] },
+  );
+}
+
+export function getAvailableEnvRegions() {
+  const regionsMap = getAvailableRegionsMap();
+  return Object.keys(regionsMap).flatMap(
+    (env) => regionsMap[env as Env].map((region: Region) => ({ env, region })) as EnvRegion[],
+  );
 }
 
 export function createSseEventSource(

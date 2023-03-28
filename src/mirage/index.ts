@@ -1,9 +1,9 @@
 import { Model, Response, createServer } from 'miragejs';
 
-import { API_URLS } from '@/config/development';
 import artifacts from '@/mirage/fixtures/artifacts';
 import clusters from '@/mirage/fixtures/clusters';
 import jobs from '@/mirage/fixtures/jobs';
+import type { Env, Region } from '@/types/api';
 import type { Artifact } from '@/types/artifact';
 import type { Cluster } from '@/types/cluster';
 import type { CompactJob, Job } from '@/types/job';
@@ -109,13 +109,11 @@ export function makeServer(baseUrl: string) {
   });
 }
 
-export function setupMirage() {
+export function setupMirage(apiUrls: { env: Env; region: Region; url: string }[]) {
   const mode = import.meta.env.MODE;
   if (mode === 'development') {
-    Object.values(API_URLS).forEach((regions) => {
-      Object.values(regions).forEach((url) => {
-        makeServer(url);
-      });
+    apiUrls.forEach((apiUrl) => {
+      makeServer(apiUrl.url);
     });
   }
 }

@@ -1,15 +1,7 @@
 import { logErrorMessage } from '@/utils/logger';
 
 const DEFAULT = 'Base';
-
-const mode = import.meta.env.MODE;
-const { CUSTOM_MODULE_SUFFIX } = import.meta.glob('/src/config/*.ts', { eager: true })[
-  `/src/config/${mode}.ts`
-] as {
-  CUSTOM_MODULE_SUFFIX: 'string';
-};
-
-const MODULE_SUFFIX = CUSTOM_MODULE_SUFFIX ? CUSTOM_MODULE_SUFFIX : DEFAULT;
+const MODULE_SUFFIX = import.meta.env.VITE_CUSTOM_MODULE_PREFIX ?? DEFAULT;
 
 // Reference: https://github.com/rollup/plugins/tree/master/packages/dynamic-import-vars#limitations
 
