@@ -9,6 +9,7 @@ import DataGrid from '@/components/DataGrid';
 import DateTime from '@/components/DateTime';
 import EnvBadge from '@/components/EnvBadge';
 import JobLabelBadge from '@/components/Jobs/JobLabelBadge';
+import JobStateBadge from '@/components/Jobs/JobStateBadge';
 import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { useAuth } from '@/hooks/useAuth';
 import { useEntityFilter } from '@/hooks/useEntityFilter';
@@ -17,8 +18,6 @@ import type { CompactJob } from '@/types/job';
 import type { Label } from '@/types/machine';
 import { getJobClusterId, getJobTagDefinitions } from '@/utils/job';
 import { pluralize } from '@/utils/string';
-
-import JobStateBadge from './JobStateBadge';
 
 function Jobs() {
   const filterValue = [{ name: 'jobId', operator: 'contains', type: 'string', value: null }];

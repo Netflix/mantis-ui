@@ -8,9 +8,8 @@ import { QueryClientProvider } from 'react-query';
 
 import { queryClient } from '@/lib/react-query';
 import type { IAuthProvider } from '@/providers/auth/AuthProvider';
+import type { IInitProvider } from '@/providers/init/InitProvider';
 import { loadProviderModule } from '@/utils/module-loader';
-
-import type { IInitProvider } from './init/InitProvider';
 
 const InitProvider = lazy(() => {
   return loadProviderModule<IInitProvider>('init', 'InitProvider');
