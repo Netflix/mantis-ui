@@ -2,7 +2,7 @@ import type { TypeRowSelection } from '@inovua/reactdatagrid-community/types';
 import { Button, Switch } from '@mantine/core';
 import { useCallback, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { FaServer } from 'react-icons/fa';
+import { TbServerCog } from 'react-icons/tb';
 
 import AppLink from '@/components/AppLink';
 import DataGrid from '@/components/DataGrid';
@@ -20,7 +20,13 @@ import { getJobClusterId, getJobTagDefinitions } from '@/utils/job';
 import { pluralize } from '@/utils/string';
 
 function Jobs() {
-  const filterValue = [{ name: 'jobId', operator: 'contains', type: 'string', value: null }];
+  const filterValue = [
+    { name: 'jobId', operator: 'contains', type: 'string', value: null },
+    { name: 'user', operator: 'contains', type: 'string', value: null },
+    { name: 'env', operator: 'contains', type: 'string', value: null },
+    { name: 'region', operator: 'contains', type: 'string', value: null },
+    { name: 'state', operator: 'contains', type: 'string', value: null },
+  ];
   const columns = [
     {
       name: 'jobId',
@@ -35,7 +41,8 @@ function Jobs() {
       defaultFlex: 0,
       render: ({ value }: { value: string }) => (
         <AppLink
-          item={<FaServer className="my-3" />}
+          className="flex h-full"
+          item={<TbServerCog />}
           to={`/${AppRoutePaths.CLUSTERS}/${getJobClusterId(value)}`}
         />
       ),

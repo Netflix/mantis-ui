@@ -1,6 +1,5 @@
 import { showNotification } from '@mantine/notifications';
-import { AiOutlineInfo } from 'react-icons/ai';
-import { TbCheck, TbX } from 'react-icons/tb';
+import { TbCheck, TbInfoCircle, TbX } from 'react-icons/tb';
 
 const autoClose = 5000;
 
@@ -9,7 +8,7 @@ export function showInfoNotification(message: string, title?: string) {
     title,
     message,
     autoClose,
-    icon: <AiOutlineInfo />,
+    icon: <TbInfoCircle />,
     color: 'gray',
   });
 }

@@ -3,9 +3,9 @@ import type { ReactNode } from 'react';
 import type { To } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-function AppLink({ item, to }: { item: ReactNode; to: To }) {
+function AppLink({ className = '', item, to }: { className?: string; item: ReactNode; to: To }) {
   return (
-    <Anchor component={Link} to={to}>
+    <Anchor className={className} component={Link} to={to}>
       {item}
     </Anchor>
   );
