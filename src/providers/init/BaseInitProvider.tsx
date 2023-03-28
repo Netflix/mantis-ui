@@ -2,6 +2,7 @@ import type { Options } from 'ky';
 import type { ReactNode } from 'react';
 import { useEffect, useRef } from 'react';
 
+import { setupMirage } from '@/mirage';
 import { setupApiClients } from '@/services/BaseService';
 import { showErrorNotification } from '@/utils/notifications';
 
@@ -35,6 +36,9 @@ function InitProvider({ children }: { children: ReactNode }) {
           },
         ],
       };
+
+      // Setup MirageJS to mock APIs
+      setupMirage();
 
       setupApiClients(API_URLS, ENVS_MAP, ADMIN_GROUPS, clientHooks);
     }
