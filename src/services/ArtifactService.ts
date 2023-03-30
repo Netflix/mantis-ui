@@ -1,5 +1,6 @@
 import ky from 'ky';
 
+import { getApiClientEntryForEnv } from '@/services/BaseService';
 import type { Artifact } from '@/types/artifact';
 
 export async function fetchArtifacts(envs: string[]) {
@@ -20,4 +21,15 @@ export async function fetchArtifacts(envs: string[]) {
     return [];
   });
   return data;
+}
+
+export function uploadArtifacts(artifact: Artifact, envs: string[]) {
+  envs.map((env) => {
+    const { client } = getApiClientEntryForEnv(env);
+
+    const data = client.post(`api/v1/artifacts`, {
+      json: artifact,
+    });
+    return data.json<Artifact>();
+  });
 }
