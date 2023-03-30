@@ -9,7 +9,7 @@
   "include": [
     "vite.config.ts",
     ".eslintrc.cjs",
-    "tailwind.config.cjs",
+    "tailwind.config.ts",
     "postcss.config.cjs",
     "lint-staged.config.cjs"
   ]
