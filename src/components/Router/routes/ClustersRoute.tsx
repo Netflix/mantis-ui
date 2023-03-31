@@ -13,7 +13,7 @@ export default [
   {
     path: AppRoutePaths.CLUSTERS,
     handle: {
-      breadcrumb: 'Jobs',
+      breadcrumb: 'Clusters',
     },
     element: <Clusters />,
     loader() {
