@@ -9,10 +9,16 @@ function NotFound() {
 
   return (
     <div className="flex h-full flex-col items-center justify-center">
-      <Title order={3}>What are you doing here !</Title>
-      <Text>Well this is sad the page that you were looking for is not here</Text>
+      <Title order={3}>Well this is sad..</Title>
+      <Text>
+        Sorry about that. Please try again later, or contact support to help troubleshoot. Error
+        code for reference: 404
+      </Text>
       <Button className="my-4" onClick={handleButtonClick}>
-        Get Yourself Home
+        Go Back
+      </Button>
+      <Button className="my-4" onClick={handleButtonClick}>
+        Go Home
       </Button>
     </div>
   );
