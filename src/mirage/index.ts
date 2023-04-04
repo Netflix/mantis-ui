@@ -80,6 +80,20 @@ export function makeServer(baseUrl: string) {
         } else return new Response(500, { Error: 'No job found with this id.' });
       });
 
+      this.get('/v1/jobClusters/:clusterName', (schema, request) => {
+        const { clusterName } = request.params;
+
+        let targetCluster: Cluster | null = null;
+        schema.db.clusters.forEach((iterCluster: Cluster) => {
+          if (iterCluster.name === clusterName) {
+            targetCluster = iterCluster;
+          }
+        });
+        if (targetCluster !== null) {
+          return targetCluster;
+        } else return new Response(500, { Error: 'No cluster with that cluster name was found' });
+      });
+
       this.delete('/v1/jobs/:jobId', (schema, request) => {
         //Local type as mirage returns "any"
         type MirageJobEntity<T> = T & {
