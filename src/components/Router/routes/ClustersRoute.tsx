@@ -30,6 +30,9 @@ export default [
   },
   {
     path: `${AppRoutePaths.CLUSTERS}/:clusterId`,
+    handle: {
+      breadcrumb: 'Cluster Details',
+    },
     meta: {
       breadcrumb: ({ clusterId }: { clusterId: string }) => clusterId,
     },
