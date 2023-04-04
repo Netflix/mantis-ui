@@ -50,3 +50,28 @@ export async function fetchJobClusters(
 
   return jobClusters;
 }
+
+export async function fetchJobClusterByName(
+  regionEnvs: EnvRegion[],
+  clusterName: string,
+): Promise<Cluster | null> {
+  if (!clusterName) return null;
+  const clientEntries = getApiClientEntries().filter(({ env, region }) =>
+    regionEnvs.some((item) => item.env === env && item.region === region),
+  );
+
+  const requests = clientEntries.map(({ client }) =>
+    client.get(`api/v1/jobClusters/${clusterName}`).json(),
+  );
+
+  const responses = await Promise.allSettled(requests);
+  const dataReponses = responses.map((response) => {
+    if (response.status === 'fulfilled') {
+      return response.value as Cluster;
+    } else {
+      return null;
+    }
+  });
+
+  return dataReponses[0];
+}
