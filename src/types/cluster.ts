@@ -1,21 +1,21 @@
 import type { HardConstraints, SoftConstraints } from '@/types/constraints';
 import type { Label, MachineDefinition, MigrationConfig, Sla } from '@/types/machine';
 
-export interface ClusterListItem {
+export type ClusterListItem = {
   labels: Label[];
   name: string;
   owners: string[];
   versions: Version[];
-}
+};
 
-export interface Version {
+export type Version = {
   disabled: boolean;
   env: string;
   region: string;
   version: string;
-}
+};
 
-export interface Cluster {
+export type Cluster = {
   cronActive: boolean;
   disabled: boolean;
   isReadyForJobMaster: boolean;
@@ -28,32 +28,32 @@ export interface Cluster {
   owner: Owner;
   parameters: Label[];
   sla: Sla;
-}
+};
 
-export interface Jar {
+export type Jar = {
   schedulingInfo: SchedulingInfo;
   uploadedAt: number;
   url: string;
   version: string;
-}
+};
 
-export interface SchedulingInfo {
+export type SchedulingInfo = {
   stages: { [key: number]: Stage };
-}
+};
 
-export interface Stage {
+export type Stage = {
   hardConstraints: HardConstraints[];
   machineDefinition: MachineDefinition;
   numberOfInstances: number;
   scalable: boolean;
   scalingPolicy: null;
   softConstraints: SoftConstraints[];
-}
+};
 
-export interface Owner {
+export type Owner = {
   contactEmail: string;
   description: string;
   name: string;
   repo: string;
   teamName: string;
-}
+};

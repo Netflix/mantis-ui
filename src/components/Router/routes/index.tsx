@@ -12,9 +12,9 @@ const Login = lazy(() => import('@/components/Login'));
 const NotFound = lazy(() => import('@/components/NotFound'));
 const Layout = lazy(() => import('@/components/Layout'));
 
-export interface RouteHandle {
+export type RouteHandle = {
   breadcrumb: string | ((params: Params) => string);
-}
+};
 
 export const routes = [
   {

@@ -6,15 +6,15 @@ import { uploadArtifacts } from '@/services/ArtifactService';
 import { ENVS } from '@/services/BaseService';
 import { showErrorNotification, showSuccessNotification } from '@/utils/notifications';
 
-interface FileRejection {
+type FileRejection = {
   errors: FileError[];
   file: File;
-}
+};
 
-export interface FileError {
+export type FileError = {
   code: string;
   message: string;
-}
+};
 
 function FilesUpload() {
   const theme = useMantineTheme();

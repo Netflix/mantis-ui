@@ -1,10 +1,10 @@
 import type { Label } from '@/types/machine';
 
-export interface LabelTag {
+export type LabelTag = {
   labelName: string;
   labelType: string;
   name: string;
-}
+};
 
 export function getJobTagDefinitions(labels: Label[]) {
   const specialTags = [] as LabelTag[];

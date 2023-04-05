@@ -1,25 +1,25 @@
-export interface MachineDefinition {
+export type MachineDefinition = {
   cpuCores: number;
   diskMB: number;
   memoryMB: number;
   networkMbps: number;
   numPorts: number;
-}
+};
 
-export interface Label {
+export type Label = {
   name: string;
   value: string;
-}
+};
 
-export interface Sla {
+export type Sla = {
   durationType: string;
   minRuntimeSecs: number;
   runtimeLimitSecs: number;
   slaType: string;
   userProvidedType: string;
-}
+};
 
-export interface MigrationConfig {
+export type MigrationConfig = {
   configString: string;
   strategy: string;
-}
+};

@@ -46,6 +46,7 @@ module.exports = {
     '@typescript-eslint/sort-type-constituents': 'error',
     '@typescript-eslint/consistent-type-exports': 'error',
     '@typescript-eslint/consistent-type-imports': 'error',
+    '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     '@typescript-eslint/member-ordering': [
       'error',
       {

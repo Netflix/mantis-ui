@@ -1,7 +1,7 @@
-export interface HardConstraints {
+export type HardConstraints = {
   id: number;
-}
+};
 
-export interface SoftConstraints {
+export type SoftConstraints = {
   id: number;
-}
+};

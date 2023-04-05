@@ -1,7 +1,7 @@
 import type { HardConstraints, SoftConstraints } from '@/types/constraints';
 import type { Label, MachineDefinition, MigrationConfig, Sla } from '@/types/machine';
 
-export interface CompactJob {
+export type CompactJob = {
   env: string;
   jarUrl: string;
   jobId: string;
@@ -16,22 +16,22 @@ export interface CompactJob {
   totMemory: number;
   type: string;
   user: string;
-}
+};
 
-export interface StatesSummary {
+export type StatesSummary = {
   Started: number;
-}
+};
 
-export interface Job {
+export type Job = {
   env: string;
   jobMetadata: JobMetadata;
   region: string;
   stageMetadataList: StageMetadata[];
   version: string;
   workerMetadataList: WorkerMetadata[];
-}
+};
 
-export interface JobMetadata {
+export type JobMetadata = {
   jarUrl: string;
   jobId: string;
   labels: Label[];
@@ -46,9 +46,9 @@ export interface JobMetadata {
   submittedAt: number;
   subscriptionTimeoutSecs: number;
   user: string;
-}
+};
 
-export interface WorkerMetadata {
+export type WorkerMetadata = {
   acceptedAt: number;
   cluster: string;
   completedAt: number;
@@ -71,9 +71,9 @@ export interface WorkerMetadata {
   totalResubmitCount: number;
   workerIndex: number;
   workerNumber: number;
-}
+};
 
-export interface StageMetadata {
+export type StageMetadata = {
   hardConstraints: HardConstraints[];
   jobId: string;
   machineDefinition: MachineDefinition;
@@ -83,9 +83,9 @@ export interface StageMetadata {
   scalingPolicy: ScalingPolicy;
   softConstraints: SoftConstraints[];
   stageNum: number;
-}
+};
 
-export interface ScalingPolicy {
+export type ScalingPolicy = {
   coolDownSecs: number;
   decrement: number;
   enabled: boolean;
@@ -93,9 +93,9 @@ export interface ScalingPolicy {
   max: number;
   min: number;
   stage: number;
-}
+};
 
-export interface JobSummary {
+export type JobSummary = {
   envs: string[];
   jobCount: number;
   name: string;
@@ -103,4 +103,4 @@ export interface JobSummary {
   totalCpus: number;
   totalMemory: number;
   totalWorkers: number;
-}
+};

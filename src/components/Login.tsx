@@ -7,10 +7,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import mantisImage from '@/assets/images/mantis-logo-full-transparent.png';
 import { useAuth } from '@/hooks/useAuth';
 
-interface UserData {
+type UserData = {
   email: string;
   name: string;
-}
+};
 
 function Login() {
   const { login } = useAuth();

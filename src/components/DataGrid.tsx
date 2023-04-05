@@ -2,10 +2,10 @@ import ReactDataGrid from '@inovua/reactdatagrid-community';
 import '@inovua/reactdatagrid-community/index.css';
 import type { TypeDataGridProps, TypeDataSource } from '@inovua/reactdatagrid-community/types';
 
-interface DataGridProps extends Partial<TypeDataGridProps> {
+type DataGridProps = Partial<TypeDataGridProps> & {
   dataSource: TypeDataSource;
   recordTypes: string;
-}
+};
 
 const filterTypes = Object.assign({}, ReactDataGrid.defaultProps.filterTypes, {
   region: {
