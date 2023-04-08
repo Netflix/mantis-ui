@@ -21,7 +21,7 @@ export default [
     },
   },
   {
-    path: `${AppRoutePaths.JOBS}/:jobId`,
+    path: `${AppRoutePaths.JOBS}/:region/:env/:jobId`,
     handle: {
       breadcrumb: ({ jobId }: { jobId: string }) => jobId,
     },

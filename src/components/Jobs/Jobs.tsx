@@ -14,7 +14,7 @@ import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { useAuth } from '@/hooks/useAuth';
 import { useEntityFilter } from '@/hooks/useEntityFilter';
 import { useJobs, useKillJobMutation } from '@/hooks/useJobs';
-import type { CompactJob } from '@/types/job';
+import type { CompactJob, Job } from '@/types/job';
 import type { Label } from '@/types/machine';
 import { getJobClusterId, getJobTagDefinitions } from '@/utils/job';
 import { pluralize } from '@/utils/string';
@@ -31,7 +31,9 @@ function Jobs() {
     {
       name: 'jobId',
       header: 'Job Name',
-      render: ({ value }: { value: string }) => <AppLink item={value} to={`${value}`} />,
+      render: ({ value, data }: { data: CompactJob | Job; value: string }) => (
+        <AppLink item={value} to={`${data.region}/${data.env}/${value}`} />
+      ),
       defaultFlex: 2,
     },
     {
