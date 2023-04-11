@@ -51,10 +51,7 @@ export async function fetchJobClusters(
   return jobClusters;
 }
 
-export async function fetchJobClusterByName(
-  regionEnvs: EnvRegion[],
-  clusterName: string,
-): Promise<Cluster | null> {
+export async function fetchJobClusterByName(regionEnvs: EnvRegion[], clusterName: string) {
   if (!clusterName) return null;
   const clientEntries = getApiClientEntries().filter(({ env, region }) =>
     regionEnvs.some((item) => item.env === env && item.region === region),
