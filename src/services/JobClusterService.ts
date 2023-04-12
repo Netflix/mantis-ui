@@ -1,6 +1,7 @@
 import { getApiClientEntries } from '@/services/BaseService';
 import type { EnvRegion } from '@/types/api';
 import type { Cluster, ClusterListItem } from '@/types/cluster';
+import type { CompactJob } from '@/types/job';
 
 export async function fetchJobClusters(
   regionEnvs: EnvRegion[],
@@ -69,6 +70,37 @@ export async function fetchJobClusterByName(regionEnvs: EnvRegion[], clusterName
       return null;
     }
   });
-
   return dataReponses[0];
+}
+
+export async function fetchJobsOnCluster(
+  regionEnvs: EnvRegion[],
+  clusterName: string,
+  compact = true,
+) {
+  const clientEntries = getApiClientEntries().filter(({ env, region }) =>
+    regionEnvs.some((item) => item.env === env && item.region === region),
+  );
+
+  const queryParams = new URLSearchParams();
+  queryParams.set('compact', compact.toString());
+
+  const requests = clientEntries.map(({ client }) =>
+    client.get(`api/v1/jobClusters/${clusterName}/jobs?${queryParams.toString()}`).json(),
+  );
+
+  const responses = await Promise.allSettled(requests);
+  const dataResponses = responses.flatMap((response, index) => {
+    if (response.status === 'fulfilled') {
+      const items = response.value as CompactJob[];
+      return items.map((item) => ({
+        ...item,
+        region: clientEntries[index].region,
+        env: clientEntries[index].env,
+      }));
+    }
+    return [];
+  });
+
+  return dataResponses;
 }
