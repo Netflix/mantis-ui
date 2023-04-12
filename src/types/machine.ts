@@ -13,6 +13,8 @@ export interface Label {
 
 export interface Sla {
   durationType: string;
+  max: number;
+  min: number;
   minRuntimeSecs: number;
   runtimeLimitSecs: number;
   slaType: string;

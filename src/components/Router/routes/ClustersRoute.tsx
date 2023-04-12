@@ -1,3 +1,4 @@
+import { Title } from '@mantine/core';
 import { lazy } from 'react';
 
 import { AppRoutePaths } from '@/components/Router/routes/constants';
@@ -31,7 +32,11 @@ export default [
   {
     path: `${AppRoutePaths.CLUSTERS}/:clusterId`,
     handle: {
-      breadcrumb: 'Cluster Details',
+      breadcrumb: ({ clusterId }: { clusterId: string }) => (
+        <Title c="blue" order={3}>
+          {clusterId}
+        </Title>
+      ),
     },
     meta: {
       breadcrumb: ({ clusterId }: { clusterId: string }) => clusterId,
