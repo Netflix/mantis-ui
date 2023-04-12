@@ -14,6 +14,7 @@ export const Queries = {
   JOBS: 'jobs',
   CLUSTERS: 'clusters',
   CLUSTER_DETAILS: 'clusterDetails',
+  JOBS_ON_CLUSTER: 'jobsOnCluster',
   ARTIFACTS: 'artifacts',
   SUMMARY: 'summary',
 };
