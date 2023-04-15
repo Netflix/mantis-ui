@@ -6,6 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useAuth } from '@/hooks/useAuth';
 import { useClusterDetails, useJobsOnCluster } from '@/hooks/useClusters';
+import { disableModal, enableModal } from '@/utils/modals';
 import { pluralize } from '@/utils/string';
 
 import ClusterConfigCard from './ClusterConfigCard';
@@ -65,7 +66,7 @@ function ClusterDetail() {
                   leftIcon={<RiToggleFill />}
                   variant="outline"
                   className="ml-auto"
-                  onClick={() => setEnabled(false)}
+                  onClick={() => disableModal(clusterName, setEnabled)}
                 >
                   Disable Cluster
                 </Button>
@@ -76,7 +77,7 @@ function ClusterDetail() {
                   leftIcon={<RiToggleLine />}
                   variant="outline"
                   className="ml-auto"
-                  onClick={() => setEnabled(true)}
+                  onClick={() => enableModal(clusterName, setEnabled)}
                 >
                   Enable Cluster
                 </Button>

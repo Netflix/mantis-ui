@@ -1,5 +1,6 @@
 import type { ColorScheme } from '@mantine/core';
 import { ColorSchemeProvider, MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import type { ReactNode } from 'react';
 import { lazy, useState } from 'react';
@@ -38,7 +39,9 @@ function AppProvider({ children }: { children: ReactNode }) {
           >
             <Notifications />
             <InitProvider>
-              <AuthProvider>{children}</AuthProvider>
+              <ModalsProvider labels={{ confirm: 'Submit', cancel: 'Cancel' }}>
+                <AuthProvider>{children}</AuthProvider>
+              </ModalsProvider>
             </InitProvider>
           </MantineProvider>
         </ColorSchemeProvider>

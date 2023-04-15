@@ -5,6 +5,7 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import { useAuth } from '@/hooks/useAuth';
 import { useKillJobMutation } from '@/hooks/useClusters';
 import type { CompactJob } from '@/types/job';
+import { killJobModal } from '@/utils/modals';
 
 import JobStateBadge from '../Jobs/JobStateBadge';
 
@@ -49,7 +50,9 @@ function ClusterJobsCard({
               leftIcon={<RiDeleteBin5Line />}
               variant="light"
               className="my-2 ml-auto"
-              onClick={() => mutate({ jobs: [item], userEmail: email })}
+              onClick={() =>
+                killJobModal(item, clusterName, () => mutate({ jobs: [item], userEmail: email }))
+              }
             >
               Kill Job
             </Button>
