@@ -104,3 +104,5 @@ export type JobSummary = {
   totalMemory: number;
   totalWorkers: number;
 };
+
+export type KillJobPayload = Pick<Job, 'env' | 'region'> & Pick<JobMetadata, 'jobId'>;

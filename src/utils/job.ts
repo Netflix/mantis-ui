@@ -48,3 +48,14 @@ export function getJobClusterId(jobId: string) {
   }
   return jobId.substring(0, jobId.lastIndexOf('-'));
 }
+
+export function getJobStateBadgeColor(state: string) {
+  switch (state.toLowerCase()) {
+    case 'launched':
+      return 'green.5';
+    case 'killed':
+      return 'red.5';
+    default:
+      return 'blue';
+  }
+}
