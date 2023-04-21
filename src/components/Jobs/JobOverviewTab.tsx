@@ -1,10 +1,10 @@
 import { Anchor, Badge, Card, Text } from '@mantine/core';
-import { HiOutlineDocumentDownload } from 'react-icons/hi';
+import { format } from 'date-fns';
+import { TbFileDownload } from 'react-icons/tb';
 
 import type { Job } from '@/types/job';
 import type { Label } from '@/types/machine';
 import { getJobStateBadgeColor } from '@/utils/job';
-import { getUtcFromEpoch } from '@/utils/string';
 
 type props = {
   jobData: { job: Job };
@@ -52,7 +52,7 @@ function JobOverviewTab({ jobData }: props) {
         <Text fw={700} c="dimmed">
           Submitted At
         </Text>
-        <Text>{getUtcFromEpoch(jobData.job.jobMetadata.submittedAt)}</Text>
+        <Text>{format(jobData.job.jobMetadata.submittedAt, 'yyyy-MM-dd, HH:mm:ss')}</Text>
 
         <Text fw={700} c="dimmed">
           Submitted By
@@ -64,7 +64,7 @@ function JobOverviewTab({ jobData }: props) {
         </Text>
         <Anchor href={jobData.job.jobMetadata.jarUrl}>
           <div className={'flex flex-row items-center gap-x-5'}>
-            Download Artifact {<HiOutlineDocumentDownload className={'text-2xl'} />}
+            Download Artifact {<TbFileDownload className={'text-2xl'} />}
           </div>
         </Anchor>
 

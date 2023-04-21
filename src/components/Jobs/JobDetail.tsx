@@ -19,16 +19,17 @@ export default function JobDetails() {
     </Tabs.Tab>
   ));
 
+  if (!jobData) {
+    return (
+      <div className={'flex h-screen w-full flex-row items-center justify-center'}>
+        <Loader />
+      </div>
+    );
+  }
   return (
     <div className={'w-full'}>
-      {jobData === undefined && (
-        <div className={'flex h-screen w-full flex-row items-center justify-center'}>
-          <Loader />
-        </div>
-      )}
-
       <div className={'absolute right-0 top-0 my-12 ml-auto mr-10 flex flex-row'}>
-        {jobData && jobData.job.jobMetadata.state.toLowerCase() === 'launched' && user && (
+        {jobData.job.jobMetadata.state.toLowerCase() === 'launched' && user && (
           <Button
             color="red"
             className="my-2 ml-auto"

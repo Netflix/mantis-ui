@@ -25,5 +25,5 @@ export function useKillJobMutation() {
 }
 
 export function useJob(env: string, region: string, jobId: string) {
-  return useQuery<{ job: Job }, Error>(Queries.JOB, () => fetchJob(env, region, jobId));
+  return useQuery(Queries.JOB, () => fetchJob(env, region, jobId));
 }

@@ -1,7 +1,7 @@
 import { Card, Divider, Group, Text } from '@mantine/core';
+import { format } from 'date-fns';
 
 import type { Job, WorkerMetadata } from '@/types/job';
-import { getUtcFromEpoch } from '@/utils/string';
 
 type props = {
   jobData: { job: Job };
@@ -12,6 +12,7 @@ function JobDescriptionTab({ jobData }: props) {
     <Card bg="gray.1" withBorder padding={0} radius="md" key={workerMeta.workerIndex}>
       <Group position="apart" m={10}>
         <Text>{workerMeta.jobId}</Text>
+        {/*Add hardware info dynamically*/}
         <Text>
           CPU: <b> 2 </b> Ram: <b> 4000 MB </b> Disk: <b>100 MB</b> Network: <b>128 MBPS</b>
         </Text>
@@ -29,27 +30,25 @@ function JobDescriptionTab({ jobData }: props) {
           <Text fw={700} c="dimmed">
             Accepted:
           </Text>
-          <Text>{getUtcFromEpoch(workerMeta.acceptedAt)}</Text>
+          <Text>{format(workerMeta.acceptedAt, 'yyyy-MM-dd, HH:mm:ss')}</Text>
 
           <Text fw={700} c="dimmed">
             Launched:
           </Text>
-          <Text>{getUtcFromEpoch(workerMeta.launchedAt)}</Text>
+          <Text>{format(workerMeta.launchedAt, 'yyyy-MM-dd, HH:mm:ss')}</Text>
 
           <Text fw={700} c="dimmed">
             Starting:
           </Text>
-          <Text>{getUtcFromEpoch(workerMeta.startingAt)}</Text>
-
+          <Text>{format(workerMeta.startingAt, 'yyyy-MM-dd, HH:mm:ss')}</Text>
           <Text fw={700} c="dimmed">
             Started:
           </Text>
-          <Text>{getUtcFromEpoch(workerMeta.startedAt)}</Text>
-
+          <Text>{format(workerMeta.startedAt, 'yyyy-MM-dd, HH:mm:ss')}</Text>
           <Text fw={700} c="dimmed">
             Completed:
           </Text>
-          <Text>{getUtcFromEpoch(workerMeta.completedAt)}</Text>
+          <Text>{format(workerMeta.completedAt, 'yyyy-MM-dd, HH:mm:ss')}</Text>
           <Divider m={0} />
         </div>
 
