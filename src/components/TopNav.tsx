@@ -1,14 +1,14 @@
 import { Anchor, Menu, createStyles } from '@mantine/core';
 import {
-  AiOutlineCarryOut,
-  AiOutlineCluster,
-  AiOutlineDashboard,
-  AiOutlineFileSync,
-  AiOutlineInfoCircle,
-  AiOutlineLogout,
-  AiOutlineQuestionCircle,
-  AiOutlineUser,
-} from 'react-icons/ai';
+  MdHelpOutline,
+  MdInfoOutline,
+  MdLogout,
+  MdOutlineEventAvailable,
+  MdOutlineFilePresent,
+  MdOutlineLan,
+  MdOutlineSpaceDashboard,
+  MdPersonOutline,
+} from 'react-icons/md';
 import { Link, useMatches, useNavigate } from 'react-router-dom';
 
 import mantisImage from '@/assets/images/mantis-logo-full-transparent.png';
@@ -62,10 +62,10 @@ function TopNav() {
   const { classes } = useStyles();
 
   const links = [
-    { link: AppRoutePaths.JOBS, label: 'Jobs', icon: <AiOutlineCarryOut /> },
-    { link: AppRoutePaths.CLUSTERS, label: 'Clusters', icon: <AiOutlineCluster /> },
-    { link: AppRoutePaths.FILES, label: 'Files', icon: <AiOutlineFileSync /> },
-    { link: AppRoutePaths.SUMMARY, label: 'Summary', icon: <AiOutlineDashboard /> },
+    { link: AppRoutePaths.JOBS, label: 'Jobs', icon: <MdOutlineEventAvailable /> },
+    { link: AppRoutePaths.CLUSTERS, label: 'Clusters', icon: <MdOutlineLan /> },
+    { link: AppRoutePaths.FILES, label: 'Files', icon: <MdOutlineFilePresent /> },
+    { link: AppRoutePaths.SUMMARY, label: 'Summary', icon: <MdOutlineSpaceDashboard /> },
   ];
 
   const items = links.map((link) => {
@@ -94,14 +94,14 @@ function TopNav() {
         <Menu trigger="hover" shadow="md">
           <Menu.Target>
             <div className="flex flex-row items-center gap-2">
-              <AiOutlineQuestionCircle /> Help
+              <MdHelpOutline /> Help
             </div>
           </Menu.Target>
 
           <Menu.Dropdown>
             <Menu.Item
               className={classes.menuItem}
-              icon={<AiOutlineInfoCircle />}
+              icon={<MdInfoOutline />}
               component="a"
               href="https://netflix.github.io/mantis/"
               target="_blank"
@@ -114,14 +114,14 @@ function TopNav() {
         <Menu trigger="hover" shadow="md">
           <Menu.Target>
             <div className="flex flex-row items-center gap-2">
-              <AiOutlineUser /> {user?.name}
+              <MdPersonOutline /> {user?.name}
             </div>
           </Menu.Target>
 
           <Menu.Dropdown>
             <Menu.Item
               className={classes.menuItem}
-              icon={<AiOutlineLogout />}
+              icon={<MdLogout />}
               onClick={() => logout(() => navigate(AppRoutePaths.LOGIN))}
             >
               Log Out

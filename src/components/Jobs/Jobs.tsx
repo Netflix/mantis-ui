@@ -2,7 +2,7 @@ import type { TypeRowSelection } from '@inovua/reactdatagrid-community/types';
 import { Button, Switch } from '@mantine/core';
 import { useCallback, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { TbServerCog } from 'react-icons/tb';
+import { MdOutlineRepartition } from 'react-icons/md';
 
 import AppLink from '@/components/AppLink';
 import DataGrid from '@/components/DataGrid';
@@ -42,7 +42,7 @@ function Jobs() {
       render: ({ value }: { value: string }) => (
         <AppLink
           className="flex h-full"
-          item={<TbServerCog />}
+          item={<MdOutlineRepartition />}
           to={`/${AppRoutePaths.CLUSTERS}/${getJobClusterId(value)}`}
         />
       ),
