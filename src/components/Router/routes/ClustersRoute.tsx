@@ -1,10 +1,11 @@
 import { Title } from '@mantine/core';
 import { lazy } from 'react';
+import type { LoaderFunctionArgs } from 'react-router-dom';
 
 import { AppRoutePaths } from '@/components/Router/routes/constants';
 import { Queries, queryClient } from '@/lib/react-query';
 import { REGION_ENVS } from '@/services/BaseService';
-import { fetchJobClusters } from '@/services/JobClusterService';
+import { fetchJobClusterByName, fetchJobClusters } from '@/services/JobClusterService';
 
 const Clusters = lazy(() => import('@/components/Clusters/Clusters'));
 const CreateCluster = lazy(() => import('@/components/Clusters/CreateCluster'));
@@ -42,5 +43,12 @@ export default [
       breadcrumb: ({ clusterId }: { clusterId: string }) => clusterId,
     },
     element: <ClusterDetail />,
+    loader(args: LoaderFunctionArgs) {
+      const { clusterId } = args as unknown as { clusterId: string };
+      void queryClient.prefetchQuery([Queries.CLUSTER_DETAILS, clusterId], () =>
+        fetchJobClusterByName(REGION_ENVS, clusterId),
+      );
+      return {};
+    },
   },
 ];
