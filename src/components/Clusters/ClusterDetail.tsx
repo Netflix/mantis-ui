@@ -1,25 +1,24 @@
 import { Button, Card, CardSection, Group, Text } from '@mantine/core';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { RiDeleteBin5Line, RiSettings4Line, RiToggleFill, RiToggleLine } from 'react-icons/ri';
+import { MdDelete, MdOutlineToggleOff, MdSettings, MdToggleOn } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import ClusterConfigCard from '@/components/Clusters/ClusterConfigCard';
+import ClusterJobsCard from '@/components/Clusters/ClusterJobsCard';
+import ClusterLabelBadge from '@/components/Clusters/ClusterLabelBadge';
+import ClusterOwnerDetails from '@/components/Clusters/ClusterOwnerDetails';
+import { disableModal, enableModal } from '@/components/Clusters/modals';
 import { useAuth } from '@/hooks/useAuth';
 import { useClusterDetails, useJobsOnCluster } from '@/hooks/useClusters';
-import { disableModal, enableModal } from '@/utils/modals';
 import { pluralize } from '@/utils/string';
-
-import ClusterConfigCard from './ClusterConfigCard';
-import ClusterJobsCard from './ClusterJobsCard';
-import ClusterLabelBadge from './ClusterLabelBadge';
-import ClusterOwnerDetails from './ClusterOwnerDetails';
 
 function ClusterDetail() {
   const navigate = useNavigate();
   const { clusterId: clusterName = '' } = useParams();
-  if (!clusterName) navigate('/404', { replace: true });
 
   const { data: cluster = null } = useClusterDetails(clusterName);
+  if (!cluster) navigate('/404', { replace: true });
   const [enabled, setEnabled] = useState(!cluster?.disabled);
   const { user } = useAuth();
 
@@ -46,7 +45,7 @@ function ClusterDetail() {
 
           {user && (
             <>
-              <Button compact color="green" leftIcon={<RiSettings4Line />} className="ml-auto">
+              <Button compact color="green" leftIcon={<MdSettings />} className="ml-auto">
                 Submit latest version {cluster?.latestVersion}
               </Button>
               <Button compact>Update Cluster</Button>
@@ -63,7 +62,7 @@ function ClusterDetail() {
                 <Button
                   compact
                   color="yellow"
-                  leftIcon={<RiToggleFill />}
+                  leftIcon={<MdToggleOn size={16} />}
                   variant="outline"
                   className="ml-auto"
                   onClick={() => disableModal(clusterName, setEnabled)}
@@ -74,7 +73,7 @@ function ClusterDetail() {
                 <Button
                   compact
                   color="green"
-                  leftIcon={<RiToggleLine />}
+                  leftIcon={<MdOutlineToggleOff size={16} />}
                   variant="outline"
                   className="ml-auto"
                   onClick={() => enableModal(clusterName, setEnabled)}
@@ -83,7 +82,7 @@ function ClusterDetail() {
                 </Button>
               )}
 
-              <Button compact color="red" leftIcon={<RiDeleteBin5Line />}>
+              <Button compact color="red" leftIcon={<MdDelete />}>
                 Delete Cluster
               </Button>
             </>

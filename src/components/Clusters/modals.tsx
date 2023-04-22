@@ -1,12 +1,12 @@
 import { Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { RiErrorWarningFill } from 'react-icons/ri';
+import { MdError } from 'react-icons/md';
 
 import type { CompactJob } from '@/types/job';
 
 export function enableModal(clusterName: string, setEnabled: (enabled: boolean) => void) {
   modals.openConfirmModal({
-    title: <>{<RiErrorWarningFill color="Orange" />} Enable Cluster </>,
+    title: <>{<MdError color="Orange" size={18} />} Enable Cluster </>,
     centered: true,
     children: (
       <Text size="sm">
@@ -21,7 +21,7 @@ export function enableModal(clusterName: string, setEnabled: (enabled: boolean) 
 
 export function disableModal(clusterName: string, setEnabled: (enabled: boolean) => void) {
   modals.openConfirmModal({
-    title: <>{<RiErrorWarningFill color="Orange" />} Disable Cluster </>,
+    title: <>{<MdError color="Orange" size={18} />} Disable Cluster </>,
     centered: true,
     children: (
       <Text size="sm">
@@ -36,7 +36,7 @@ export function disableModal(clusterName: string, setEnabled: (enabled: boolean)
 
 export function killJobModal(jobToKill: CompactJob, clusterName: string, mock: () => void) {
   modals.openConfirmModal({
-    title: <>{<RiErrorWarningFill color="red" />} Kill Job </>,
+    title: <>{<MdError color="red" size={18} />} Kill Job </>,
     centered: true,
     children: (
       <Text size="sm">

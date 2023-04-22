@@ -1,6 +1,6 @@
 import { Badge, Button, Card, Text } from '@mantine/core';
 import { format } from 'date-fns';
-import { RiSettings4Line } from 'react-icons/ri';
+import { MdSettings } from 'react-icons/md';
 
 import { useAuth } from '@/hooks/useAuth';
 import type { Cluster } from '@/types/cluster';
@@ -64,7 +64,7 @@ function ClusterConfigCard({ cluster }: { cluster: Cluster }) {
       </Text>
 
       {user && (
-        <Button compact color="green" leftIcon={<RiSettings4Line />} className="m-auto mt-2">
+        <Button compact color="green" leftIcon={<MdSettings />} className="m-auto mt-2">
           Submit version {cluster?.latestVersion}
         </Button>
       )}

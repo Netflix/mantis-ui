@@ -39,7 +39,7 @@ function AppProvider({ children }: { children: ReactNode }) {
           >
             <Notifications />
             <InitProvider>
-              <ModalsProvider labels={{ confirm: 'Submit', cancel: 'Cancel' }}>
+              <ModalsProvider>
                 <AuthProvider>{children}</AuthProvider>
               </ModalsProvider>
             </InitProvider>

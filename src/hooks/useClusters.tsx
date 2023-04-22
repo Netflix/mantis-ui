@@ -27,11 +27,9 @@ export function useClusterDetails(clusterName: string) {
 }
 
 export function useJobsOnCluster(clusterName: string) {
-  const shouldFetch = Boolean(clusterName);
   return useQuery({
-    queryKey: [Queries.JOBS_ON_CLUSTER, clusterName],
+    queryKey: [Queries.CLUSTER_DETAILS, clusterName, Queries.JOBS_ON_CLUSTER],
     queryFn: () => fetchJobsOnCluster(REGION_ENVS, clusterName),
-    enabled: shouldFetch,
   });
 }
 
@@ -40,7 +38,11 @@ export function useKillJobMutation(clusterName: string) {
   return useMutation({
     mutationFn: killJobs,
     onSuccess: () => {
-      void queryClient.invalidateQueries([Queries.JOBS_ON_CLUSTER, clusterName]);
+      void queryClient.invalidateQueries([
+        Queries.CLUSTER_DETAILS,
+        clusterName,
+        Queries.JOBS_ON_CLUSTER,
+      ]);
       showSuccessNotification('Job killed successfully.', 'Kill Job');
     },
     onError: (error: Error) => {

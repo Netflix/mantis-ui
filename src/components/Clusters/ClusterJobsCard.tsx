@@ -1,13 +1,12 @@
 import { Button, Card, Group, Stack, Text } from '@mantine/core';
 import { format } from 'date-fns';
-import { RiDeleteBin5Line } from 'react-icons/ri';
+import { MdDelete } from 'react-icons/md';
 
+import { killJobModal } from '@/components/Clusters/modals';
+import JobStateBadge from '@/components/Jobs/JobStateBadge';
 import { useAuth } from '@/hooks/useAuth';
 import { useKillJobMutation } from '@/hooks/useClusters';
 import type { CompactJob } from '@/types/job';
-import { killJobModal } from '@/utils/modals';
-
-import JobStateBadge from '../Jobs/JobStateBadge';
 
 function ClusterJobsCard({
   activeJobs,
@@ -47,7 +46,7 @@ function ClusterJobsCard({
             <Button
               color="red"
               compact
-              leftIcon={<RiDeleteBin5Line />}
+              leftIcon={<MdDelete />}
               variant="light"
               className="my-2 ml-auto"
               onClick={() =>
