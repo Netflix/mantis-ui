@@ -1,5 +1,5 @@
-import { Button, Card, CardSection, Group, Text } from '@mantine/core';
-import { useState } from 'react';
+import { Button, Card, CardSection, Group, Loader, Text } from '@mantine/core';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { MdDelete, MdOutlineToggleOff, MdSettings, MdToggleOn } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -17,8 +17,7 @@ function ClusterDetail() {
   const navigate = useNavigate();
   const { clusterId: clusterName = '' } = useParams();
 
-  const { data: cluster = null } = useClusterDetails(clusterName);
-  if (!cluster) navigate('/404', { replace: true });
+  const { data: cluster = null, isLoading } = useClusterDetails(clusterName);
   const [enabled, setEnabled] = useState(!cluster?.disabled);
   const { user } = useAuth();
 
@@ -27,6 +26,19 @@ function ClusterDetail() {
   const activeJobs = clusterJobs?.filter(
     (job) => job.state === 'Accepted' || job.state === 'Launched',
   );
+
+  useEffect(() => {
+    if (!cluster && !isLoading) {
+      navigate('/404', { replace: true });
+    }
+  }, [cluster, isLoading, navigate]);
+  if (!cluster) {
+    return (
+      <div className="animate-fade-in flex h-full flex-col items-center justify-center gap-4">
+        <Loader variant="oval" />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -40,13 +52,13 @@ function ClusterDetail() {
 
         <Group position="apart" spacing="xs" className="my-1">
           <Text className="text-left">
-            Latest Job Cluster version is: <strong>{cluster?.latestVersion}</strong>
+            Latest Job Cluster version is: <strong>{cluster.latestVersion}</strong>
           </Text>
 
           {user && (
             <>
               <Button compact color="green" leftIcon={<MdSettings />} className="ml-auto">
-                Submit latest version {cluster?.latestVersion}
+                Submit latest version {cluster.latestVersion}
               </Button>
               <Button compact>Update Cluster</Button>
             </>
@@ -103,15 +115,15 @@ function ClusterDetail() {
               )}
             </Text>
             <Text>
-              SLA min/max: <strong>{cluster?.sla.min}</strong>/ <strong>{cluster?.sla.max}</strong>
+              SLA min/max: <strong>{cluster.sla.min}</strong>/ <strong>{cluster.sla.max}</strong>
             </Text>
 
-            {cluster?.labels && <ClusterLabelBadge labels={cluster?.labels} />}
+            {cluster.labels && <ClusterLabelBadge labels={cluster.labels} />}
 
-            {cluster?.owner && <ClusterOwnerDetails owner={cluster?.owner} />}
+            {cluster.owner && <ClusterOwnerDetails owner={cluster.owner} />}
           </CardSection>
 
-          {cluster && <ClusterConfigCard cluster={cluster} />}
+          <ClusterConfigCard cluster={cluster} />
         </Card>
 
         <Card withBorder radius="md" className="mx-auto my-8 w-1/2 text-sm hover:shadow-lg">
