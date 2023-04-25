@@ -13,6 +13,7 @@ export const Queries = {
   AUTH: 'auth',
   JOBS: 'jobs',
   CLUSTERS: 'clusters',
+  CLUSTER_DETAILS: 'clusterDetails',
   ARTIFACTS: 'artifacts',
   SUMMARY: 'summary',
 };
