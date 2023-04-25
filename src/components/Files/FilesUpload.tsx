@@ -1,6 +1,6 @@
 import { Text, useMantineTheme } from '@mantine/core';
 import { Dropzone, MIME_TYPES } from '@mantine/dropzone';
-import { TbFileCheck, TbFileZip, TbX } from 'react-icons/tb';
+import { MdClose, MdOutlineFolderZip, MdOutlineTask } from 'react-icons/md';
 
 import { uploadArtifacts } from '@/services/ArtifactService';
 import { ENVS } from '@/services/BaseService';
@@ -50,16 +50,16 @@ function FilesUpload() {
       accept={[MIME_TYPES.zip, 'application/json', 'application/java-archive']}
     >
       <Dropzone.Accept>
-        <TbFileCheck
+        <MdOutlineTask
           size={50}
           color={theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6]}
         />
       </Dropzone.Accept>
       <Dropzone.Reject>
-        <TbX size={50} color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]} />
+        <MdClose size={50} color={theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]} />
       </Dropzone.Reject>
       <Dropzone.Idle>
-        <TbFileZip size={50} />
+        <MdOutlineFolderZip size={50} />
       </Dropzone.Idle>
 
       <div>

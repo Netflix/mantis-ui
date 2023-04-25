@@ -1,7 +1,7 @@
 import { Button, Card, Image, TextInput } from '@mantine/core';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
-import { TbAt } from 'react-icons/tb';
+import { MdAlternateEmail } from 'react-icons/md';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import mantisImage from '@/assets/images/mantis-logo-full-transparent.png';
@@ -60,7 +60,7 @@ function Login() {
               <TextInput
                 label="Email"
                 placeholder="Enter your email"
-                icon={<TbAt size={14} />}
+                icon={<MdAlternateEmail size={14} />}
                 withAsterisk
                 {...register('email', {
                   required: 'Email required',
