@@ -77,21 +77,19 @@ export function makeServer(baseUrl: string) {
         });
         if (job !== null) {
           return { job: job };
-        } else return new Response(500, { Error: 'No job found with this id.' });
+        } else return new Response(404, { Error: 'No job found with this id.' });
       });
 
       this.get('/v1/jobClusters/:clusterName', (schema, request) => {
         const { clusterName } = request.params;
+        const cluster = schema.db.clusters.find((cluster: Cluster) => {
+          return cluster.name === clusterName;
+        }) as Cluster | undefined;
 
-        let targetCluster: Cluster | null = null;
-        schema.db.clusters.forEach((iterCluster: Cluster) => {
-          if (iterCluster.name === clusterName) {
-            targetCluster = iterCluster;
-          }
-        });
-        if (targetCluster !== null) {
-          return targetCluster;
-        } else return new Response(500, { Error: 'No cluster with that cluster name was found' });
+        if (!cluster) {
+          return new Response(404, { Error: 'No cluster with that cluster name was found' });
+        }
+        return cluster;
       });
 
       this.delete('/v1/jobs/:jobId', (schema, request) => {

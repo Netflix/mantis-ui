@@ -53,6 +53,7 @@ export async function fetchJobClusters(
 
 export async function fetchJobClusterByName(regionEnvs: EnvRegion[], clusterName: string) {
   if (!clusterName) return null;
+
   const clientEntries = getApiClientEntries().filter(({ env, region }) =>
     regionEnvs.some((item) => item.env === env && item.region === region),
   );
