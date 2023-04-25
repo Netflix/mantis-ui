@@ -1,6 +1,6 @@
 import { Anchor, Badge, Card, Text } from '@mantine/core';
 import { format } from 'date-fns';
-import { TbFileDownload } from 'react-icons/tb';
+import { MdFileDownload } from 'react-icons/md';
 
 import type { Job } from '@/types/job';
 import type { Label } from '@/types/machine';
@@ -64,7 +64,7 @@ function JobOverviewTab({ jobData }: props) {
         </Text>
         <Anchor href={jobData.job.jobMetadata.jarUrl}>
           <div className={'flex flex-row items-center gap-x-5'}>
-            Download Artifact {<TbFileDownload className={'text-2xl'} />}
+            Download Artifact {<MdFileDownload className={'text-2xl'} />}
           </div>
         </Anchor>
 
