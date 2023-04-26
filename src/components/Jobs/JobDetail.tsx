@@ -1,4 +1,4 @@
-import { Button, Container, Loader, Tabs } from '@mantine/core';
+import { Button, Loader, Tabs } from '@mantine/core';
 import { useParams } from 'react-router-dom';
 
 import JobDescriptionTab from '@/components/Jobs/JobDescriptionTab';
@@ -12,22 +12,22 @@ export default function JobDetails() {
   const { mutate } = useKillJobMutation();
   const { user } = useAuth();
 
-  const tabs: string[] = ['Overview', 'Job Description', 'Stage Details', 'Job Status Output'];
+  const tabs = ['Overview', 'Job Description', 'Stage Details', 'Job Status Output'];
   const items = tabs.map((tab) => (
-    <Tabs.Tab className={`rounded-lg bg-transparent text-gray-500`} value={tab} key={tab}>
+    <Tabs.Tab className={`rounded-lg bg-transparent`} value={tab} key={tab}>
       {tab}
     </Tabs.Tab>
   ));
 
   if (!jobData) {
     return (
-      <div className={'flex h-screen w-full flex-row items-center justify-center'}>
+      <div className={'flex h-full w-full items-center justify-center'}>
         <Loader />
       </div>
     );
   }
   return (
-    <div className={'w-full'}>
+    <>
       <div className={'absolute right-0 top-0 my-12 ml-auto mr-10 flex flex-row'}>
         {jobData.job.jobMetadata.state.toLowerCase() === 'launched' && user && (
           <Button
@@ -46,11 +46,9 @@ export default function JobDetails() {
       </div>
 
       {jobData && (
-        <Container className={'my-10'} size={'xl'}>
+        <div className="mx-4 my-8">
           <Tabs defaultValue="Overview" variant="pills">
-            <Tabs.List className={'flex justify-between'} position="apart">
-              {items}
-            </Tabs.List>
+            <Tabs.List position="apart">{items}</Tabs.List>
 
             <Tabs.Panel value="Overview">
               <JobOverviewTab jobData={jobData} />
@@ -67,8 +65,8 @@ export default function JobDetails() {
               <div>Job output</div>
             </Tabs.Panel>
           </Tabs>
-        </Container>
+        </div>
       )}
-    </div>
+    </>
   );
 }

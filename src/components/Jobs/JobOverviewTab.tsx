@@ -32,10 +32,19 @@ function JobOverviewTab({ jobData }: props) {
         <Text fw={700} c="dimmed">
           Job Label
         </Text>
-        <div className={'flex flex-row gap-2'}>
+        <div className={' flex flex-row flex-wrap gap-2'}>
           {jobData.job.jobMetadata.labels.map((label: Label) => (
-            <Badge color={'gray.6'} key={label.name} variant="filled" className="py-3" radius="md">
+            <Badge
+              color={'gray.6'}
+              key={label.name}
+              variant="filled"
+              className="group py-3"
+              radius="md"
+            >
               {label.name}
+              <div className="data-popper-arrow invisible absolute -mt-16 rounded-md bg-gray-700 p-2 text-center group-hover:visible">
+                {label.value}
+              </div>
             </Badge>
           ))}
         </div>
@@ -45,7 +54,8 @@ function JobOverviewTab({ jobData }: props) {
         </Text>
         <div>
           <Badge color="dark.1" variant="filled" className="py-3" radius="sm">
-            <p className="text-[#f8f9fa]">Unknown</p>
+            {/*Change unknown to dynamic when JSON schema from is defined later*/}
+            <p className="text-slate-50">Unknown</p>
           </Badge>
         </div>
 
@@ -63,7 +73,7 @@ function JobOverviewTab({ jobData }: props) {
           Artifact File
         </Text>
         <Anchor href={jobData.job.jobMetadata.jarUrl}>
-          <div className={'flex flex-row items-center gap-x-5'}>
+          <div className={'flex flex-row items-center'}>
             Download Artifact {<MdFileDownload className={'text-2xl'} />}
           </div>
         </Anchor>
