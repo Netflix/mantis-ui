@@ -13,12 +13,12 @@ function ClusterConfigCard({ cluster }: { cluster: Cluster }) {
   const formattedDateAndTime = jar.uploadedAt ? format(jar.uploadedAt, 'MMM d yyyy, hh:ss a') : '';
 
   const { strategy, configString } = cluster.migrationConfig;
-  function decodeConfigString() {
+  const decodeConfigString = () => {
     let decodedString = '';
     switch (strategy) {
       case 'PERCENTAGE':
         try {
-          const configObject = JSON.parse(configString.replace(/\\"/g, '"')) as {
+          const configObject = JSON.parse(configString) as {
             intervalMs: number;
             percentToMove: number;
           };
@@ -29,7 +29,7 @@ function ClusterConfigCard({ cluster }: { cluster: Cluster }) {
         break;
     }
     return decodedString;
-  }
+  };
 
   return (
     <Card withBorder p={8} className="bg-slate-100 hover:bg-slate-50">
