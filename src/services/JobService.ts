@@ -1,6 +1,6 @@
 import { getApiClientEntries, getApiClientEntryForRegion } from '@/services/BaseService';
 import type { EnvRegion } from '@/types/api';
-import type { CompactJob, Job, JobSummary } from '@/types/job';
+import type { CompactJob, Job, JobSummary, KillJobPayload } from '@/types/job';
 
 const reason = 'Mantis UI user action';
 
@@ -78,7 +78,7 @@ export async function fetchJobsSummary(regionEnvs: EnvRegion[]) {
   return jobSummaries;
 }
 
-export async function killJobs({ jobs, userEmail }: { jobs: CompactJob[]; userEmail: string }) {
+export async function killJobs({ jobs, userEmail }: { jobs: KillJobPayload[]; userEmail: string }) {
   const requests = jobs.map(({ env, region, jobId }) => {
     const { client } = getApiClientEntryForRegion(env, region);
     return client.delete(`api/v1/jobs/${jobId}?user=${userEmail}&reason=${reason}`);
@@ -94,16 +94,8 @@ export async function killJobs({ jobs, userEmail }: { jobs: CompactJob[]; userEm
   }
 }
 
-export async function fetchJob(
-  env: string,
-  region: string,
-  jobId: string,
-): Promise<{ job: Job } | null> {
+export async function fetchJob(env: string, region: string, jobId: string) {
   const { client } = getApiClientEntryForRegion(env, region);
-  const request = await client.get(`api/v1/jobs/${jobId}`);
-  if (request.status === 200) {
-    return request.json<{ job: Job }>();
-  } else {
-    return null;
-  }
+  const request = await client.get(`api/v1/jobs/${jobId}?compact=true`);
+  return request.json<{ job: Job }>();
 }

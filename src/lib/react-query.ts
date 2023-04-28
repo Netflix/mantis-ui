@@ -12,6 +12,7 @@ export const queryClient = new QueryClient({ defaultOptions: queryConfig });
 export const Queries = {
   AUTH: 'auth',
   JOBS: 'jobs',
+  JOB: 'job',
   CLUSTERS: 'clusters',
   CLUSTER_DETAILS: 'clusterDetails',
   ARTIFACTS: 'artifacts',

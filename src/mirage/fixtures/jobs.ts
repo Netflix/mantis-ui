@@ -213,6 +213,8 @@ export default [
         totalResubmitCount: 2,
       },
     ],
+    env: 'test',
+    region: 'us-east-1',
     terminatedAt: -1,
     version: null,
   },
