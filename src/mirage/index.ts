@@ -92,6 +92,49 @@ export function makeServer(baseUrl: string) {
         return cluster;
       });
 
+      this.get('/v1/jobClusters/:clusterName/jobs', (schema, request) => {
+        const { clusterName } = request.params;
+        const { compact } = request.queryParams;
+        const isCompact = `${compact}`.toLowerCase() === 'true';
+
+        let targetCluster: Cluster | null = null;
+        schema.db.clusters.forEach((iterCluster: Cluster) => {
+          if (iterCluster.name === clusterName) {
+            targetCluster = iterCluster;
+          }
+        });
+
+        if (isCompact && targetCluster !== null) {
+          const jobsOnCluster = schema.db.jobs.filter((job: Job) => {
+            return job.jobMetadata.name === clusterName;
+          });
+          return jobsOnCluster.map((job: Job) => {
+            return {
+              jarUrl: job.jobMetadata.jarUrl,
+              submittedAt: job.jobMetadata.submittedAt,
+              user: job.jobMetadata.user,
+              state: job.jobMetadata.state,
+              type: job.jobMetadata.labels.find((label) => label.name === '_mantis.jobType')?.name,
+              numStages: job.stageMetadataList.reduce((acc, stage) => acc + stage.numStages, 0),
+              numWorkers: job.stageMetadataList.reduce((acc, stage) => acc + stage.numWorkers, 0),
+              totCPUs: job.stageMetadataList.reduce(
+                (acc, stage) => acc + stage.machineDefinition.cpuCores,
+                0,
+              ),
+              totMemory: job.stageMetadataList.reduce(
+                (acc, stage) => acc + stage.machineDefinition.memoryMB,
+                0,
+              ),
+              statesSummary: {
+                Started: 1,
+              },
+              labels: job.jobMetadata.labels,
+              jobId: job.jobMetadata.jobId,
+            } as Omit<CompactJob, 'env' | 'region'>;
+          });
+        } else return new Response(500, { Error: 'No cluster with that cluster name was found' });
+      });
+
       this.delete('/v1/jobs/:jobId', (schema, request) => {
         //Local type as mirage returns "any"
         type MirageJobEntity<T> = T & {

@@ -6,7 +6,7 @@ dependencies:
     version: 11.10.6(@types/react@18.0.31)(react@18.2.0)
   '@inovua/reactdatagrid-community':
     specifier: ^5.8.5
-    version: 5.8.5(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
+    version: 5.8.5(react-dom@18.2.0)(react@18.2.0)
   '@mantine/core':
     specifier: ^6.0.5
     version: 6.0.5(@emotion/react@11.10.6)(@mantine/hooks@6.0.5)(@types/react@18.0.31)(react-dom@18.2.0)(react@18.2.0)
@@ -16,6 +16,9 @@ dependencies:
   '@mantine/hooks':
     specifier: ^6.0.5
     version: 6.0.5(react@18.2.0)
+  '@mantine/modals':
+    specifier: ^6.0.7
+    version: 6.0.7(@mantine/core@6.0.5)(@mantine/hooks@6.0.5)(react-dom@18.2.0)(react@18.2.0)
   '@mantine/notifications':
     specifier: ^6.0.5
     version: 6.0.5(@mantine/core@6.0.5)(@mantine/hooks@6.0.5)(react-dom@18.2.0)(react@18.2.0)
@@ -661,7 +664,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
-  /@inovua/reactdatagrid-community@5.8.5(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
+  /@inovua/reactdatagrid-community@5.8.5(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-H9pfB0Ji4Fy0mQ1Cw868dyhuzBntxmI4iHvejyAVDwtmv7eUDJ2qyMR71bvtRqkU63wfSyy+cln4aCpz04HBzg==}
     peerDependencies:
       prop-types: '>=15.5.0'
@@ -675,7 +678,6 @@ packages:
       lodash.debounce: 4.0.8
       lodash.throttle: 4.1.1
       object-assign: 4.1.1
-      prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       resize-observer-polyfill: 1.5.1
@@ -727,6 +729,21 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@mantine/modals@6.0.7(@mantine/core@6.0.5)(@mantine/hooks@6.0.5)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-H83apNcglzARbKp296l5z6xEnBuAeQQk6frkGXVGB+bZhmjOdDsaropiq+CL/cqESm29vGFjjOnBl+yvYv9MzQ==}
+    peerDependencies:
+      '@mantine/core': 6.0.7
+      '@mantine/hooks': 6.0.7
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      '@mantine/core': 6.0.5(@emotion/react@11.10.6)(@mantine/hooks@6.0.5)(@types/react@18.0.31)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks': 6.0.5(react@18.2.0)
+      '@mantine/utils': 6.0.7(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /@mantine/notifications@6.0.5(@mantine/core@6.0.5)(@mantine/hooks@6.0.5)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-JNYKQ24gHMOUVR9rg5piJwjT219pTTy36LoEsbOl8mAK17u/QrFtRVnvChIbvje49ALRuLuRtvHDJfdL8vojvg==}
     peerDependencies:
@@ -759,6 +776,14 @@ packages:
 
   /@mantine/utils@6.0.5(react@18.2.0):
     resolution: {integrity: sha512-P2FVcBd2oZ9ANOsZUtTwJ4+FV6NgCRE5B7trsT8gEFUbMeQLietcsZEgAe5xhzEu9Afp5V8X8a+E9yx1blMpNg==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+    dev: false
+
+  /@mantine/utils@6.0.7(react@18.2.0):
+    resolution: {integrity: sha512-XMm66GNn9hXnc9s/twXzL9iqhzM8HLVOyuKDo4WUn/ZM6NEJYJJVcTTlSIXOPq9AWo8bI76vbAHkIry1aEbgmg==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
