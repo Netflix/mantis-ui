@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core';
+import { Button, Text } from '@mantine/core';
 
 import type { Label } from '@/types/machine';
 
@@ -9,7 +9,7 @@ function ClusterLabelBadge({ labels }: { labels: Label[] }) {
         labels.map((label) => {
           return (
             <Button compact key={label.name} color="gray" variant="light" radius={3}>
-              {label.name} : {label.value}
+              {label.name} : <Text className="text-gray-500">{label.value}</Text>
             </Button>
           );
         })}

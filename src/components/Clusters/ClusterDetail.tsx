@@ -23,7 +23,7 @@ function ClusterDetail() {
 
   const { data: clusterJobs = [], isFetched } = useJobsOnCluster(clusterName);
 
-  const activeJobs = clusterJobs?.filter(
+  const activeJobs = clusterJobs.filter(
     (job) => job.state === 'Accepted' || job.state === 'Launched',
   );
 

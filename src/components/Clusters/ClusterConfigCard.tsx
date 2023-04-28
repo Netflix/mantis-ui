@@ -7,7 +7,7 @@ import type { Cluster } from '@/types/cluster';
 
 function ClusterConfigCard({ cluster }: { cluster: Cluster }) {
   const { user } = useAuth();
-  const jar = cluster?.jars[cluster.jars.length - 1];
+  const jar = cluster.jars[cluster.jars.length - 1];
 
   const stageValues = Object.values(jar.schedulingInfo.stages);
   const formattedDateAndTime = jar.uploadedAt ? format(jar.uploadedAt, 'MMM d yyyy, hh:ss a') : '';
@@ -34,7 +34,7 @@ function ClusterConfigCard({ cluster }: { cluster: Cluster }) {
   return (
     <Card withBorder p={8} className="bg-slate-100 hover:bg-slate-50">
       <Text px="sm" color="blue" className="mb-2 bg-gray-200">
-        Latest Version: <strong>{cluster?.latestVersion}</strong>
+        Latest Version: <strong>{cluster.latestVersion}</strong>
       </Text>
       <Text>
         Artifact: <strong>{jar.url}</strong> <br />
@@ -65,7 +65,7 @@ function ClusterConfigCard({ cluster }: { cluster: Cluster }) {
 
       {user && (
         <Button compact color="green" leftIcon={<MdSettings />} className="m-auto mt-2">
-          Submit version {cluster?.latestVersion}
+          Submit version {cluster.latestVersion}
         </Button>
       )}
     </Card>
