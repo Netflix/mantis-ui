@@ -1,7 +1,9 @@
 import ky from 'ky';
 
 import { getApiClientEntryForEnv } from '@/services/BaseService';
+import { ArtifactSchema } from '@/types/artifact';
 import type { Artifact } from '@/types/artifact';
+import { showErrorNotification } from '@/utils/notifications';
 
 export async function fetchArtifacts(envs: string[]) {
   // Fix this API call to not call hard coded UI APIs
@@ -12,11 +14,20 @@ export async function fetchArtifacts(envs: string[]) {
   const data = responses.flatMap((response, index) => {
     if (response.status === 'fulfilled') {
       const items = response.value as Artifact[];
-      return items.map((item) => ({
-        ...item,
-        lastModified: item.lastModified * 1000,
-        env: envs[index],
-      }));
+      return items.map((item) => {
+        try {
+          const validatedItem = ArtifactSchema.parse(item);
+          return {
+            ...validatedItem,
+            lastModified: validatedItem.lastModified * 1000,
+            env: envs[index],
+          };
+        } catch (error) {
+          showErrorNotification(`Invalid artifact: ${String(error)}`);
+          console.error(`Invalid artifact: ${String(error)}`);
+          return null;
+        }
+      });
     }
     return [];
   });

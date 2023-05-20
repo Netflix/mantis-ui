@@ -1,7 +1,11 @@
-export type HardConstraints = {
-  id: number;
-};
+import { z } from 'zod';
 
-export type SoftConstraints = {
-  id: number;
-};
+export const HardConstraintsSchema = z.object({
+  id: z.number(),
+});
+export type HardConstraints = z.infer<typeof HardConstraintsSchema>;
+
+export const SoftConstraintsSchema = z.object({
+  id: z.number(),
+});
+export type SoftConstraints = z.infer<typeof SoftConstraintsSchema>;

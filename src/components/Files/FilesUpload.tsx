@@ -4,6 +4,7 @@ import { MdClose, MdOutlineFolderZip, MdOutlineTask } from 'react-icons/md';
 
 import { uploadArtifacts } from '@/services/ArtifactService';
 import { ENVS } from '@/services/BaseService';
+import { ArtifactSchema } from '@/types/artifact';
 import { showErrorNotification, showSuccessNotification } from '@/utils/notifications';
 
 type FileRejection = {
@@ -27,10 +28,18 @@ function FilesUpload() {
         file: file.toString(),
         size: file.size.toString(),
       };
-
-      uploadArtifacts(newArtifact, ENVS);
+      try {
+        const validArtifact = ArtifactSchema.parse(newArtifact);
+        uploadArtifacts(validArtifact, ENVS);
+        showSuccessNotification(
+          `${fileNames.toString()} uploaded successfully.`,
+          'Upload Successful',
+        );
+      } catch (error) {
+        showErrorNotification(`Invalid artifact upload: ${String(error)}`);
+        console.error(`Invalid artifact upload: ${String(error)}`);
+      }
     });
-    showSuccessNotification(`${fileNames.toString()} uploaded successfully.`, 'Upload Successful');
   };
 
   const onReject = (fileRejections: FileRejection[]) => {

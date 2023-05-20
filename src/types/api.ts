@@ -1,4 +1,5 @@
 import type { KyInstance } from 'ky/distribution/types/ky';
+import { z } from 'zod';
 
 export type ApiClientEntry = {
   client: KyInstance;
@@ -7,11 +8,19 @@ export type ApiClientEntry = {
   url: string;
 };
 
-export type Env = 'prod' | 'test';
+const EnvSchema = z.union([z.literal('prod'), z.literal('test')]);
+export type Env = z.infer<typeof EnvSchema>;
 
-export type Region = 'eu-west-1' | 'us-east-1' | 'us-east-2' | 'us-west-2';
+const RegionSchema = z.union([
+  z.literal('eu-west-1'),
+  z.literal('us-east-1'),
+  z.literal('us-east-2'),
+  z.literal('us-west-2'),
+]);
+export type Region = z.infer<typeof RegionSchema>;
 
-export type EnvRegion = {
-  env: string;
-  region: string;
-};
+const EnvRegionSchema = z.object({
+  env: z.string(),
+  region: z.string(),
+});
+export type EnvRegion = z.infer<typeof EnvRegionSchema>;
