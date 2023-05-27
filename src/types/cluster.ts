@@ -1,59 +1,73 @@
-import type { HardConstraints, SoftConstraints } from '@/types/constraints';
-import type { Label, MachineDefinition, MigrationConfig, Sla } from '@/types/machine';
+import { z } from 'zod';
 
-export type ClusterListItem = {
-  labels: Label[];
-  name: string;
-  owners: string[];
-  versions: Version[];
-};
+import { HardConstraintsSchema, SoftConstraintsSchema } from '@/types/constraints';
+import {
+  LabelSchema,
+  MachineDefinitionSchema,
+  MigrationConfigSchema,
+  SlaSchema,
+} from '@/types/machine';
 
-export type Version = {
-  disabled: boolean;
-  env: string;
-  region: string;
-  version: string;
-};
+const VersionSchema = z.object({
+  disabled: z.boolean(),
+  env: z.string(),
+  region: z.string(),
+  version: z.string(),
+});
+export type Version = z.infer<typeof VersionSchema>;
 
-export type Cluster = {
-  cronActive: boolean;
-  disabled: boolean;
-  isReadyForJobMaster: boolean;
-  jars: Jar[];
-  labels: Label[];
-  lastJobCount: number;
-  latestVersion: string;
-  migrationConfig: MigrationConfig;
-  name: string;
-  owner: Owner;
-  parameters: Label[];
-  sla: Sla;
-};
+const OwnerSchema = z.object({
+  contactEmail: z.string(),
+  description: z.string(),
+  name: z.string(),
+  repo: z.string(),
+  teamName: z.string(),
+});
+export type Owner = z.infer<typeof OwnerSchema>;
 
-export type Jar = {
-  schedulingInfo: SchedulingInfo;
-  uploadedAt: number;
-  url: string;
-  version: string;
-};
+const ClusterListItemSchema = z.object({
+  labels: z.array(LabelSchema),
+  name: z.string(),
+  owners: z.array(z.string()),
+  versions: z.array(VersionSchema),
+});
+export type ClusterListItem = z.infer<typeof ClusterListItemSchema>;
 
-export type SchedulingInfo = {
-  stages: { [key: number]: Stage };
-};
+const StageSchema = z.object({
+  hardConstraints: z.array(HardConstraintsSchema),
+  machineDefinition: MachineDefinitionSchema,
+  numberOfInstances: z.number(),
+  scalable: z.boolean(),
+  scalingPolicy: z.null(),
+  softConstraints: z.array(SoftConstraintsSchema),
+});
+export type Stage = z.infer<typeof StageSchema>;
 
-export type Stage = {
-  hardConstraints: HardConstraints[];
-  machineDefinition: MachineDefinition;
-  numberOfInstances: number;
-  scalable: boolean;
-  scalingPolicy: null;
-  softConstraints: SoftConstraints[];
-};
+const SchedulingInfoSchema = z.object({
+  stages: z.record(StageSchema),
+});
+export type SchedulingInfo = z.infer<typeof SchedulingInfoSchema>;
 
-export type Owner = {
-  contactEmail: string;
-  description: string;
-  name: string;
-  repo: string;
-  teamName: string;
-};
+const JarSchema = z.object({
+  schedulingInfo: SchedulingInfoSchema,
+  uploadedAt: z.number(),
+  url: z.string(),
+  version: z.string(),
+});
+export type Jar = z.infer<typeof JarSchema>;
+
+const ClusterSchema = z.object({
+  cronActive: z.boolean(),
+  disabled: z.boolean(),
+  isReadyForJobMaster: z.boolean(),
+  jars: z.array(JarSchema),
+  labels: z.array(LabelSchema),
+  lastJobCount: z.number(),
+  latestVersion: z.string(),
+  migrationConfig: MigrationConfigSchema,
+  name: z.string(),
+  owner: OwnerSchema,
+  parameters: z.array(LabelSchema),
+  sla: SlaSchema,
+});
+export type Cluster = z.infer<typeof ClusterSchema>;

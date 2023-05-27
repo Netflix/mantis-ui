@@ -1,108 +1,128 @@
-import type { HardConstraints, SoftConstraints } from '@/types/constraints';
-import type { Label, MachineDefinition, MigrationConfig, Sla } from '@/types/machine';
+import { z } from 'zod';
 
-export type CompactJob = {
-  env: string;
-  jarUrl: string;
-  jobId: string;
-  labels: Label[];
-  numStages: number;
-  numWorkers: number;
-  region: string;
-  state: string;
-  statesSummary: StatesSummary;
-  submittedAt: number;
-  totCPUs: number;
-  totMemory: number;
-  type: string;
-  user: string;
-};
+import { HardConstraintsSchema, SoftConstraintsSchema } from '@/types/constraints';
+import {
+  LabelSchema,
+  MachineDefinitionSchema,
+  MigrationConfigSchema,
+  SlaSchema,
+} from '@/types/machine';
 
-export type StatesSummary = {
-  Started: number;
-};
+const statesSummarySchema = z.object({
+  Started: z.number(),
+});
+export type StatesSummary = z.infer<typeof statesSummarySchema>;
 
-export type Job = {
-  env: string;
-  jobMetadata: JobMetadata;
-  region: string;
-  stageMetadataList: StageMetadata[];
-  version: string;
-  workerMetadataList: WorkerMetadata[];
-};
+const compactJobSchema = z.object({
+  env: z.string(),
+  jarUrl: z.string(),
+  jobId: z.string(),
+  labels: z.array(LabelSchema),
+  numStages: z.number(),
+  numWorkers: z.number(),
+  region: z.string(),
+  state: z.string(),
+  statesSummary: statesSummarySchema,
+  submittedAt: z.number(),
+  totCPUs: z.number(),
+  totMemory: z.number(),
+  type: z.string(),
+  user: z.string(),
+});
+export type CompactJob = z.infer<typeof compactJobSchema>;
 
-export type JobMetadata = {
-  jarUrl: string;
-  jobId: string;
-  labels: Label[];
-  migrationConfig: MigrationConfig;
-  name: string;
-  nextWorkerNumberToUse: number;
-  numStages: number;
-  parameters: Label[];
-  sla: Sla;
-  startedAt: number;
-  state: string;
-  submittedAt: number;
-  subscriptionTimeoutSecs: number;
-  user: string;
-};
+const jobMetadataSchema = z.object({
+  jarUrl: z.string(),
+  jobId: z.string(),
+  labels: z.array(LabelSchema),
+  migrationConfig: MigrationConfigSchema,
+  name: z.string(),
+  nextWorkerNumberToUse: z.number(),
+  numStages: z.number(),
+  parameters: z.array(LabelSchema),
+  sla: SlaSchema,
+  startedAt: z.number(),
+  state: z.string(),
+  submittedAt: z.number(),
+  subscriptionTimeoutSecs: z.number(),
+  user: z.string(),
+});
+export type JobMetadata = z.infer<typeof jobMetadataSchema>;
 
-export type WorkerMetadata = {
-  acceptedAt: number;
-  cluster: string;
-  completedAt: number;
-  consolePort: number;
-  customPort: number;
-  debugPort: number;
-  jobId: string;
-  launchedAt: number;
-  metricsPort: number;
-  numberOfPorts: number;
-  ports: number[];
-  reason: string;
-  resubmitOf: number;
-  slave: string;
-  slaveID: string;
-  stageNum: number;
-  startedAt: number;
-  startingAt: number;
-  state: string;
-  totalResubmitCount: number;
-  workerIndex: number;
-  workerNumber: number;
-};
+const workerMetadataSchema = z.object({
+  acceptedAt: z.number(),
+  cluster: z.string(),
+  completedAt: z.number(),
+  consolePort: z.number(),
+  customPort: z.number(),
+  debugPort: z.number(),
+  jobId: z.string(),
+  launchedAt: z.number(),
+  metricsPort: z.number(),
+  numberOfPorts: z.number(),
+  ports: z.array(z.number()),
+  reason: z.string(),
+  resubmitOf: z.number(),
+  slave: z.string(),
+  slaveID: z.string(),
+  stageNum: z.number(),
+  startedAt: z.number(),
+  startingAt: z.number(),
+  state: z.string(),
+  totalResubmitCount: z.number(),
+  workerIndex: z.number(),
+  workerNumber: z.number(),
+});
+export type WorkerMetadata = z.infer<typeof workerMetadataSchema>;
 
-export type StageMetadata = {
-  hardConstraints: HardConstraints[];
-  jobId: string;
-  machineDefinition: MachineDefinition;
-  numStages: number;
-  numWorkers: number;
-  scalable: boolean;
-  scalingPolicy: ScalingPolicy;
-  softConstraints: SoftConstraints[];
-  stageNum: number;
-};
+const stageMetadataSchema = z.object({
+  hardConstraints: z.array(HardConstraintsSchema),
+  jobId: z.string(),
+  machineDefinition: MachineDefinitionSchema,
+  numStages: z.number(),
+  numWorkers: z.number(),
+  scalable: z.boolean(),
+  scalingPolicy: z.null(),
+  softConstraints: z.array(SoftConstraintsSchema),
+  stageNum: z.number(),
+});
+export type StageMetadata = z.infer<typeof stageMetadataSchema>;
 
-export type ScalingPolicy = {
-  coolDownSecs: number;
-  decrement: number;
-  enabled: boolean;
-  increment: number;
-  max: number;
-  min: number;
-  stage: number;
-};
+const jobSchema = z.object({
+  env: z.string(),
+  jobMetadata: jobMetadataSchema,
+  region: z.string(),
+  stageMetadataList: z.array(stageMetadataSchema),
+  version: z.string(),
+  workerMetadataList: z.array(workerMetadataSchema),
+});
+export type Job = z.infer<typeof jobSchema>;
 
-export type JobSummary = {
-  envs: string[];
-  jobCount: number;
-  name: string;
-  regions: string[];
-  totalCpus: number;
-  totalMemory: number;
-  totalWorkers: number;
-};
+const jobSummarySchema = z.object({
+  envs: z.array(z.string()),
+  jobCount: z.number(),
+  name: z.string(),
+  regions: z.array(z.string()),
+  totalCpus: z.number(),
+  totalMemory: z.number(),
+  totalWorkers: z.number(),
+});
+export type JobSummary = z.infer<typeof jobSummarySchema>;
 
-export type KillJobPayload = Pick<Job, 'env' | 'region'> & Pick<JobMetadata, 'jobId'>;
+const killJobPayloadSchema = z.object({
+  env: z.string(),
+  jobId: z.string(),
+  region: z.string(),
+});
+export type KillJobPayload = z.infer<typeof killJobPayloadSchema>;
+
+const ScalingPolicySchema = z.object({
+  coolDownSecs: z.number(),
+  decrement: z.number(),
+  enabled: z.boolean(),
+  increment: z.number(),
+  max: z.number(),
+  min: z.number(),
+  stage: z.number(),
+});
+export type ScalingPolicy = z.infer<typeof ScalingPolicySchema>;
