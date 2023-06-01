@@ -9,7 +9,7 @@ function NotFound() {
       <Title order={3}>404</Title>
       <Text>Page not found!</Text>
       <Button className="my-4" onClick={() => navigate(',', { replace: true })}>
-        Back Home
+        Back Home Testing some changes
       </Button>
     </div>
   );
