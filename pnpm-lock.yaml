@@ -1,12 +1,16 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@emotion/react':
     specifier: ^11.10.6
     version: 11.10.6(@types/react@18.0.31)(react@18.2.0)
   '@inovua/reactdatagrid-community':
     specifier: ^5.8.5
-    version: 5.8.5(react-dom@18.2.0)(react@18.2.0)
+    version: 5.8.5(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
   '@mantine/core':
     specifier: ^6.0.5
     version: 6.0.5(@emotion/react@11.10.6)(@mantine/hooks@6.0.5)(@types/react@18.0.31)(react-dom@18.2.0)(react@18.2.0)
@@ -664,7 +668,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
-  /@inovua/reactdatagrid-community@5.8.5(react-dom@18.2.0)(react@18.2.0):
+  /@inovua/reactdatagrid-community@5.8.5(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-H9pfB0Ji4Fy0mQ1Cw868dyhuzBntxmI4iHvejyAVDwtmv7eUDJ2qyMR71bvtRqkU63wfSyy+cln4aCpz04HBzg==}
     peerDependencies:
       prop-types: '>=15.5.0'
@@ -678,6 +682,7 @@ packages:
       lodash.debounce: 4.0.8
       lodash.throttle: 4.1.1
       object-assign: 4.1.1
+      prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       resize-observer-polyfill: 1.5.1
@@ -4334,7 +4339,7 @@ packages:
     dependencies:
       hosted-git-info: 2.8.9
       resolve: 1.22.1
-      semver: 5.7.1
+      semver: 5.7.2
       validate-npm-package-license: 3.0.4
     dev: true
 
@@ -5592,8 +5597,8 @@ packages:
     dependencies:
       loose-envify: 1.4.0
 
-  /semver@5.7.1:
-    resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}
+  /semver@5.7.2:
+    resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
     hasBin: true
     dev: true
 
